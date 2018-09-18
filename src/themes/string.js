@@ -11,5 +11,6 @@ export const HEADER = {
         {id: 1, name: 'Phim lẻ'},
         {id: 2, name: 'Phim bộ'},
         {id: 3, name: 'TV Show'},
+        {id: 4, name: 'Anime'}
     ],
 };

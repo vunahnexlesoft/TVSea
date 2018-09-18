@@ -4,6 +4,7 @@ import styles from './styles';
 import Text from '../../commons/Text/Text';
 import PropTypes from 'prop-types';
 import global from '../../themes/global';
+import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 const { height, width } = Dimensions.get('window');
 
 const HighlightCarouselItem = ({onClick, item}) => {
@@ -13,7 +14,7 @@ const HighlightCarouselItem = ({onClick, item}) => {
     let imageOneNum = {
         width: width - 50,
         borderRadius: 10,
-        height: 200,
+        height: 250,
         alignSelf: 'center'
     };
     return (
@@ -21,17 +22,28 @@ const HighlightCarouselItem = ({onClick, item}) => {
             <View style={viewGroup}>
                 <View style={{position:'absolute',
                     bottom: 10,
-                    right:10,
+                    left:10,
                     zIndex: 1,
-                    backgroundColor: global.backgroundColor,
+                    width: (width - 50) / 2,
+                    backgroundColor: 'transparent',
                     padding:5,
-                    alignItems: 'center',
                     borderRadius: 5}}>
                     <Text text={item.title}
+                          numberOfLines={2}
                           color={global.colorFF}
-                          size={global.sizeP15}
+                          size={global.sizeP20}
                           />
                 </View>
+                <ButtonWithIcon buttonText={'Xem ngay'}
+                                style={{
+                                    bottom: 10,
+                                    right:10,
+                                    position:'absolute',
+                                    height: null,
+                                    backgroundColor: global.borderRightColor,
+                                    padding: 8, paddingRight:10, paddingLeft:10,
+                                    zIndex:1}}
+                                styleText={{color: global.colorFF, fontSize: global.sizeP15}}/>
                 <Image
                     resizeMode={'cover'}
                     style={imageOneNum}

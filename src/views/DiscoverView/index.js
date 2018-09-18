@@ -14,6 +14,8 @@ import WrapperView from "../../modules/WrapperView";
 import HighlightCarouselItem from "../../modules/HighlightCarouselItem";
 import CarouselView from "../../modules/CarouselView";
 import Carousel from "react-native-snap-carousel";
+import ItemMovieNew from "../../modules/ItemMovieNew";
+import ItemGenres from "../../modules/ItemGenres";
 
 const {height, width} = Dimensions.get('window');
 
@@ -30,7 +32,6 @@ export default class Home extends Component {
 
     renderScene() {
         const {data, isLoading} = this.props;
-        console.log(data, isLoading);
         switch (this.state.index) {
             case 1:
                 return (
@@ -43,8 +44,42 @@ export default class Home extends Component {
                                              renderItem={({item,index})=>
                                              <HighlightCarouselItem item={item}/>
                                              }/>}
-
                         />
+                        <WrapperView heading={'Phim mới cập nhật'}
+                                     isShowAll
+                                     children={
+                                         <VerticalListView
+                                             ItemSeparatorComponent={() => <View
+                                                 style={{
+                                                     height: 10,
+                                                     width: "100%",
+                                                 }}
+                                             />}
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <ItemMovieNew item={item}/>
+                                             }/>}
+                        />
+                        <WrapperView heading={'Thể loại'}
+                                     isShowAll
+                                     children={
+                                         <VerticalGirdView
+                                             ItemSeparatorComponent={() => <View
+                                                 style={{
+                                                     height: 10,
+                                                     width: "100%",
+                                                 }}
+                                             />}
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <ItemGenres item={item}/>
+                                             }/>}
+                        />
+                    </View>
+                );
+            case 2:
+                return (
+                    <View style={{flex: 1, marginTop: 10}}>
                         <WrapperView heading={'Nổi bật'}
                                      children={
                                          <CarouselView
@@ -53,26 +88,125 @@ export default class Home extends Component {
                                              renderItem={({item,index})=>
                                                  <HighlightCarouselItem item={item}/>
                                              }/>}
-
                         />
-                    </View>
-                );
-            case 2:
-                return (
-                    <View style={{flex: 1, marginTop: 10}}>
-                        <VerticalGirdView data={data}
-                                          renderItem={({item, index}) =>
-                                              <ItemChannel uriImage={item.poster_path}/>
-                                          }/>
+                        <WrapperView heading={'Phim mới cập nhật'}
+                                     isShowAll
+                                     children={
+                                         <VerticalListView
+                                             ItemSeparatorComponent={() => <View
+                                                 style={{
+                                                     height: 10,
+                                                     width: "100%",
+                                                 }}
+                                             />}
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <ItemMovieNew item={item}/>
+                                             }/>}
+                        />
+                        <WrapperView heading={'Thể loại'}
+                                     isShowAll
+                                     children={
+                                         <VerticalGirdView
+                                             ItemSeparatorComponent={() => <View
+                                                 style={{
+                                                     height: 10,
+                                                     width: "100%",
+                                                 }}
+                                             />}
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <ItemGenres item={item}/>
+                                             }/>}
+                        />
                     </View>
                 );
             case 3:
                 return (
                     <View style={{flex: 1, marginTop: 10}}>
-                        <VerticalGirdView data={data}
-                                          renderItem={({item, index}) =>
-                                              <ItemChannel uriImage={item.poster_path}/>
-                                          }/>
+                        <WrapperView heading={'Nổi bật'}
+                                     children={
+                                         <CarouselView
+                                             showsPagination
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <HighlightCarouselItem item={item}/>
+                                             }/>}
+                        />
+                        <WrapperView heading={'Phim mới cập nhật'}
+                                     isShowAll
+                                     children={
+                                         <VerticalListView
+                                             ItemSeparatorComponent={() => <View
+                                                 style={{
+                                                     height: 10,
+                                                     width: "100%",
+                                                 }}
+                                             />}
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <ItemMovieNew item={item}/>
+                                             }/>}
+                        />
+                        <WrapperView heading={'Thể loại'}
+                                     isShowAll
+                                     children={
+                                         <VerticalGirdView
+                                             ItemSeparatorComponent={() => <View
+                                                 style={{
+                                                     height: 10,
+                                                     width: "100%",
+                                                 }}
+                                             />}
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <ItemGenres item={item}/>
+                                             }/>}
+                        />
+                    </View>
+                );
+            case 4:
+                return (
+                    <View style={{flex: 1, marginTop: 10}}>
+                        <WrapperView heading={'Nổi bật'}
+                                     children={
+                                         <CarouselView
+                                             showsPagination
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <HighlightCarouselItem item={item}/>
+                                             }/>}
+                        />
+                        <WrapperView heading={'Phim mới cập nhật'}
+                                     isShowAll
+                                     children={
+                                         <VerticalListView
+                                             ItemSeparatorComponent={() => <View
+                                                 style={{
+                                                     height: 10,
+                                                     width: "100%",
+                                                 }}
+                                             />}
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <ItemMovieNew item={item}/>
+                                             }/>}
+                        />
+                        <WrapperView heading={'Thể loại'}
+                                     isShowAll
+                                     children={
+                                         <VerticalGirdView
+                                             ItemSeparatorComponent={() => <View
+                                                 style={{
+                                                     height: 10,
+                                                     width: "100%",
+                                                 }}
+                                             />}
+                                             data={data}
+                                             renderItem={({item,index})=>
+                                                 <ItemGenres item={item}/>
+                                             }/>}
+                        />
                     </View>
                 );
             default:
@@ -96,7 +230,7 @@ export default class Home extends Component {
                     onIndexChange={this._onIndexChange}
                     selectedTabItem={this.state.index}
                     isUpperCase
-                    numTab={3}
+                    numTab={4}
                     styleText={{fontSize: global.sizeP14, fontWeight: '700'}}
                     styleTab={{
                         height: height / 18,
@@ -104,7 +238,7 @@ export default class Home extends Component {
                     }}
                 />
                 <View style={{flex: 1, marginRight: 10, marginLeft: 10}}>
-                    <ScrollView style={{flex:1}}>
+                    <ScrollView style={{flex:1}} >
                         {this.renderScene()}
                     </ScrollView>
                 </View>
