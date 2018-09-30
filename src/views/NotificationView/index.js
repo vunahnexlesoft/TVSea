@@ -5,7 +5,7 @@ import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import TextComponent from "../../commons/Text/Text";
 import global from "../../themes/global";
 
-export default class Home extends Component {
+export default class NotificationView extends Component {
     constructor(props) {
         super(props);
         this.state = {};

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, LayoutAnimation, Dimensions,ScrollView} from 'react-native';
+import {View, LayoutAnimation, Dimensions, ScrollView, Animated, Platform, StatusBar} from 'react-native';
 import styles from './styles';
 import global from "../../themes/global";
 import * as STRING from '../../themes/string';
@@ -16,8 +16,19 @@ import CarouselView from "../../modules/CarouselView";
 import Carousel from "react-native-snap-carousel";
 import ItemMovieNew from "../../modules/ItemMovieNew";
 import ItemGenres from "../../modules/ItemGenres";
+import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
+
+const HeaderAnimated = Animated.createAnimatedComponent(Header);
 
 const {height, width} = Dimensions.get('window');
+const HEADER_MAX_HEIGHT = 300;
+const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+const statusBarHeight = Platform.select({
+    ios: 24,
+    android: StatusBar.currentHeight
+});
+const headerHeight = 84 - statusBarHeight;
 
 export default class Home extends Component {
     constructor(props) {
@@ -26,10 +37,16 @@ export default class Home extends Component {
             index: STRING.HEADER.ROUTE_DISCOVER[0].id,
             routes: STRING.HEADER.ROUTE_DISCOVER,
         };
-        this._onIndexChange = this._onIndexChange.bind(this);
         this.renderScene = this.renderScene.bind(this);
+        this._onIndexChange = this._onIndexChange.bind(this);
     }
-
+    componentDidMount(){
+        this.props.getTopMovie.fetchingDataTopMovieByCategory('Phim lẻ');
+    }
+    _onIndexChange(item) {
+        LayoutAnimation.easeInEaseOut();
+        this.setState({index: item.id});
+    }
     renderScene() {
         const {data, isLoading} = this.props;
         switch (this.state.index) {
@@ -40,9 +57,10 @@ export default class Home extends Component {
                                      children={
                                          <CarouselView
                                              showsPagination
+                                             loop={true}
                                              data={data}
-                                             renderItem={({item,index})=>
-                                             <HighlightCarouselItem item={item}/>
+                                             renderItem={({item, index}) =>
+                                                 <HighlightCarouselItem item={item}/>
                                              }/>}
                         />
                         <WrapperView heading={'Phim mới cập nhật'}
@@ -56,7 +74,7 @@ export default class Home extends Component {
                                                  }}
                                              />}
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <ItemMovieNew item={item}/>
                                              }/>}
                         />
@@ -64,6 +82,7 @@ export default class Home extends Component {
                                      isShowAll
                                      children={
                                          <VerticalGirdView
+                                             numColumns={3}
                                              ItemSeparatorComponent={() => <View
                                                  style={{
                                                      height: 10,
@@ -71,7 +90,7 @@ export default class Home extends Component {
                                                  }}
                                              />}
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <ItemGenres item={item}/>
                                              }/>}
                         />
@@ -85,7 +104,7 @@ export default class Home extends Component {
                                          <CarouselView
                                              showsPagination
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <HighlightCarouselItem item={item}/>
                                              }/>}
                         />
@@ -100,7 +119,7 @@ export default class Home extends Component {
                                                  }}
                                              />}
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <ItemMovieNew item={item}/>
                                              }/>}
                         />
@@ -108,6 +127,7 @@ export default class Home extends Component {
                                      isShowAll
                                      children={
                                          <VerticalGirdView
+                                             numColumns={3}
                                              ItemSeparatorComponent={() => <View
                                                  style={{
                                                      height: 10,
@@ -115,7 +135,7 @@ export default class Home extends Component {
                                                  }}
                                              />}
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <ItemGenres item={item}/>
                                              }/>}
                         />
@@ -129,7 +149,7 @@ export default class Home extends Component {
                                          <CarouselView
                                              showsPagination
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <HighlightCarouselItem item={item}/>
                                              }/>}
                         />
@@ -144,7 +164,7 @@ export default class Home extends Component {
                                                  }}
                                              />}
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <ItemMovieNew item={item}/>
                                              }/>}
                         />
@@ -152,6 +172,7 @@ export default class Home extends Component {
                                      isShowAll
                                      children={
                                          <VerticalGirdView
+                                             numColumns={3}
                                              ItemSeparatorComponent={() => <View
                                                  style={{
                                                      height: 10,
@@ -159,7 +180,7 @@ export default class Home extends Component {
                                                  }}
                                              />}
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <ItemGenres item={item}/>
                                              }/>}
                         />
@@ -173,7 +194,7 @@ export default class Home extends Component {
                                          <CarouselView
                                              showsPagination
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <HighlightCarouselItem item={item}/>
                                              }/>}
                         />
@@ -188,7 +209,7 @@ export default class Home extends Component {
                                                  }}
                                              />}
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <ItemMovieNew item={item}/>
                                              }/>}
                         />
@@ -196,6 +217,7 @@ export default class Home extends Component {
                                      isShowAll
                                      children={
                                          <VerticalGirdView
+                                             numColumns={3}
                                              ItemSeparatorComponent={() => <View
                                                  style={{
                                                      height: 10,
@@ -203,7 +225,7 @@ export default class Home extends Component {
                                                  }}
                                              />}
                                              data={data}
-                                             renderItem={({item,index})=>
+                                             renderItem={({item, index}) =>
                                                  <ItemGenres item={item}/>
                                              }/>}
                         />
@@ -214,35 +236,17 @@ export default class Home extends Component {
         }
     }
 
-    _onIndexChange(item) {
-        this.props.getTopMovie.fetchingDataTopMovieByCategory('Phim lẻ');
-        LayoutAnimation.easeInEaseOut();
-        this.setState({index: item.id});
-    }
-
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
-                <Header date={'Sunday, Sep 16, 2018'}
-                        heading={STRING.HEADER.NAME.DISCOVER}/>
-                <TabItems
-                    routes={this.state.routes}
-                    onIndexChange={this._onIndexChange}
-                    selectedTabItem={this.state.index}
-                    isUpperCase
-                    numTab={4}
-                    styleText={{fontSize: global.sizeP14, fontWeight: '700'}}
-                    styleTab={{
-                        height: height / 18,
-                        width: width,
-                    }}
-                />
-                <View style={{flex: 1, marginRight: 10, marginLeft: 10}}>
-                    <ScrollView style={{flex:1}} >
-                        {this.renderScene()}
-                    </ScrollView>
-                </View>
-            </View>
+            <ViewTabScrollAnimated
+                {...this.props}
+                textHeader={STRING.HEADER.NAME.DISCOVER}
+                textDate={'Sunday, Feb 5, 2018'}
+                numTab={4}
+                onIndexChange={this._onIndexChange}
+                renderScene={this.renderScene()}
+                routes={this.state.routes}
+                index={this.state.index}/>
         );
     }
 }

@@ -8,11 +8,11 @@ const { height, width } = Dimensions.get('window');
 
 const ItemGenres = ({onClick, item}) => {
     let imageTwoNum = {
-        width: (width - 6 * 4) / 2,
+        width: (width - 6 * 4) / 3,
         margin: 5,
         marginTop: 3,
         marginBottom:3,
-        height: 70,
+        height: height/14,
         backgroundColor: "transparent",
         alignItems:'center',
         justifyContent:'center',

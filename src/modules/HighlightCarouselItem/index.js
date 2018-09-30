@@ -1,25 +1,37 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, Dimensions, Image} from 'react-native';
+import {View, TouchableOpacity, Dimensions, Image,Platform} from 'react-native';
 import styles from './styles';
 import Text from '../../commons/Text/Text';
 import PropTypes from 'prop-types';
 import global from '../../themes/global';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 const { height, width } = Dimensions.get('window');
+const IS_IOS = Platform.OS === 'ios';
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
+function wp (percentage) {
+    const value = (percentage * viewportWidth) / 100;
+    return Math.round(value);
+}
+
+const slideHeight = viewportHeight * 0.36;
+const slideWidth = wp(80);
+const itemHorizontalMargin = wp(7);
+
+ const sliderWidth = viewportWidth;
+const itemWidth = slideWidth + itemHorizontalMargin;
 const HighlightCarouselItem = ({onClick, item}) => {
     let viewGroup = {
         flex:1,
+        width: itemWidth,
     };
     let imageOneNum = {
-        width: width - 50,
+        width: itemWidth,
         borderRadius: 10,
-        height: 250,
-        alignSelf: 'center'
+        height: slideHeight,
     };
     return (
-        <TouchableOpacity onPress={onClick}>
-            <View style={viewGroup}>
+        <TouchableOpacity style={viewGroup} onPress={onClick}>
                 <View style={{position:'absolute',
                     bottom: 10,
                     left:10,
@@ -48,7 +60,6 @@ const HighlightCarouselItem = ({onClick, item}) => {
                     resizeMode={'cover'}
                     style={imageOneNum}
                     source={{uri: item.backdrop_path, cache: 'force-cache'}}/>
-            </View>
         </TouchableOpacity>
     );
 };

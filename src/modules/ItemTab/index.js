@@ -27,7 +27,7 @@ const TabItem = ({text, styleText, onChangeTabView, isActive, size, isUpperCase,
                         />
                         <View style={{marginTop: 2,
                             opacity: isActive ? 1 : 0,
-                            height: 2,
+                            height: 3,
                             width: width / numTab,
                             position: 'absolute',
                             bottom: 0,

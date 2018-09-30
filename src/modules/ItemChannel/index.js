@@ -16,18 +16,18 @@ const ItemChannel = ({uriImage, onClick, numCol}) => {
         elevation: 2,
     };
     let imageTwoNum = {
-        width: (width - 6 * 4) / 2,
+        width: (width - 6 * 7) / 2,
         margin: 5,
-        height: 250,
+        height: height / 3,
         backgroundColor: "white",
         borderRadius: 8,
         flex: 1};
     let imageOneNum = {
         width: width - 20,
         borderRadius: 10,
-        height: 200};
+        height: height / 3};
     return (
-        <TouchableOpacity style={viewGroup} onPress={onClick}>
+        <TouchableOpacity activeOpacity={0.95} style={viewGroup} onPress={onClick}>
             <View style={viewGroup}>
                 <Image
                     resizeMode={'cover'}

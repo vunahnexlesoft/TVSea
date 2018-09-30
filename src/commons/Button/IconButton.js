@@ -7,7 +7,6 @@ import global from "../../themes/global";
 
 const IconButton = ({nameIcon, btnStyle, iconStyle, badge, onClick}) => {
     let buttonStyle = {
-        justifyContent: 'center',
         alignItems: 'center',
     };
     let badgeStyle = {
@@ -18,11 +17,9 @@ const IconButton = ({nameIcon, btnStyle, iconStyle, badge, onClick}) => {
         textAlign:'center'
     };
     return (
-        <TouchableOpacity onPress={onClick}>
-            <View style={[buttonStyle, btnStyle]}>
+        <TouchableOpacity style={[buttonStyle, btnStyle]} onPress={onClick}>
                 <Icon name={nameIcon} style={iconStyle}/>
                 {badge && <TextComponent text={badge} size={global.sizeP15} color={global.colorF4} style={badgeStyle}/>}
-            </View>
         </TouchableOpacity>
     );
 };

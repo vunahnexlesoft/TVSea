@@ -5,6 +5,19 @@ import global from "../../themes/global";
 import PropTypes from "prop-types";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 const {height, width} = Dimensions.get('window');
+const IS_IOS = Platform.OS === 'ios';
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+function wp (percentage) {
+    const value = (percentage * viewportWidth) / 100;
+    return Math.round(value);
+}
+const slideHeight = viewportHeight * 0.36;
+const slideWidth = wp(85);
+const itemHorizontalMargin = wp(7);
+
+const sliderWidth = viewportWidth;
+const itemWidth = slideWidth + itemHorizontalMargin;
 class CarouselView extends Component{
     constructor(props) {
         super(props);
@@ -42,14 +55,17 @@ class CarouselView extends Component{
                     {...this.props}
                     data={data}
                     renderItem={renderItem}
-                    useScrollView
                     onSnapToItem={(index) => this.setState({index})}
-                    containerCustomStyle={{flex:1}}
-                    contentContainerCustomStyle={{alignItems:'center'}}
-                    //inactiveSlideScale={0.9}
-                    //inactiveSlideOpacity={1}
-                    sliderWidth={Math.round((100 * width) / 100)}
-                    itemWidth={width - 50}
+                    containerCustomStyle={{flex:1,overflow: 'hidden'}}
+                    //contentContainerCustomStyle={{alignItems:'center'}}
+                    //containerCustomStyle={styles.slider}
+                    activeSlideAlignment={'center'}
+                    activeAnimationType={'spring'}
+                    contentContainerCustomStyle={{paddingVertical: 10}}
+                    inactiveSlideScale={0.9}
+                    inactiveSlideOpacity={0.5}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
                 />
                 {
                     showsPagination ? this._renderPagination(data, this.state.index) : null

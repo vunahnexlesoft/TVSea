@@ -9,6 +9,7 @@ import TabItems from "../../modules/TabItems";
 import VerticalListView from "../../modules/VerticalListView";
 import VerticalGirdView from "../../modules/VerticalGirdView"
 import ItemChannel from "../../modules/ItemChannel";
+import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
 const {height, width} = Dimensions.get('window');
 
 export default class Home extends Component {
@@ -18,12 +19,18 @@ export default class Home extends Component {
             index: STRING.HEADER.ROUTE_HOME[0].id,
             routes: STRING.HEADER.ROUTE_HOME,
         };
-        this._onIndexChange = this._onIndexChange.bind(this);
         this.renderScene = this.renderScene.bind(this);
+        this._onIndexChange = this._onIndexChange.bind(this);
+    }
+    componentDidMount(){
+        this.props.getData.fetchingDataMoviebyCategory(1,'Phim lẻ');
+    }
+    _onIndexChange(item) {
+        LayoutAnimation.easeInEaseOut();
+        this.setState({index: item.id});
     }
     renderScene() {
         const{data,isLoading} = this.props;
-        console.log(data,isLoading);
         switch (this.state.index) {
             case 1:
                 return (
@@ -31,7 +38,7 @@ export default class Home extends Component {
                         <VerticalListView data={data}
                                           ItemSeparatorComponent={() => <View
                                               style={{
-                                                  height: 10,
+                                                  height: 20,
                                                   width: "100%",
                                               }}
                                           />}
@@ -54,34 +61,17 @@ export default class Home extends Component {
                 return null;
         }
     }
-
-    _onIndexChange(item) {
-        this.props.getData.fetchingDataMoviebyCategory(1,'Phim lẻ');
-        LayoutAnimation.easeInEaseOut();
-        this.setState({index: item.id});
-    }
-
     render() {
         return (
-            <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
-                <Header date={'Sunday, Sep 16, 2018'}
-                        heading={STRING.HEADER.NAME.TODAY}/>
-                <TabItems
-                    routes={this.state.routes}
-                    onIndexChange={this._onIndexChange}
-                    selectedTabItem={this.state.index}
-                    isUpperCase
-                    numTab={2}
-                    styleText={{fontSize: global.sizeP14, fontWeight: '700'}}
-                    styleTab={{
-                        height: height / 18,
-                        width: width,
-                    }}
-                />
-                <View style={{flex: 1}}>
-                    {this.renderScene()}
-                </View>
-            </View>
+            <ViewTabScrollAnimated
+                {...this.props}
+                textHeader={STRING.HEADER.NAME.TODAY}
+                textDate={'Sunday, Feb 5, 2018'}
+                numTab={2}
+                onIndexChange={this._onIndexChange}
+                renderScene={this.renderScene()}
+                routes={this.state.routes}
+                index={this.state.index}/>
         );
     }
 }

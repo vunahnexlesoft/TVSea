@@ -1,32 +1,81 @@
 import React, {Component} from 'react';
-import {TouchableNativeFeedback, View,Image} from 'react-native';
+import {View, TouchableOpacity, AppRegistry, StyleSheet, Image, Platform} from 'react-native';
+import styles from './styles';
 import PropTypes from 'prop-types';
-import global from "../../Styles/global";
-import FastImage from 'react-native-fast-image'
+import global from "../../themes/global";
 
-const RoundAvatar = ({uriImage, avatarStyle, onClick,disableClick}) => {
-    let imageStyle = {
-        height:50,
-        width:50,
-        borderRadius:25,
-        borderColor:'white',
-        borderWidth:1};
-    return (
-        <TouchableNativeFeedback onPress={onClick} disable ={disableClick}>
-            <FastImage
-                resizeMode={FastImage.resizeMode.cover}
-                source={{uri:uriImage}}
-                style={[imageStyle, avatarStyle]}
+const RoundAvatar = ({size, icSrc, onPress, canClick, style, styleIc, isShowDot}) => {
+    let styleRadiusSize = null;
+    let styleDot = null;
+    let styleAvatar = {};
+
+    if (size === 'small') {
+        styleAvatar = styles.avatarSmall;
+        styleRadiusSize = 25;
+    }
+    if (size === 'x-small') {
+        styleAvatar = styles.avatarXSmall;
+        styleRadiusSize = 35;
+        styleDot = 13 / 2;
+    }
+    if (size === "large") {
+        styleAvatar = styles.avatarLarge;
+        styleRadiusSize = 40;
+
+    }
+    if (size === "x-large") {
+        styleAvatar = styles.avatarXlarge;
+        styleRadiusSize = 60;
+
+    }
+    if (size === 'xx-large') {
+        styleAvatar = {width: 125, height: 125};
+        styleRadiusSize = 62.5;
+    }
+    return icSrc ? (
+        <TouchableOpacity
+            activeOpacity={0.85}
+            disabled={!canClick} style={[styles.viewAvatar, {borderRadius: styleRadiusSize}, style]}
+            onPress={onPress}
+        >
+            <Image source={{uri: icSrc, cache: 'force-cache'}}
+                   style={[styleAvatar, styleIc]}
+                   borderRadius={styleRadiusSize}
+                   resizeMode={'cover'}
             />
-        </TouchableNativeFeedback>
-    );
+            {
+                isShowDot ? <View style={{
+                    backgroundColor: global.lightGreen,
+                    width: (styleRadiusSize - 5) / 2,
+                    height: (styleRadiusSize - 5) / 2,
+                    borderRadius: (styleRadiusSize - 5) / 4,
+                    position: 'absolute',
+                    right: (styleRadiusSize - 5) / 6, bottom: 0,
+                    borderColor: global.colorFF,
+                    borderWidth: 1
+                }}/> : null
+            }
+        </TouchableOpacity>
+    ) : null;
+};
+
+RoundAvatar.defaultProps = {
+    size: "small",
+    style: {},
+    canClick: true,
+    isShowDot:false,
+    onPress: () => {
+    }
 };
 
 RoundAvatar.propTypes = {
-    uriImage: PropTypes.string,
-    avatarStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
-    onClick: PropTypes.func,
-    disableClick:PropTypes.bool
+    size: PropTypes.oneOf(["small", "x-small", "large", "x-large", "xx-large"]),
+    style: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
+    styleIc: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
+    onPress: PropTypes.func,
+    icSrc: PropTypes.string,
+    canClick: PropTypes.bool,
+    isShowDot: PropTypes.bool
 };
 
 export default RoundAvatar;

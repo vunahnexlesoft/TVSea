@@ -8,7 +8,7 @@ const {height, width} = Dimensions.get('window');
 
 class VerticalGirdView extends Component {
     render() {
-        const {data, renderItem,style} = this.props;
+        const {data, renderItem,style, numColumns} = this.props;
         return (
             <FlatList
                 {...this.props}
@@ -18,7 +18,7 @@ class VerticalGirdView extends Component {
                 removeClippedSubviews={true}
                 nestedScrollEnabled={true}
                 horizontal={false}
-                numColumns={2}
+                numColumns={numColumns}
                 automaticallyAdjustContentInsets={true}
                 extraData={this.props}
                 showsVerticalScrollIndicator={false}
@@ -30,9 +30,10 @@ class VerticalGirdView extends Component {
 
 VerticalGirdView.defaultProps = {
     data: [],
+    numColumns: 2
 };
 VerticalGirdView.propTypes = {
-    num: PropTypes.number,
+    numColumns: PropTypes.number,
     data: PropTypes.array,
     renderItem: PropTypes.func,
     style: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),

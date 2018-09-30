@@ -7,7 +7,7 @@ import global from '../../themes/global';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 const { height, width } = Dimensions.get('window');
 
-const ItemMovieNew = ({onClick, item}) => {
+const ItemMovieNew = ({onClick, item,isNew}) => {
     let viewGroup = {
         flex:1,
         flexDirection:'row',
@@ -23,6 +23,7 @@ const ItemMovieNew = ({onClick, item}) => {
         width:70,
         height:70,
         borderRadius: 70 / 4};
+    let buttonText = isNew ? 'Xem ngay' : 'Xem lại';
     return (
         <View style={viewGroup} onPress={onClick}>
                 <Image
@@ -40,7 +41,7 @@ const ItemMovieNew = ({onClick, item}) => {
                       color={global.colorFF}
                       style={{marginTop:3}}/>
             </View>
-            <ButtonWithIcon buttonText={'Xem ngay'}
+            <ButtonWithIcon buttonText={buttonText}
                             onClick={onClick}
                             style={{
                                 bottom: 70 / 4,
@@ -55,12 +56,14 @@ const ItemMovieNew = ({onClick, item}) => {
     );
 };
 ItemMovieNew.defaultProps = {
+    isNew: true
 };
 
 ItemMovieNew.propTypes = {
     styleText: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     onClick: PropTypes.func,
-    numCol:PropTypes.number
+    numCol:PropTypes.number,
+    isNew:PropTypes.bool
 };
 
 export default ItemMovieNew;

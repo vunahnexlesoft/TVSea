@@ -1,7 +1,9 @@
 export const HEADER = {
     NAME: {
         TODAY:'Hôm nay',
-        DISCOVER:'Khám phá'
+        DISCOVER:'Khám phá',
+        SEARCH:'Tìm kiếm',
+        PERSIONAL: 'Cá nhân'
     },
     ROUTE_HOME: [
         {id: 1, name: 'Đang chiếu'},
@@ -12,5 +14,10 @@ export const HEADER = {
         {id: 2, name: 'Phim bộ'},
         {id: 3, name: 'TV Show'},
         {id: 4, name: 'Anime'}
+    ],
+    ROUTE_ACCOUNT: [
+        {id: 1, name: 'Tài khoản'},
+        {id: 2, name: 'Phim đã xem'},
+        {id: 3, name: 'Thông báo'},
     ],
 };

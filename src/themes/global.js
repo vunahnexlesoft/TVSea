@@ -7,6 +7,7 @@ export default  {
     yellowColor: '#FFB600',
     orangeColor: '#FE5A1D',
     grayColor: '#757575',
+    grayDarkColor:'#656e77',
     grayLightColor: '#BBBBBB',
     grayLineColor: '#CCCCCC',
     blackTab: '#151114',

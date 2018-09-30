@@ -13,13 +13,16 @@ import Account from './containers/AccountContainer';
 import Notification from './containers/NotificationContainer';
 import SignIn from './containers/SignInContainer';
 import SignUp from './containers/SignUpContainer';
+import Search from './containers/SearchContainer';
 const { height, width } = Dimensions.get('window');
 
 const TabBar = createBottomTabNavigator({
         Home: Home,
         Discover: Discover,
+        Search: Search,
         Notification: Notification,
         Account: Account
+
     }, {
         navigationOptions: ({navigation}) => ({
             tabBarIcon: ({focused, tintColor}) => {
@@ -31,6 +34,9 @@ const TabBar = createBottomTabNavigator({
                         break;
                     case 'Discover':
                         iconName = "ios-aperture";
+                        break;
+                    case 'Search':
+                        iconName = "ios-search";
                         break;
                     case 'Notification':
                         iconName = "ios-alert";
