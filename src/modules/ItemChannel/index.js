@@ -4,6 +4,8 @@ import styles from './styles';
 import Text from '../../commons/Text/Text';
 import PropTypes from 'prop-types';
 import global from '../../themes/global';
+import FastImage from 'react-native-fast-image'
+
 const { height, width } = Dimensions.get('window');
 
 const ItemChannel = ({uriImage, onClick, numCol}) => {
@@ -29,10 +31,13 @@ const ItemChannel = ({uriImage, onClick, numCol}) => {
     return (
         <TouchableOpacity activeOpacity={0.95} style={viewGroup} onPress={onClick}>
             <View style={viewGroup}>
-                <Image
-                    resizeMode={'cover'}
+                <FastImage
+                    resizeMode={FastImage.resizeMode.cover}
                     style={numCol === 1 ? imageOneNum : imageTwoNum}
-                    source={{uri: uriImage, cache: 'force-cache'}}/>
+                    source={{
+                        uri: uriImage,
+                        priority: FastImage.priority.normal,
+                    }}/>
             </View>
         </TouchableOpacity>
     );

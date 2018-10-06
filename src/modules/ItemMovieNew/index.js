@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import global from '../../themes/global';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 const { height, width } = Dimensions.get('window');
+import FastImage from 'react-native-fast-image'
 
 const ItemMovieNew = ({onClick, item,isNew}) => {
     let viewGroup = {
@@ -26,10 +27,13 @@ const ItemMovieNew = ({onClick, item,isNew}) => {
     let buttonText = isNew ? 'Xem ngay' : 'Xem lại';
     return (
         <View style={viewGroup} onPress={onClick}>
-                <Image
-                    resizeMode={'cover'}
+                <FastImage
+                    resizeMode={FastImage.resizeMode.cover}
                     style={imageOneNum}
-                    source={{uri: item.poster_path, cache: 'force-cache'}}/>
+                    source={{
+                        uri: item.poster_path,
+                        priority: FastImage.priority.normal,
+                    }}/>
             <View style={{marginLeft: 10, width: (width / 2) - 30}}>
                 <Text text={item.title_en}
                       numberOfLines={2}

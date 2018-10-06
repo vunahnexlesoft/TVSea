@@ -44,6 +44,7 @@ export default class Home extends Component {
                                           />}
                                           renderItem={({item, index}) =>
                                               <ItemChannel numCol={1}
+                                                           onClick={()=> this.props.navigation.navigate('Video')}
                                                            uriImage={item.backdrop_path}/>
                                           }/>
                     </View>
