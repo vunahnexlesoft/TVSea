@@ -26,14 +26,27 @@ const HighlightCarouselItem = ({onClick, item}) => {
     let viewGroup = {
         flex: 1,
         width: itemWidth,
+        zIndex:0
     };
     let imageOneNum = {
         width: itemWidth,
         borderRadius: 10,
         height: slideHeight,
+        zIndex:0
     };
     return (
-        <TouchableOpacity style={viewGroup} onPress={onClick}>
+        <TouchableOpacity style={viewGroup} disabled>
+            <View style={{
+                width: itemWidth,
+                backgroundColor: global.transparentBlack2,
+                position: 'absolute',
+                flex:1,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom:0,
+                zIndex: 1
+            }}/>
             <View style={{
                 position: 'absolute',
                 bottom: 10,
@@ -51,6 +64,7 @@ const HighlightCarouselItem = ({onClick, item}) => {
                 />
             </View>
             <ButtonWithIcon buttonText={'Xem ngay'}
+                            onClick={onClick}
                             style={{
                                 bottom: 10,
                                 right: 10,

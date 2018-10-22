@@ -9,7 +9,7 @@ import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 const {height, width} = Dimensions.get('window');
 class WrapperView extends Component{
     render(){
-        const {heading, children, isShowAll}=this.props;
+        const {heading, children, isShowAll,styleHeading}=this.props;
         return (
             <View style={{flex:1, marginTop: 10}}>
                 <View style = {{flexDirection:'row', justifyContent: 'space-between'}}>
@@ -17,7 +17,7 @@ class WrapperView extends Component{
                         <View style={{height: 8, width:8, borderRadius:4, backgroundColor: global.yellowColor, marginRight: 5, alignSelf: 'center'}}/>
                         <Text text={heading}
                                        size={global.sizeP20}
-                                       style={{fontWeight: '500'}}
+                                       style={[{fontWeight: '500'},styleHeading]}
                                        color={global.colorFF}/>
                     </View>
                     {

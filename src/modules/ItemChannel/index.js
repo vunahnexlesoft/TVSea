@@ -12,10 +12,6 @@ const ItemChannel = ({uriImage, onClick, numCol}) => {
     let viewGroup = {
         flex:1,
         alignItems: numCol === 1 ? 'center' : null,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.2,
-        elevation: 2,
     };
     let imageTwoNum = {
         width: (width - 6 * 7) / 2,
@@ -29,7 +25,7 @@ const ItemChannel = ({uriImage, onClick, numCol}) => {
         borderRadius: 10,
         height: height / 3};
     return (
-        <TouchableOpacity activeOpacity={0.95} style={viewGroup} onPress={onClick}>
+        <TouchableOpacity activeOpacity={0.85} style={viewGroup} onPress={onClick}>
             <View style={viewGroup}>
                 <FastImage
                     resizeMode={FastImage.resizeMode.cover}

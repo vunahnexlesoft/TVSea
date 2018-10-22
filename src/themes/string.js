@@ -3,6 +3,7 @@ export const HEADER = {
         TODAY:'Hôm nay',
         DISCOVER:'Khám phá',
         SEARCH:'Tìm kiếm',
+        HISTORY:'Lịch sử',
         PERSIONAL: 'Cá nhân'
     },
     ROUTE_HOME: [
@@ -17,7 +18,10 @@ export const HEADER = {
     ],
     ROUTE_ACCOUNT: [
         {id: 1, name: 'Tài khoản'},
-        {id: 2, name: 'Phim đã xem'},
-        {id: 3, name: 'Thông báo'},
+        {id: 2, name: 'Thông báo'},
+    ],
+    ROUTE_HISTORY: [
+        {id: 1, name: 'Phim đã xem'},
+        {id: 2, name: 'Phim đã thích'},
     ],
 };

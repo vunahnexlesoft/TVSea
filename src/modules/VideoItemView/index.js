@@ -10,6 +10,7 @@ const {height, width} = Dimensions.get('window');
 class VideoItemView extends Component {
     render() {
         const {data, renderItem,style, numColumns} = this.props;
+        const {host} = this.props.navigation.state.params;
         return (
             <View style={{flex:1, backgroundColor:global.blackTab}}>
                 <View style={{
@@ -26,7 +27,7 @@ class VideoItemView extends Component {
                                 btnStyle={{marginRight: 2}}
                                 iconStyle={{fontSize:global.sizeP30, color: global.colorFF}}/>
                 </View>
-                <Video source={{uri: 'http://172.30.198.187:5080/live/test.m3u8'}}   // Can be a URL or a local file.
+                <Video source={{uri: host}}   // Can be a URL or a local file.
                        style={{
                            position: 'absolute',
                            top: 0,

@@ -1,16 +1,26 @@
 import HomeView from '../../views/HomeView';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as actionGetByCategory from '../../redux/ActionCreator/actionGetMovieByCategory'
+import * as moviesAction from "../../redux/ActionCreator/actionMovieCreator";
 function mapStateToProps(state) {
+    const {category} = state.moviesReducer;
     return {
-        data: state.getMovieByCategory.phimle.data,
-        isLoading: state.getMovieByCategory.phimle.isLoading,
+        dataPhimle: category.phimle.data,
+        dataPhimbo: category.phimbo.data,
+        dataTvshow: category.tvshow.data,
+        
+        isPhimleLoading: category.phimle.isLoading,
+        isPhimboLoading: category.phimbo.isLoading,
+        isTvshowLoading: category.tvshow.isLoading,
+
+        isPhimleError: category.phimle.isError,
+        isPhimboError: category.phimbo.isError,
+        isTvshowError: category.tvshow.isError,
     };
 }
 function mapDispatchToProps(dispatch) {
   return {
-      getData: bindActionCreators(actionGetByCategory, dispatch),
+      moviesAction: bindActionCreators(moviesAction, dispatch),
   };
 }
 export default connect(mapStateToProps,mapDispatchToProps)(HomeView);

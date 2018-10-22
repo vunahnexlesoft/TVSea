@@ -14,6 +14,7 @@ import Notification from './containers/NotificationContainer';
 import SignIn from './containers/SignInContainer';
 import SignUp from './containers/SignUpContainer';
 import Search from './containers/SearchContainer';
+import MoviesDetail from './containers/MoviesDetailContainer';
 import VideoItemView from './modules/VideoItemView';
 const { height, width } = Dimensions.get('window');
 
@@ -40,7 +41,7 @@ const TabBar = createBottomTabNavigator({
                         iconName = "ios-search";
                         break;
                     case 'Notification':
-                        iconName = "ios-alert";
+                        iconName = "ios-copy";
                         break;
                     case 'Account':
                         iconName = "ios-contact";
@@ -75,7 +76,8 @@ const TabBar = createBottomTabNavigator({
 const RootNavigator = createStackNavigator({
         TabBar: {screen: TabBar},
         Home: {screen: Home},
-        Video: {screen: VideoItemView}
+        Video: {screen: VideoItemView},
+        MoviesDetail: {screen: MoviesDetail}
     },
     {
         initialRouteName: "TabBar",

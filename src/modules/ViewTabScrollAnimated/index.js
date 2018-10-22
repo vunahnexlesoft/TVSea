@@ -5,15 +5,7 @@ import global from "../../themes/global";
 import * as STRING from '../../themes/string';
 import Header from "../../modules/Header";
 import TabItems from "../../modules/TabItems";
-import VerticalListView from "../../modules/VerticalListView";
-import VerticalGirdView from "../../modules/VerticalGirdView";
-import WrapperView from "../../modules/WrapperView";
-import HighlightCarouselItem from "../../modules/HighlightCarouselItem";
-import CarouselView from "../../modules/CarouselView";
-import ItemMovieNew from "../../modules/ItemMovieNew";
-import ItemGenres from "../../modules/ItemGenres";
 const HeaderAnimated = Animated.createAnimatedComponent(Header);
-
 const {height, width} = Dimensions.get('window');
 const HEADER_MAX_HEIGHT = 300;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;

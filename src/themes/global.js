@@ -3,6 +3,7 @@ export default  {
     primaryColor: '#7EC34D',
     greenRgba: 'rgba(103,241,39,0.8)',
     colorTextPrimary: '#2C91D5',
+    colorBlackBlue: '#1875D6',
     colorTextBlack: '#535353',
     yellowColor: '#FFB600',
     orangeColor: '#FE5A1D',
@@ -37,7 +38,7 @@ export default  {
     green: '#2ECC71',
     purple: '#9B59B6',
     darkBlue: '#34495E',
-    yellow: '#F1C40F',
+    yellow: '#EDAE39',
     orange: '#E67E22',
     red: '#E74C3C',
     grey: '#95A5A6',
@@ -72,6 +73,9 @@ export default  {
     transparentWhite1: 'rgba(255, 255, 255, .1)',
     transparentWhite2: 'rgba(255, 255, 255, .2)',
     transparentWhite0: 'rgba(255, 255, 255, 0)',
+    transparentBlack3: 'rgba(0, 0, 0, .3)',
+    transparentBlack2: 'rgba(0, 0, 0, .2)',
+    transparentWhite4: 'rgba(255, 255, 255, .4)',
     transparent204: 'rgba(204, 204, 204, .5)',
     transparent77: 'rgba(77,77,77,.4)',
     transparentPrimary: 'rgba(126,195,77,.5)',
@@ -86,6 +90,10 @@ export default  {
     sizeP20: 20,
     sizeP25: 25,
     sizeP30: 30,
+    sizeP35: 35,
+    sizeP40: 40,
+    sizeP45: 45,
+
     // for member search screen
     lightGreen:"#7BCB45",
     lightGrey:"#f3f3f3"

@@ -10,14 +10,15 @@ import VerticalListView from "../../modules/VerticalListView";
 import VerticalGirdView from "../../modules/VerticalGirdView"
 import ItemChannel from "../../modules/ItemChannel";
 import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
+import ItemMovieNew from "../../modules/ItemMovieNew";
 const {height, width} = Dimensions.get('window');
 
-export default class HomeView extends Component {
+export default class HistoryView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            index: STRING.HEADER.ROUTE_HOME[0].id,
-            routes: STRING.HEADER.ROUTE_HOME,
+            index: STRING.HEADER.ROUTE_HISTORY[0].id,
+            routes: STRING.HEADER.ROUTE_HISTORY,
         };
         this.renderScene = this.renderScene.bind(this);
         this._onIndexChange = this._onIndexChange.bind(this);
@@ -32,23 +33,23 @@ export default class HomeView extends Component {
     }
     renderScene() {
         const{dataPhimle, isPhimleLoading} = this.props;
-        console.log(dataPhimle, isPhimleLoading)
+        console.log(dataPhimle, isPhimleLoading);
         switch (this.state.index) {
             case 1:
                 return (
-                    <View style={{flex: 1,marginTop:10}}>
-                        <VerticalListView data={dataPhimle}
-                                          ItemSeparatorComponent={() => <View
-                                              style={{
-                                                  height: 20,
-                                                  width: "100%",
-                                              }}
-                                          />}
-                                          renderItem={({item, index}) =>
-                                              <ItemChannel numCol={1}
-                                                           onClick={()=> this.props.navigation.navigate('Video',{host:"http://18.222.223.197:5080/live/streaming.m3u8"})}
-                                                           uriImage={item.backdrop_path}/>
-                                          }/>
+                    <View style={{flex: 1, marginTop: 10}}>
+                        <VerticalListView
+                            ItemSeparatorComponent={() => <View
+                                style={{
+                                    height: 15,
+                                    width: "100%",
+                                }}
+                            />}
+                            data={dataPhimle}
+                            renderItem={({item, index}) =>
+                                <ItemMovieNew isNew={false}
+                                              item={item}/>
+                            }/>
                     </View>
                 );
             case 2:
@@ -68,7 +69,7 @@ export default class HomeView extends Component {
         return (
             <ViewTabScrollAnimated
                 {...this.props}
-                textHeader={STRING.HEADER.NAME.TODAY}
+                textHeader={STRING.HEADER.NAME.HISTORY}
                 textDate={'Sunday, Feb 5, 2018'}
                 numTab={2}
                 onIndexChange={this._onIndexChange}

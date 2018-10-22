@@ -8,7 +8,7 @@ const {height, width} = Dimensions.get('window');
 
 class VerticalListView extends Component {
     render() {
-        const {data, renderItem,style,num} = this.props;
+        const {data, renderItem,style,num,horizontal} = this.props;
         return (
             <FlatList
                 {...this.props}
@@ -17,11 +17,12 @@ class VerticalListView extends Component {
                 scrollEventThrottle={1}
                 removeClippedSubviews={true}
                 nestedScrollEnabled={true}
-                horizontal={false}
+                horizontal={horizontal}
                 numColumns={num === 2 ? 2 : 1}
                 automaticallyAdjustContentInsets={true}
                 extraData={this.props}
                 showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={renderItem}/>
         );
@@ -30,11 +31,13 @@ class VerticalListView extends Component {
 
 VerticalListView.defaultProps = {
     data: [],
+    horizontal: false
 };
 VerticalListView.propTypes = {
     num: PropTypes.number,
     data: PropTypes.array,
     renderItem: PropTypes.func,
+    horizontal:PropTypes.bool,
     style: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
 };
 

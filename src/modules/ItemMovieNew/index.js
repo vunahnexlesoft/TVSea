@@ -15,10 +15,6 @@ const ItemMovieNew = ({onClick, item,isNew}) => {
         paddingLeft:5,
         paddingRight:5,
         alignItems:'center',
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0.2,
-        elevation: 2,
     };
     let imageOneNum = {
         width:70,

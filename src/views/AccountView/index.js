@@ -19,7 +19,7 @@ import ItemNotification from "../../modules/ItemNotification";
 
 const {height, width} = Dimensions.get('window');
 
-export default class Home extends Component {
+export default class AccountView extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -141,23 +141,6 @@ export default class Home extends Component {
                         <VerticalListView
                             ItemSeparatorComponent={() => <View
                                 style={{
-                                    height: 15,
-                                    width: "100%",
-                                }}
-                            />}
-                            data={data}
-                            renderItem={({item, index}) =>
-                                <ItemMovieNew isNew={false}
-                                              item={item}/>
-                            }/>
-                    </View>
-                );
-            case 3:
-                return (
-                    <View style={{flex: 1, marginTop: 10}}>
-                        <VerticalListView
-                            ItemSeparatorComponent={() => <View
-                                style={{
                                     height: 10,
                                     width: "100%",
                                 }}
@@ -191,7 +174,7 @@ export default class Home extends Component {
                 {...this.props}
                 textHeader={STRING.HEADER.NAME.PERSIONAL}
                 textDate={'Sunday, Feb 5, 2018'}
-                numTab={3}
+                numTab={2}
                 onIndexChange={this._onIndexChange}
                 renderScene={this.renderScene()}
                 routes={this.state.routes}

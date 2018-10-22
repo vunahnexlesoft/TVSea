@@ -30,25 +30,32 @@ const statusBarHeight = Platform.select({
 });
 const headerHeight = 84 - statusBarHeight;
 
-export default class Home extends Component {
+export default class DiscoverView extends Component {
     constructor(props) {
         super(props);
         this.state = {
             index: STRING.HEADER.ROUTE_DISCOVER[0].id,
             routes: STRING.HEADER.ROUTE_DISCOVER,
+            isOpen: false
         };
         this.renderScene = this.renderScene.bind(this);
         this._onIndexChange = this._onIndexChange.bind(this);
     }
-    componentDidMount(){
-        this.props.getTopMovie.fetchingDataTopMovieByCategory('Phim lẻ');
+
+    componentDidMount() {
+        const {moviesAction: {getDataTopMovie, getAllDataGenres}} = this.props;
+        getDataTopMovie({page: 1, size: 6, category: 'Phim le'});
+        getAllDataGenres({page: 1, size: 8});
     }
+
     _onIndexChange(item) {
         LayoutAnimation.easeInEaseOut();
         this.setState({index: item.id});
     }
+
     renderScene() {
-        const {data, isLoading} = this.props;
+        const {dataTopMovie, dataAllGenres, isAllGenresLoading} = this.props;
+        console.log('aaa', isAllGenresLoading);
         switch (this.state.index) {
             case 1:
                 return (
@@ -57,10 +64,9 @@ export default class Home extends Component {
                                      children={
                                          <CarouselView
                                              showsPagination
-                                             loop={true}
-                                             data={data}
+                                             data={dataTopMovie}
                                              renderItem={({item, index}) =>
-                                                 <HighlightCarouselItem item={item}/>
+                                                 <HighlightCarouselItem item={item} onClick={() => this.props.navigation.navigate('MoviesDetail',{movie: item})}/>
                                              }/>}
                         />
                         <WrapperView heading={'Phim mới cập nhật'}
@@ -73,9 +79,9 @@ export default class Home extends Component {
                                                      width: "100%",
                                                  }}
                                              />}
-                                             data={data}
+                                             data={dataTopMovie}
                                              renderItem={({item, index}) =>
-                                                 <ItemMovieNew item={item}/>
+                                                 <ItemMovieNew item={item}  onClick={() => this.props.navigation.navigate('MoviesDetail',{movie: item})}/>
                                              }/>}
                         />
                         <WrapperView heading={'Thể loại'}
@@ -89,7 +95,7 @@ export default class Home extends Component {
                                                      width: "100%",
                                                  }}
                                              />}
-                                             data={data}
+                                             data={dataAllGenres}
                                              renderItem={({item, index}) =>
                                                  <ItemGenres item={item}/>
                                              }/>}
@@ -103,7 +109,8 @@ export default class Home extends Component {
                                      children={
                                          <CarouselView
                                              showsPagination
-                                             data={data}
+                                             loop={true}
+                                             data={dataTopMovie}
                                              renderItem={({item, index}) =>
                                                  <HighlightCarouselItem item={item}/>
                                              }/>}
@@ -118,7 +125,7 @@ export default class Home extends Component {
                                                      width: "100%",
                                                  }}
                                              />}
-                                             data={data}
+                                             data={dataTopMovie}
                                              renderItem={({item, index}) =>
                                                  <ItemMovieNew item={item}/>
                                              }/>}
@@ -134,7 +141,7 @@ export default class Home extends Component {
                                                      width: "100%",
                                                  }}
                                              />}
-                                             data={data}
+                                             data={dataAllGenres}
                                              renderItem={({item, index}) =>
                                                  <ItemGenres item={item}/>
                                              }/>}
@@ -148,7 +155,8 @@ export default class Home extends Component {
                                      children={
                                          <CarouselView
                                              showsPagination
-                                             data={data}
+                                             loop={true}
+                                             data={dataTopMovie}
                                              renderItem={({item, index}) =>
                                                  <HighlightCarouselItem item={item}/>
                                              }/>}
@@ -163,7 +171,7 @@ export default class Home extends Component {
                                                      width: "100%",
                                                  }}
                                              />}
-                                             data={data}
+                                             data={dataTopMovie}
                                              renderItem={({item, index}) =>
                                                  <ItemMovieNew item={item}/>
                                              }/>}
@@ -179,7 +187,7 @@ export default class Home extends Component {
                                                      width: "100%",
                                                  }}
                                              />}
-                                             data={data}
+                                             data={dataAllGenres}
                                              renderItem={({item, index}) =>
                                                  <ItemGenres item={item}/>
                                              }/>}
@@ -193,7 +201,8 @@ export default class Home extends Component {
                                      children={
                                          <CarouselView
                                              showsPagination
-                                             data={data}
+                                             loop={true}
+                                             data={dataTopMovie}
                                              renderItem={({item, index}) =>
                                                  <HighlightCarouselItem item={item}/>
                                              }/>}
@@ -208,7 +217,7 @@ export default class Home extends Component {
                                                      width: "100%",
                                                  }}
                                              />}
-                                             data={data}
+                                             data={dataTopMovie}
                                              renderItem={({item, index}) =>
                                                  <ItemMovieNew item={item}/>
                                              }/>}
@@ -224,7 +233,7 @@ export default class Home extends Component {
                                                      width: "100%",
                                                  }}
                                              />}
-                                             data={data}
+                                             data={dataAllGenres}
                                              renderItem={({item, index}) =>
                                                  <ItemGenres item={item}/>
                                              }/>}

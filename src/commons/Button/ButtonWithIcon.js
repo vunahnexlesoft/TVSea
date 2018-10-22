@@ -29,19 +29,19 @@ const ButtonWithIcon = ({nameIcon, icoStyle, style, buttonText, styleText, onCli
     };
     return (
         <TouchableOpacity style={[buttonStyle, style]} onPress={onClick}>
-                {!nameIcon ? (null) : (<Icon name={nameIcon} style={[iconStyle, icoStyle]}/>)}
-                <Text style={[textStyle, styleText]}>{buttonText}</Text>
+            {!nameIcon ? (null) : (<Icon name={nameIcon} style={[iconStyle, icoStyle]}/>)}
+            {!buttonText ? (null) : (<Text style={[textStyle, styleText]}>{buttonText}</Text>)}
         </TouchableOpacity>
 
     );
-}
+};
 
 ButtonWithIcon.defaultProps = {
     name: '',
 };
 ButtonWithIcon.propTypes = {
     nameIcon: PropTypes.string,
-    buttonText: PropTypes.string.isRequired,
+    buttonText: PropTypes.string,
     onClick: PropTypes.func,
     icoStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     style: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
