@@ -135,6 +135,32 @@ export function dataFetchingRelatedMovieFail() {
     }
 }
 
+export function dataFetchingSearchMovie() {
+    return {
+        type: NAME_ACTION.GET_SEARCH_MOVIES_FETCHING
+    };
+}
+
+export function dataFetchingSearchMovieSuccess(data) {
+    return {
+        type: NAME_ACTION.GET_SEARCH_MOVIES_SUCCESS,
+        data,
+    }
+}
+
+export function dataFetchingSearchMovieFail() {
+    return {
+        type: NAME_ACTION.GET_SEARCH_MOVIES_FAIL,
+    }
+}
+
+export function updateSearchHistory(data) {
+    return {
+        type: NAME_ACTION.UPDATE_HISTORY_SEARCH_MOVIE,
+        data
+    }
+}
+
 export function resetStateDataMovies(data) {
     return {
         type: NAME_ACTION.RESET_STATE_MOVIES,
@@ -211,6 +237,22 @@ export function getDataRelatedMovie(params) {
                 dispatch(dataFetchingRelatedMovieSuccess(res.data));
             }else{
                 dispatch(dataFetchingRelatedMovieFail());
+            }
+        })
+    }
+}
+
+export function getDataSearchMovie(params) {
+    return (dispatch) => {
+        var url = URL.base_url + URL.GET_SERACH_MOVIES;
+        let token = store.getState().userLoginReducer.token;
+        dispatch(dataFetchingSearchMovie());
+        restClient.excuteAPI("get",url,token,params).then(res =>{
+            console.log(res,params);
+            if(res.success){
+                dispatch(dataFetchingSearchMovieSuccess(res.data));
+            }else{
+                dispatch(dataFetchingSearchMovieFail());
             }
         })
     }

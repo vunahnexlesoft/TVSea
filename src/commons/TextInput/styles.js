@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import global from "../../Styles/global";
+import global from "../../themes/global";
 
 const {height, width} = Dimensions.get('window');
 
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     divider: {
         height: 33,
         width: 1,
-        backgroundColor: global.colorA5,
+        backgroundColor: global.darkBlue,
         marginLeft: 10,
         marginRight: 10,
         alignSelf:'center'

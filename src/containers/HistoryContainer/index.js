@@ -1,4 +1,4 @@
-import NotificationView from '../../views/HistoryView';
+import HistoryView from '../../views/HistoryView';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as moviesAction from "../../redux/ActionCreator/actionMovieCreator";
@@ -23,6 +23,6 @@ function mapDispatchToProps(dispatch) {
         moviesAction: bindActionCreators(moviesAction, dispatch),
     };
 }
-export default connect(mapStateToProps,mapDispatchToProps)(NotificationView);
+export default connect(mapStateToProps,mapDispatchToProps)(HistoryView);
 
 

@@ -44,6 +44,12 @@ export default {
             data:[],
             isLoading: false,
             isError: false,
+        },
+        search:{
+            data:[],
+            history:[],
+            isLoading: false,
+            isError: false,
         }
     })
 };

@@ -4,23 +4,23 @@ import {TextInput,View} from "react-native";
 import PropTypes from 'prop-types';
 import TextComponent from "../Text/Text";
 import styles from './styles'
-import global from "../../Styles/global";
+import global from "../../themes/global";
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multiline,value, placeholder, placeholderTextColor, style,
                                 onChangeText,autoCapitalize,secureTextEntry,
-                                returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning}) => {
+                                returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning,styleForm}) => {
     const borderColor = warning ? styles.borderWarning : null;
     const height = multiline ? 100 : 40;
     return (
         <View style={borderColor}>
-            <View style ={{
+            <View style ={[{
                 backgroundColor: 'white',
                 borderRadius: 6,
                 height:height,
                 flexDirection:'row'
-            }}>
-                <Icon name = {nameIcon} style={{marginLeft:10,alignSelf: 'center',fontSize:30, color: global.darkBlue}}/>
+            },styleForm]}>
+                <Icon name = {nameIcon} style={{marginLeft:10,alignSelf: 'center',fontSize:30, color: global.darkBlue, marginTop:2}}/>
                 {
                     multiline ?  <View style={[styles.divider, {height: 145}]}/> : <View style={styles.divider}/>
                 }
@@ -29,7 +29,7 @@ const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multil
                     ref={ref}
                     value={value}
                     placeholder={placeholder}
-                    placeholderTextColor={placeholderTextColor ? global.colorA5 :placeholderTextColor}
+                    placeholderTextColor={!placeholderTextColor ? global.colorA5 : placeholderTextColor}
                     style={[{height, width: '75%'},style]}
                     onChangeText={onChangeText}
                     underlineColorAndroid={"rgba(255, 255, 255, 0)"}
@@ -51,7 +51,7 @@ const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multil
             {
                 warning ? <View style={styles.footerWarningWrapper}>
                     <TextComponent text={'Số điện thoại không đúng'} style={styles.textFooterWarning}/>
-                </View> : <View style={{height:20}}/>
+                </View> : <View style={{height:10}}/>
             }
         </View>
     );
@@ -72,6 +72,7 @@ TextSingleInput.propTypes = {
     value: PropTypes.string,
     placeholder: PropTypes.string,
     style: PropTypes.oneOfType([PropTypes.number,PropTypes.object,PropTypes.array]),
+    styleForm: PropTypes.oneOfType([PropTypes.number,PropTypes.object,PropTypes.array]),
     onChangeText: PropTypes.func,
     autoCapitalize: PropTypes.string,
     secureTextEntry: PropTypes.bool,

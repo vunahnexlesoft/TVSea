@@ -53,6 +53,27 @@ export default function moviesReducer(state = defaultState.movies, action) {
             return state.merge({...state, recommend: {data: action.data, isLoading: false, isError: false}});
         case NAME_ACTION.GET_RECOMMEND_MOVIES_FAIL:
             return state.merge({...state, recommend: {data: [], isLoading: false, isError: true}});
+        //Search Movie
+        case NAME_ACTION.GET_SEARCH_MOVIES_FETCHING:
+            return state.setIn(['search', 'isLoading'], true);
+        case NAME_ACTION.GET_SEARCH_MOVIES_SUCCESS:
+            return state.merge({...state, search: {...state.search, data: action.data, isLoading: false, isError: false}});
+        case NAME_ACTION.GET_SEARCH_MOVIES_FAIL:
+            return state.merge({...state, search: {...state.search, data: [], isLoading: false, isError: true}});
+        case NAME_ACTION.UPDATE_HISTORY_SEARCH_MOVIE:
+            let updateObject = {};
+            if(action.data.type === 'ADD_SEARCH_HISTORY_MOVIE'){
+                console.log(state.search.history);
+                if(action.data.name && state.search.history.indexOf(action.data.name) < -1){
+                    updateObject = state.search.history.concat(action.data);
+                }
+            }else{
+                let removeFromArray = [...state.search.history];
+                let index = removeFromArray.indexOf(action.data.name);
+                removeFromArray.splice(index, 1);
+                updateObject = removeFromArray;
+            }
+            return state.setIn(['search', 'history'], updateObject);
         case NAME_ACTION.RESET_STATE_MOVIES:
             return state.merge({...state, [action.data.key] : action.data.value});
         default:
