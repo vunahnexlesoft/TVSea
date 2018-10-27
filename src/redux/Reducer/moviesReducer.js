@@ -61,19 +61,20 @@ export default function moviesReducer(state = defaultState.movies, action) {
         case NAME_ACTION.GET_SEARCH_MOVIES_FAIL:
             return state.merge({...state, search: {...state.search, data: [], isLoading: false, isError: true}});
         case NAME_ACTION.UPDATE_HISTORY_SEARCH_MOVIE:
-            let updateObject = {};
+            let updateObject = [];
             if(action.data.type === 'ADD_SEARCH_HISTORY_MOVIE'){
-                console.log(state.search.history);
-                if(action.data.name && state.search.history.indexOf(action.data.name) < -1){
-                    updateObject = state.search.history.concat(action.data);
+                if(action.data.name && state.search.history.indexOf(action.data.name) <= -1){
+                    updateObject = state.search.history.concat(action.data.name);
+                    return state.setIn(['search', 'history'], updateObject);
                 }
-            }else{
+            }else if(action.data.type === 'REMOVE_SEARCH_HISTORY_MOVIE'){
                 let removeFromArray = [...state.search.history];
                 let index = removeFromArray.indexOf(action.data.name);
                 removeFromArray.splice(index, 1);
                 updateObject = removeFromArray;
+                return state.setIn(['search', 'history'], updateObject);
             }
-            return state.setIn(['search', 'history'], updateObject);
+            return state;
         case NAME_ACTION.RESET_STATE_MOVIES:
             return state.merge({...state, [action.data.key] : action.data.value});
         default:

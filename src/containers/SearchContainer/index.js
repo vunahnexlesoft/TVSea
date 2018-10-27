@@ -9,6 +9,7 @@ function mapStateToProps(state) {
         isSearchLoading: search.isLoading,
         isSearchError: search.isError,
         dataHistory: search.history,
+        search: state.moviesReducer.search
     };
 }
 function mapDispatchToProps(dispatch) {

@@ -32,7 +32,6 @@ export default class HomeView extends Component {
     }
     renderScene() {
         const{dataPhimle, isPhimleLoading} = this.props;
-        console.log(dataPhimle, isPhimleLoading)
         switch (this.state.index) {
             case 1:
                 return (

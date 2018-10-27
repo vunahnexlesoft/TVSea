@@ -13,7 +13,7 @@ import TextSingleInput from "../../commons/TextInput/TextSingleInput";
 import ItemHistorySearch from "../../modules/ItemHistorySearch";
 import ItemMovieNew from "../../modules/ItemMovieNew";
 import EmptyView from "../../modules/EmptyView";
-
+import * as UTIL_FUCTION from "../../util";
 const {height, width} = Dimensions.get('window');
 
 export default class SearchView extends Component {
@@ -25,33 +25,50 @@ export default class SearchView extends Component {
         };
         this.addHistoryTimeOut = null;
         this.onChangeTextToSearch = this.onChangeTextToSearch.bind(this);
+        this.onClickHistoryItem = this.onClickHistoryItem.bind(this);
+        this.onEndEditing = this.onEndEditing.bind(this);
     }
 
     onChangeTextToSearch(value) {
-        const {moviesAction} = this.props;
-        if (value.length > 3) {
-            moviesAction.getDataSearchMovie({query: value});
-        }
+        const {moviesAction,search} = this.props;
+        console.log('onChangeText',UTIL_FUCTION.convertText(value));
 
+        if (value.length >= 3) {
+            moviesAction.getDataSearchMovie({query: UTIL_FUCTION.convertText(value)});
+        }else if (value.length <=0){
+            moviesAction.resetStateDataMovies({key: "search" ,value: {...search, data: []}})
+        }
         this.setState({
             searchText: value,
             changeText: value.length > 0
         });
+    }
+
+    onEndEditing(){
+        const {moviesAction} = this.props;
         if(this.addHistoryTimeOut){
             clearTimeout(this.addHistoryTimeOut);
             this.addHistoryTimeOut = null;
         }
         this.addHistoryTimeOut = setTimeout(()=>{
-            console.log('ADD HISTORY')
-            moviesAction.updateSearchHistory({type :'ADD_SEARCH_HISTORY_MOVIE', name : value});
+            if(this.state.searchText.length >= 3){
+                moviesAction.updateSearchHistory({type :'ADD_SEARCH_HISTORY_MOVIE', name : this.state.searchText});
+            }
             clearTimeout(this.addHistoryTimeOut);
             this.addHistoryTimeOut = null;
-        },5000);
+        },200);
     }
 
+    onClickHistoryItem(value){
+        this.setState({
+            searchText : value,
+            changeText : true
+        },()=>{
+            this.props.moviesAction.getDataSearchMovie({query: UTIL_FUCTION.convertText(value)});
+        })
+    }
     render() {
         const {dataSearch, dataHistory} = this.props;
-        console.log(dataSearch,dataHistory);
         return (
             <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
                 <Header date={'Chủ nhật'} heading={STRING.HEADER.NAME.SEARCH}/>
@@ -66,27 +83,31 @@ export default class SearchView extends Component {
                     }}
                                      value={this.state.searchText}
                                      onChangeText={this.onChangeTextToSearch}
+                                     onEndEditing={this.onEndEditing}
                                      placeholder={'Tìm kiếm ngay'}
                                      placeholderTextColor={global.darkBlue}
                                      style={{fontSize: global.sizeP18, color: global.colorFF}}
                                      nameIcon={'ios-search'}/>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View style={{
-                            height: 8,
-                            width: 8,
-                            borderRadius: 4,
-                            backgroundColor: global.yellowColor,
-                            marginRight: 5,
-                            alignSelf: 'center'
-                        }}/>
-                        <TextComponent text={'Lịch sử'}
-                                       size={global.sizeP20}
-                                       style={{fontWeight: '500'}}
-                                       color={global.colorFF}/>
-                    </View>
+
+                    {
+                        this.state.searchText.length <= 0 ? <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <View style={{
+                                height: 8,
+                                width: 8,
+                                borderRadius: 4,
+                                backgroundColor: global.yellowColor,
+                                marginRight: 5,
+                                alignSelf: 'center'
+                            }}/>
+                            <TextComponent text={'Lịch sử'}
+                                           size={global.sizeP20}
+                                           style={{fontWeight: '500'}}
+                                           color={global.colorFF}/>
+                        </View> : null
+                    }
                     {
                         dataHistory.length > 0 || this.state.changeText ?
-                            <VerticalListView data={this.state.changeText ? dataSearch : dataHitory}
+                            <VerticalListView data={this.state.changeText ? dataSearch : dataHistory}
                                               contentContainerStyle={{paddingTop: height / 50}}
                                               ItemSeparatorComponent={() => <View
                                                   style={{
@@ -99,7 +120,7 @@ export default class SearchView extends Component {
                                                           <ItemMovieNew item={item} isNew/>
                                                       )
                                                       :
-                                                      (<ItemHistorySearch item={item}/>);
+                                                      (<ItemHistorySearch item={item} onClick={this.onClickHistoryItem.bind(this, item)}/>);
                                               }}/>
                             : <EmptyView nameIcon={'ios-pulse'} textDes={'Chưa có lịch sử tìm kiếm'}/>
                     }
