@@ -8,3 +8,8 @@ export const convertText = (value)=>{
         .replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y")
         .replace(/đ/g,"d");
 };
+
+export const navigateToDetail = (action, navigation, data) =>{
+    navigation.push('MoviesDetail',{movie: data.movie});
+    action.addUserHistoryMovies(data);
+};

@@ -15,7 +15,7 @@ class VerticalListView extends Component {
                 style={[{flex:1}, style]}
                 data={data}
                 scrollEventThrottle={1}
-                removeClippedSubviews={true}
+                removeClippedSubviews={false}
                 nestedScrollEnabled={true}
                 horizontal={horizontal}
                 numColumns={num === 2 ? 2 : 1}

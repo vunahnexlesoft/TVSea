@@ -5,6 +5,7 @@ import global from "../../themes/global";
 import * as STRING from '../../themes/string';
 import Header from "../../modules/Header";
 import TabItems from "../../modules/TabItems";
+
 const HeaderAnimated = Animated.createAnimatedComponent(Header);
 const {height, width} = Dimensions.get('window');
 const HEADER_MAX_HEIGHT = 300;
@@ -21,6 +22,7 @@ export default class ViewTabScrollAnimated extends Component {
         super(props);
         this.scrollY = new Animated.Value(0);
     }
+
     render() {
         const headerTranslate = this.scrollY.interpolate({
             inputRange: [0, 70],
@@ -37,16 +39,17 @@ export default class ViewTabScrollAnimated extends Component {
             outputRange: [0, 30],
             extrapolate: 'clamp',
         });
-        const{textHeader, textDate, numTab,renderScene,routes,index,onIndexChange} = this.props;
+        const {textHeader, numTab, renderScene, routes, index, onIndexChange} = this.props;
         return (
-            <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
-                <Animated.View style={{zIndex: 0,position: 'absolute',
+            <View key={textHeader} style={{flex: 1, backgroundColor: global.backgroundColor}}>
+                <Animated.View style={{
+                    zIndex: 0, position: 'absolute',
                     top: 0,
                     left: 0,
                     right: 0,
-                    overflow: 'hidden', opacity: Opacity, transform :[{translateY: animatedYHeader}]}}>
-                    <HeaderAnimated date={textDate}
-                                    heading={textHeader}/>
+                    overflow: 'hidden', opacity: Opacity, transform: [{translateY: animatedYHeader}]
+                }}>
+                    <HeaderAnimated heading={textHeader}/>
                 </Animated.View>
 
                 <Animated.View style={[{zIndex: 2},
@@ -76,7 +79,7 @@ export default class ViewTabScrollAnimated extends Component {
                         style={{flex: 1}}
                         showsVerticalScrollIndicator={false}
                         scrollEventThrottle={16}
-                        contentContainerStyle={{paddingTop: height/ 15}}
+                        contentContainerStyle={{paddingTop: height / 15}}
                         removeClippedSubviews={false}
                         onScroll={Animated.event(
                             [

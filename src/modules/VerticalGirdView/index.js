@@ -15,7 +15,7 @@ class VerticalGirdView extends Component {
                 style={style}
                 data={data}
                 scrollEventThrottle={1}
-                removeClippedSubviews={true}
+                removeClippedSubviews={false}
                 nestedScrollEnabled={true}
                 horizontal={false}
                 numColumns={numColumns}

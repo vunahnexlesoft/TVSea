@@ -5,11 +5,12 @@ import Text from '../../commons/Text/Text';
 import global from "../../themes/global";
 import IconButton from "../../commons/Button/IconButton";
 import PropTypes from "prop-types";
-
+import moment from 'moment';
 const {height, width} = Dimensions.get('window');
 class Header extends Component{
     render(){
-        const {date, heading,styleHeader}=this.props;
+        const {heading,styleHeader}=this.props;
+        let date = moment(new Date()).format("dddd, MMM DD, YYYY");
         return (
                 <View style={[{
                     justifyContent: 'space-between',

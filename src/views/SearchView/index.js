@@ -31,8 +31,6 @@ export default class SearchView extends Component {
 
     onChangeTextToSearch(value) {
         const {moviesAction,search} = this.props;
-        console.log('onChangeText',UTIL_FUCTION.convertText(value));
-
         if (value.length >= 3) {
             moviesAction.getDataSearchMovie({query: UTIL_FUCTION.convertText(value)});
         }else if (value.length <=0){
@@ -46,6 +44,7 @@ export default class SearchView extends Component {
 
     onEndEditing(){
         const {moviesAction} = this.props;
+        console.log('onSubmitEditing');
         if(this.addHistoryTimeOut){
             clearTimeout(this.addHistoryTimeOut);
             this.addHistoryTimeOut = null;
@@ -117,7 +116,7 @@ export default class SearchView extends Component {
                                               />}
                                               renderItem={({item, index}) => {
                                                   return this.state.changeText ? (
-                                                          <ItemMovieNew item={item} isNew/>
+                                                          <ItemMovieNew item={item} isNew onClick={() => this.props.navigation.navigate('MoviesDetail',{movie: item})}/>
                                                       )
                                                       :
                                                       (<ItemHistorySearch item={item} onClick={this.onClickHistoryItem.bind(this, item)}/>);

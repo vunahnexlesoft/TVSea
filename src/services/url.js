@@ -6,6 +6,11 @@ export const GET_DETAIL_MOVIES_BY_ID ='movies/detail';
 export const GET_ALL_GENRES = 'movies/genres/total';
 export const GET_RECOMMEND_MOVIES = 'movies/related';
 export const GET_SERACH_MOVIES = 'movies/search';
+export const GET_USER_HISTORY_MOVIES = 'movies/history';
+export const GET_USER_LIKE_MOVIES = 'movies/like';
+export const POST_USER_LIKE_OR_HISTORY_MOVIES = 'movies/insertHistoryOrLike';
+export const PUT_REMOVE_USER_LIKE_OR_HISTORY_MOVIES = 'movies/removeMovie';
+
 //USER
 export const GET_USER_HISTORY = 'user/history';
 export const GET_USER_LIKE = 'user/like';

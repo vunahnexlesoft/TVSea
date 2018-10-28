@@ -1,28 +1,27 @@
 import HistoryView from '../../views/HistoryView';
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as moviesAction from "../../redux/ActionCreator/actionMovieCreator";
+import * as usersAction from "../../redux/ActionCreator/actionLoginCreators";
+
 function mapStateToProps(state) {
-    const {category} = state.moviesReducer;
+    const {like, history, userInfo} = state.userLoginReducer;
     return {
-        dataPhimle: category.phimle.data,
-        dataPhimbo: category.phimbo.data,
-        dataTvshow: category.tvshow.data,
-
-        isPhimleLoading: category.phimle.isLoading,
-        isPhimboLoading: category.phimbo.isLoading,
-        isTvshowLoading: category.tvshow.isLoading,
-
-        isPhimleError: category.phimle.isError,
-        isPhimboError: category.phimbo.isError,
-        isTvshowError: category.tvshow.isError,
+        dataHistory: history.data,
+        isHistoryLoading: history.isLoading,
+        isHistoryError: history.isError,
+        dataLike: like.data,
+        isLikeLoading: like.isLoading,
+        isLikeError: like.isError,
+        userInfo
     };
 }
+
 function mapDispatchToProps(dispatch) {
     return {
-        moviesAction: bindActionCreators(moviesAction, dispatch),
+        usersAction: bindActionCreators(usersAction, dispatch),
     };
 }
-export default connect(mapStateToProps,mapDispatchToProps)(HistoryView);
+
+export default connect(mapStateToProps, mapDispatchToProps)(HistoryView);
 
 

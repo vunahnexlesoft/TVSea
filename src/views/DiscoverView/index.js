@@ -17,6 +17,8 @@ import Carousel from "react-native-snap-carousel";
 import ItemMovieNew from "../../modules/ItemMovieNew";
 import ItemGenres from "../../modules/ItemGenres";
 import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
+import * as restClient from "../../services/restClient";
+import * as UTIL_FUCTION from "../../util";
 
 const HeaderAnimated = Animated.createAnimatedComponent(Header);
 
@@ -40,6 +42,7 @@ export default class DiscoverView extends Component {
         };
         this.renderScene = this.renderScene.bind(this);
         this._onIndexChange = this._onIndexChange.bind(this);
+        this._navigateToDetail = this._navigateToDetail.bind(this);
     }
 
     componentDidMount() {
@@ -51,6 +54,21 @@ export default class DiscoverView extends Component {
     _onIndexChange(item) {
         LayoutAnimation.easeInEaseOut();
         this.setState({index: item.id});
+    }
+
+    _navigateToDetail(movie) {
+        //{type: LIKE : HISTORY, actionType: ADD : REMOVE, MOVIE : DATAMOVIE , PARAMS: IDUSER, IDMOVIE, KEY: 1 HISTORY, 2 LIKE}
+        let data = {
+            movie,
+            type: 'HISTORY',
+            actionType: 'ADD',
+            params: {
+                idMovie: movie.id,
+                idUser: 1,
+                Key: 1
+            }
+        };
+        UTIL_FUCTION.navigateToDetail(this.props.usersAction, this.props.navigation, data);
     }
 
     renderScene() {
@@ -66,7 +84,8 @@ export default class DiscoverView extends Component {
                                              showsPagination
                                              data={dataTopMovie}
                                              renderItem={({item, index}) =>
-                                                 <HighlightCarouselItem item={item} onClick={() => this.props.navigation.navigate('MoviesDetail',{movie: item})}/>
+                                                 <HighlightCarouselItem item={item}
+                                                                        onClick={() => this._navigateToDetail(item)}/>
                                              }/>}
                         />
                         <WrapperView heading={'Phim mới cập nhật'}
@@ -81,7 +100,8 @@ export default class DiscoverView extends Component {
                                              />}
                                              data={dataTopMovie}
                                              renderItem={({item, index}) =>
-                                                 <ItemMovieNew item={item}  onClick={() => this.props.navigation.navigate('MoviesDetail',{movie: item})}/>
+                                                 <ItemMovieNew item={item}
+                                                               onClick={() => this._navigateToDetail(item)}/>
                                              }/>}
                         />
                         <WrapperView heading={'Thể loại'}
@@ -250,7 +270,6 @@ export default class DiscoverView extends Component {
             <ViewTabScrollAnimated
                 {...this.props}
                 textHeader={STRING.HEADER.NAME.DISCOVER}
-                textDate={'Sunday, Feb 5, 2018'}
                 numTab={4}
                 onIndexChange={this._onIndexChange}
                 renderScene={this.renderScene()}

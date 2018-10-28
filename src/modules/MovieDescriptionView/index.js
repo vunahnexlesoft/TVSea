@@ -26,7 +26,7 @@ class MovieDescriptionView extends Component {
     render() {
         const {title, partAndEpisode, releaseDate, languageAndRuntime, overview, style} = this.props;
         return (
-            <View style={[{flex: 1}, style]}>
+            <View style={[{flex: 1, zIndex: 1}, style]}>
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                     <TextComponent color={global.colorFF}
                                    size={global.sizeP18}

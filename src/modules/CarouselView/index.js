@@ -57,12 +57,8 @@ class CarouselView extends Component{
                     renderItem={renderItem}
                     onSnapToItem={(index) => this.setState({index})}
                     containerCustomStyle={{flex:1,overflow: 'hidden'}}
-                    //contentContainerCustomStyle={{alignItems:'center'}}
-                    //containerCustomStyle={styles.slider}
-                    activeSlideAlignment={'center'}
-                    activeAnimationType={'spring'}
                     contentContainerCustomStyle={{paddingVertical: 10}}
-                    inactiveSlideScale={0.9}
+                    inactiveSlideScale={1}
                     inactiveSlideOpacity={0.5}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}

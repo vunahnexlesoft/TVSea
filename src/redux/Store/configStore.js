@@ -4,10 +4,11 @@ import thunk from 'redux-thunk';
 import rootReducer from '../Reducer'
 import { AsyncStorage } from 'react-native'
 import { persistStore, persistReducer } from 'redux-persist'
+
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
-    whitelist: ['login']
+    whitelist: ['userInfo']
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export default function configureStore(){

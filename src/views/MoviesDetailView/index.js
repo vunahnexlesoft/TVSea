@@ -31,6 +31,7 @@ class MoviesDetailView extends Component {
         this._renderHeader = this._renderHeader.bind(this);
         this._renderDescription = this._renderDescription.bind(this);
         this._renderSubDescription = this._renderSubDescription.bind(this);
+        this._onClickToLike = this._onClickToLike.bind(this);
     }
 
     componentDidMount() {
@@ -72,11 +73,42 @@ class MoviesDetailView extends Component {
         //resetStateDataMovies({key: "recommend", value: {data: [], isLoading: false, isError: false}});
         navigation.pop();
     }
-
+    _onClickToLike(){
+        const {
+            usersAction,
+            dataLike,
+            dataDetail: {
+                info,
+                language,
+            }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
+        } = this.props;
+        let check = !!dataDetail && !!dataDetail.info && dataLike.map((e) => {return e.id}).indexOf(info.id) <= -1;
+        let data = {
+            movie: info,
+            type: 'LIKE',
+            actionType: check ? 'ADD' : 'REMOVE',
+            params: {
+                idMovie: info.id,
+                idUser: 1,
+                Key: 2
+            }
+        };
+        usersAction.addUserHistoryMovies(data);
+    }
     _renderHeader() {
         let {backdrop_path} = this.props.navigation.state.params.movie;
+        const {
+            dataLike,
+            usersAction,
+            dataDetail: {
+                info,
+                language,
+            }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
+        } = this.props;
+        console.log(dataLike);
+        let check = !!dataDetail && !!dataDetail.info && dataLike.map((e) => {return e.id}).indexOf(info.id) <= -1;
         return (
-            <View style = {{flex:1, zIndex:1}}>
+            <View style={{flex: 1, zIndex: 2, height: height / 3 + 40 /2,}}>
                 <View style={{
                     height: height / 3,
                     width: null,
@@ -86,7 +118,7 @@ class MoviesDetailView extends Component {
                     top: 0,
                     left: 0,
                     right: 0,
-                    zIndex: 1
+                    zIndex: 2
                 }}/>
                 <ButtonWithIcon nameIcon={'ios-arrow-back-outline'}
                                 onClick={this.onGoBack}
@@ -101,11 +133,12 @@ class MoviesDetailView extends Component {
                                     paddingRight: 3,
                                     paddingTop: 2,
                                     flex: 1,
-                                    position: 'absolute', top: height/3 - 35/2, left: 10, zIndex: 1
+                                    elevation: 1,
+                                    position: 'absolute', top: height / 3 - 35 / 2, left: 10, zIndex: 2
                                 }}/>
-                <ButtonWithIcon nameIcon={'ios-heart-outline'}
-                                onClick={() => this.props.navigation.pop()}
-                                icoStyle={{fontSize: global.sizeP40, color: global.colorFF, margin: 0}}
+                <ButtonWithIcon nameIcon={check ? 'ios-heart-outline' : 'ios-heart'}
+                                onClick={this._onClickToLike}
+                                icoStyle={{fontSize: global.sizeP40, color: check ? global.colorFF : global.yellowColor, margin: 0}}
                                 style={{
                                     height: 35,
                                     width: 40,
@@ -116,7 +149,8 @@ class MoviesDetailView extends Component {
                                     paddingLeft: 3,
                                     paddingTop: 2,
                                     flex: 1,
-                                    position: 'absolute', top: height/3 - 40/2, right: 10, zIndex: 1
+                                    elevation: 1,
+                                    position: 'absolute', top: height / 3 - 40 / 2, right: 10, zIndex: 2
                                 }}/>
                 <ButtonWithIcon nameIcon={'ios-play-outline'}
                                 icoStyle={{fontSize: global.sizeP40, color: global.colorFF, margin: 0}}
@@ -125,26 +159,27 @@ class MoviesDetailView extends Component {
                                     width: 50,
                                     borderRadius: 40 / 3,
                                     backgroundColor: global.transparentWhite2,
-                                    borderWidth:1,
-                                    borderColor:global.colorFF,
+                                    borderWidth: 1,
+                                    borderColor: global.colorFF,
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    alignSelf:'center',
+                                    alignSelf: 'center',
                                     paddingLeft: 3,
                                     flex: 1,
-                                    position: 'absolute', top: height/3/2 -40/2,
-                                    zIndex: 1
+                                    position: 'absolute', top: height / 3 / 2 - 40 / 2,
+                                    zIndex: 2
                                 }}/>
                 <FastImage
-                    resizeMode={FastImage.resizeMode.cover}
-                    style={{height: height / 3, width: null}}
-                    source={{
-                        uri: backdrop_path,
-                        priority: FastImage.priority.normal,
-                    }}/>
+                resizeMode={FastImage.resizeMode.cover}
+                style={{height: height / 3, width: null,zIndex:0}}
+                source={{
+                uri: backdrop_path,
+                priority: FastImage.priority.normal,
+                }}/>
             </View>
         );
     }
+
     _renderDescription() {
         const {
             dataDetail: {
@@ -167,6 +202,7 @@ class MoviesDetailView extends Component {
                                   partAndEpisode={partAndEpisode}/>
         );
     }
+
     _renderSubDescription() {
         const {
             dataDetail: {
@@ -176,7 +212,7 @@ class MoviesDetailView extends Component {
             }, dataRecommend, isRecommendLoading, isRecommendError
         } = this.props;
         return (
-            <View style={{flex:1}}>
+            <View style={{flex: 1}}>
                 <WrapperView heading={'Thể loại'}
                              styleHeading={{fontSize: global.sizeP16}}
                              children={
@@ -221,19 +257,21 @@ class MoviesDetailView extends Component {
                                  dataRecommend.length > 0 ? (
                                          <VerticalGirdView data={dataRecommend}
                                                            renderItem={({item, index}) =>
-                                                               <ItemChannel uriImage={item.poster_path} onClick={() => this.props.navigation.push('MoviesDetail',{movie: item})}/>
+                                                               <ItemChannel uriImage={item.poster_path}
+                                                                            onClick={() => this.props.navigation.push('MoviesDetail', {movie: item})}/>
                                                            }/>) :
                                      <EmptyView nameIcon={'ios-pulse'} textDes={'Không có phim liên quan'}/>
                              }/>
             </View>
         );
     }
+
     render() {
         return (
             <View style={{flex: 1, backgroundColor: '#232635'}}>
-                <ScrollView style ={{flex: 1}} showsVerticalScrollIndicator={false}>
+                <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
                     {this._renderHeader()}
-                    <View style={{marginTop: 10, padding: 10, flex: 1, backgroundColor: '#232635',zIndex:0}}>
+                    <View style={{paddingLeft: 10,paddingRight:10, flex: 1, zIndex: 0}}>
                         {this._renderDescription()}
                         {this._renderSubDescription()}
                     </View>

@@ -11,6 +11,7 @@ import VerticalGirdView from "../../modules/VerticalGirdView"
 import ItemChannel from "../../modules/ItemChannel";
 import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
 import ItemMovieNew from "../../modules/ItemMovieNew";
+
 const {height, width} = Dimensions.get('window');
 
 export default class HistoryView extends Component {
@@ -23,21 +24,27 @@ export default class HistoryView extends Component {
         this.renderScene = this.renderScene.bind(this);
         this._onIndexChange = this._onIndexChange.bind(this);
     }
-    componentDidMount(){
-        const {moviesAction:{getDataMoviebyCategory}} = this.props;
-        getDataMoviebyCategory({page: 1, category:'Phim lẻ'});
+
+    componentDidMount() {
+        const {usersAction: {getDataUserHistoryMovie, getDataUserLikeMovie}, userInfo} = this.props;
+        getDataUserHistoryMovie({id: 1});
+        getDataUserLikeMovie({id: 1});
     }
+
     _onIndexChange(item) {
         LayoutAnimation.easeInEaseOut();
         this.setState({index: item.id});
     }
+
     renderScene() {
-        const{dataPhimle, isPhimleLoading} = this.props;
-        console.log(dataPhimle, isPhimleLoading);
+        const {dataHistory, dataLike} = this.props;
+        console.log(dataHistory, dataLike.map((e) => {
+            return e.id
+        }).indexOf(1));
         switch (this.state.index) {
-            case 1:
+            case 1: {
                 return (
-                    <View style={{flex: 1, marginTop: 10}}>
+                    <View key={1} style={{flex: 1, marginTop: 10}}>
                         <VerticalListView
                             ItemSeparatorComponent={() => <View
                                 style={{
@@ -45,32 +52,35 @@ export default class HistoryView extends Component {
                                     width: "100%",
                                 }}
                             />}
-                            data={dataPhimle}
+                            data={dataHistory}
                             renderItem={({item, index}) =>
                                 <ItemMovieNew isNew={false}
                                               item={item}/>
                             }/>
                     </View>
                 );
-            case 2:
+            }
+            case 2: {
                 return (
-                    <View style={{flex: 1,marginTop:10}}>
-                        <VerticalGirdView data={dataPhimle}
+                    <View key={1} style={{flex: 1, marginTop: 10}}>
+                        <VerticalGirdView data={dataLike}
                                           renderItem={({item, index}) =>
                                               <ItemChannel uriImage={item.poster_path}/>
                                           }/>
                     </View>
                 );
+            }
             default:
                 return null;
         }
     }
+
     render() {
+        console.log(this.props.dataHistory);
         return (
             <ViewTabScrollAnimated
                 {...this.props}
                 textHeader={STRING.HEADER.NAME.HISTORY}
-                textDate={'Sunday, Feb 5, 2018'}
                 numTab={2}
                 onIndexChange={this._onIndexChange}
                 renderScene={this.renderScene()}
