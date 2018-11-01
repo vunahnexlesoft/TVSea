@@ -54,19 +54,25 @@ export default class HistoryView extends Component {
                             />}
                             data={dataHistory}
                             renderItem={({item, index}) =>
-                                <ItemMovieNew isNew={false}
-                                              item={item}/>
+                                <ItemMovieNew isNew={false} item={item}/>
                             }/>
                     </View>
                 );
             }
             case 2: {
                 return (
-                    <View key={1} style={{flex: 1, marginTop: 10}}>
-                        <VerticalGirdView data={dataLike}
-                                          renderItem={({item, index}) =>
-                                              <ItemChannel uriImage={item.poster_path}/>
-                                          }/>
+                    <View key={2} style={{flex: 1, marginTop: 10}}>
+                        <VerticalListView
+                            ItemSeparatorComponent={() => <View
+                                style={{
+                                    height: 15,
+                                    width: "100%",
+                                }}
+                            />}
+                            data={dataLike}
+                            renderItem={({item, index}) =>
+                                <ItemMovieNew isNew={false} item={item}/>
+                            }/>
                     </View>
                 );
             }

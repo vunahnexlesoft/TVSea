@@ -24,4 +24,9 @@ export const HEADER = {
         {id: 1, name: 'Phim đã xem'},
         {id: 2, name: 'Phim đã thích'},
     ],
+    ROUTE_DETAIL: [
+        {id: 1, name: 'Thông tin'},
+        {id: 2, name: 'Số tập'},
+        {id: 2, name: 'Bình luận'},
+    ],
 };

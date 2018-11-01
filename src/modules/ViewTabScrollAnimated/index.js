@@ -52,7 +52,10 @@ export default class ViewTabScrollAnimated extends Component {
                     <HeaderAnimated heading={textHeader}/>
                 </Animated.View>
 
-                <Animated.View style={[{zIndex: 2},
+                <Animated.View style={[{zIndex: 2, elevation:  1,
+                    shadowColor: "#000",
+                    shadowOffset: {width: 0, height: 0},
+                    shadowOpacity: 0.3,},
                     {transform: [{translateY: headerTranslate}]},
                 ]}>
                     <TabItems

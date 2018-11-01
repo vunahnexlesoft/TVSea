@@ -13,6 +13,7 @@ export default  {
     grayLineColor: '#CCCCCC',
     blackTab: '#151114',
     backgroundColor: '#161823',
+    backgroundColor23: '#232635',
     fontPrimary: 14,
     fontTitle: 16,
     fontTitleSmall: 14,

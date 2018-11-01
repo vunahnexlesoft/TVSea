@@ -10,6 +10,7 @@ import VerticalListView from "../../modules/VerticalListView";
 import VerticalGirdView from "../../modules/VerticalGirdView"
 import ItemChannel from "../../modules/ItemChannel";
 import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
+import firebaseService from "../../services/firebase";
 const {height, width} = Dimensions.get('window');
 
 export default class HomeView extends Component {
@@ -27,6 +28,11 @@ export default class HomeView extends Component {
         getDataMoviebyCategory({page: 1, category:'Phim lẻ'});
     }
     _onIndexChange(item) {
+        let userInfo ={
+            uid: '2',
+            name: 'Huy Vu'
+        };
+        firebaseService.setUserInfo(userInfo);
         LayoutAnimation.easeInEaseOut();
         this.setState({index: item.id});
     }

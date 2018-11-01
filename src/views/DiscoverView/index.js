@@ -73,14 +73,14 @@ export default class DiscoverView extends Component {
 
     renderScene() {
         const {dataTopMovie, dataAllGenres, isAllGenresLoading} = this.props;
-        console.log('aaa', isAllGenresLoading);
         switch (this.state.index) {
-            case 1:
+            case 1: {
                 return (
                     <View style={{flex: 1, marginTop: 10}}>
                         <WrapperView heading={'Nổi bật'}
                                      children={
                                          <CarouselView
+                                             keyAccess={1}
                                              showsPagination
                                              data={dataTopMovie}
                                              renderItem={({item, index}) =>
@@ -101,6 +101,8 @@ export default class DiscoverView extends Component {
                                              data={dataTopMovie}
                                              renderItem={({item, index}) =>
                                                  <ItemMovieNew item={item}
+                                                               disabledClick
+                                                               disabledSwipe
                                                                onClick={() => this._navigateToDetail(item)}/>
                                              }/>}
                         />
@@ -122,12 +124,14 @@ export default class DiscoverView extends Component {
                         />
                     </View>
                 );
-            case 2:
+            }
+            case 2: {
                 return (
                     <View style={{flex: 1, marginTop: 10}}>
                         <WrapperView heading={'Nổi bật'}
                                      children={
                                          <CarouselView
+                                             keyAccess={2}
                                              showsPagination
                                              loop={true}
                                              data={dataTopMovie}
@@ -168,12 +172,15 @@ export default class DiscoverView extends Component {
                         />
                     </View>
                 );
-            case 3:
+            }
+
+            case 3: {
                 return (
                     <View style={{flex: 1, marginTop: 10}}>
                         <WrapperView heading={'Nổi bật'}
                                      children={
                                          <CarouselView
+                                             keyAccess={3}
                                              showsPagination
                                              loop={true}
                                              data={dataTopMovie}
@@ -214,12 +221,14 @@ export default class DiscoverView extends Component {
                         />
                     </View>
                 );
-            case 4:
+            }
+            case 4: {
                 return (
                     <View style={{flex: 1, marginTop: 10}}>
                         <WrapperView heading={'Nổi bật'}
                                      children={
                                          <CarouselView
+                                             keyAccess={4}
                                              showsPagination
                                              loop={true}
                                              data={dataTopMovie}
@@ -260,6 +269,7 @@ export default class DiscoverView extends Component {
                         />
                     </View>
                 );
+            }
             default:
                 return null;
         }

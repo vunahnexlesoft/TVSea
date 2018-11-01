@@ -36,9 +36,10 @@ const ItemGenres = ({onClick, item, type}) => {
         borderWidth:1,
         flex: 1
     };
+    let label = item.name_genre ? item.name_genre : 'Tập ' + item.part;
     return (
-        <TouchableOpacity style={type === 'discover' ? styleDiscover : styleDetail} onPress={onClick}>
-                <Text text={item.name_genre}
+        <TouchableOpacity activeOpacity={0.85} style={type === 'discover' ? styleDiscover : styleDetail} onPress={onClick}>
+                <Text text={label}
                       numberOfLines={type === 'discover' ? 2 : 1}
                       color={global.colorFF}
                       size={type === 'discover' ? global.sizeP18 : global.sizeP15}/>

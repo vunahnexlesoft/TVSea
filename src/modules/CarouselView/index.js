@@ -48,9 +48,9 @@ class CarouselView extends Component{
         );
     }
     render(){
-        const {data,showsPagination,renderItem}=this.props;
+        const {data,showsPagination,renderItem,keyAccess}=this.props;
         return (
-            <View style={{flex:1}}>
+            <View key= {keyAccess} style={{flex:1}}>
                 <Carousel
                     {...this.props}
                     data={data}
@@ -78,6 +78,7 @@ CarouselView.propTypes = {
     data: PropTypes.array,
     showsPagination: PropTypes.bool,
     renderItem: PropTypes.func,
+    keyAccess:PropTypes.number
 };
 
 export default CarouselView;

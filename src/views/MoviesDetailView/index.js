@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Dimensions, ScrollView} from 'react-native';
+import {View, Dimensions, ScrollView, Animated, Platform, StatusBar} from 'react-native';
 import global from "../../themes/global";
 import PropTypes from "prop-types";
 import Video from 'react-native-video';
@@ -21,17 +21,44 @@ import * as STRING from "../../themes/string";
 import {dataFetchingCategory} from "../../redux/ActionCreator/actionMovieCreator";
 import EmptyView from "../../modules/EmptyView";
 import MovieDescriptionView from "../../modules/MovieDescriptionView";
-
+import {
+    BallIndicator,
+    BarIndicator,
+    DotIndicator,
+    MaterialIndicator,
+    PacmanIndicator,
+    PulseIndicator,
+    SkypeIndicator,
+    UIActivityIndicator,
+    WaveIndicator,
+} from 'react-native-indicators';
+import TabItems from "../../modules/TabItems";
 const {height, width} = Dimensions.get('window');
+const statusBarHeight = Platform.select({
+    ios: 24,
+    android: StatusBar.currentHeight
+});
+const HEADER_MAX_HEIGHT = height / 2 + 85;
+const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
+
+const headerHeight = 84 - statusBarHeight;
+const FastImageAnimated = Animated.createAnimatedComponent(FastImage);
 
 class MoviesDetailView extends Component {
     constructor(props) {
         super(props);
+        this.state= {
+            isShowHeader: false,
+        };
         this.onGoBack = this.onGoBack.bind(this);
         this._renderHeader = this._renderHeader.bind(this);
         this._renderDescription = this._renderDescription.bind(this);
         this._renderSubDescription = this._renderSubDescription.bind(this);
         this._onClickToLike = this._onClickToLike.bind(this);
+        this._renderHeading = this._renderHeading.bind(this);
+        this.nScroll = new Animated.Value(0);
+
     }
 
     componentDidMount() {
@@ -39,7 +66,6 @@ class MoviesDetailView extends Component {
         const {movie} = this.props.navigation.state.params;
         getDataDetailMovieByID({id: movie.id});
     }
-
     componentWillReceiveProps(nextProps) {
         const {
             moviesAction: {getDataDetailMovieByID, getDataRelatedMovie}, dataDetail: {
@@ -70,10 +96,11 @@ class MoviesDetailView extends Component {
         const {
             moviesAction: {getDataDetailMovieByID, getDataRelatedMovie, resetStateDataMovies}, navigation
         } = this.props;
-        //resetStateDataMovies({key: "recommend", value: {data: [], isLoading: false, isError: false}});
+        resetStateDataMovies({key: "detail", value: {data: [], isLoading: false, isError: false}});
         navigation.pop();
     }
-    _onClickToLike(){
+
+    _onClickToLike() {
         const {
             usersAction,
             dataLike,
@@ -82,7 +109,9 @@ class MoviesDetailView extends Component {
                 language,
             }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
         } = this.props;
-        let check = !!dataDetail && !!dataDetail.info && dataLike.map((e) => {return e.id}).indexOf(info.id) <= -1;
+        let check = !!dataDetail && !!dataDetail.info && dataLike.map((e) => {
+            return e.id
+        }).indexOf(info.id) <= -1;
         let data = {
             movie: info,
             type: 'LIKE',
@@ -95,8 +124,8 @@ class MoviesDetailView extends Component {
         };
         usersAction.addUserHistoryMovies(data);
     }
+
     _renderHeader() {
-        let {backdrop_path} = this.props.navigation.state.params.movie;
         const {
             dataLike,
             usersAction,
@@ -105,11 +134,25 @@ class MoviesDetailView extends Component {
                 language,
             }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
         } = this.props;
-        console.log(dataLike);
-        let check = !!dataDetail && !!dataDetail.info && dataLike.map((e) => {return e.id}).indexOf(info.id) <= -1;
+        let {backdrop_path} = this.props.navigation.state.params.movie;
+        const imageOpacity = this.nScroll.interpolate({
+            inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
+            outputRange: [1, 0, 0],
+            extrapolate: 'clamp',
+        });
+        const imageTranslate = this.nScroll.interpolate({
+            inputRange: [0, height / 3 - 35/2],
+            outputRange: [0, height / 3 - 35/2],
+            extrapolate: 'clamp',
+        });
         return (
-            <View style={{flex: 1, zIndex: 2, height: height / 3 + 40 /2,}}>
-                <View style={{
+            <Animated.View style={{
+                flex: 1,
+                zIndex: 2,
+                opacity: imageOpacity, transform: [{translateY: imageTranslate}],
+                height: height / 3 + 40 / 2,
+            }}>
+                <Animated.View style={{
                     height: height / 3,
                     width: null,
                     backgroundColor: global.transparentBlack3,
@@ -118,68 +161,126 @@ class MoviesDetailView extends Component {
                     top: 0,
                     left: 0,
                     right: 0,
-                    zIndex: 2
+                    zIndex: 1,
+
                 }}/>
-                <ButtonWithIcon nameIcon={'ios-arrow-back-outline'}
-                                onClick={this.onGoBack}
-                                icoStyle={{fontSize: global.sizeP25, color: global.colorFF, margin: 0}}
-                                style={{
-                                    height: 35,
-                                    width: 45,
-                                    borderRadius: 40 / 3,
-                                    backgroundColor: global.transparentWhite50,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    paddingRight: 3,
-                                    paddingTop: 2,
-                                    flex: 1,
-                                    elevation: 1,
-                                    position: 'absolute', top: height / 3 - 35 / 2, left: 10, zIndex: 2
-                                }}/>
-                <ButtonWithIcon nameIcon={check ? 'ios-heart-outline' : 'ios-heart'}
+                <FastImageAnimated
+                    resizeMode={FastImage.resizeMode.cover}
+                    style={{
+                        height: height / 3,
+                        width: null,
+                        zIndex: 0,
+                    }}
+                    source={{
+                        uri: backdrop_path,
+                        priority: FastImage.priority.normal,
+                    }}/>
+                <Animated.View style={{
+                    position: 'absolute', top: height / 3 / 2 - 40 / 2,
+                    left: width/2 - 20,
+                    alignSelf: 'center',
+                    flex: 1,
+                    zIndex:3
+                }}>
+                    <ButtonWithIcon nameIcon={'ios-play-outline'}
+                                    icoStyle={{fontSize: global.sizeP40, color: global.colorFF, margin: 0}}
+                                    style={{
+                                        height: 40,
+                                        width: 50,
+                                        borderRadius: 40 / 3,
+                                        backgroundColor: global.transparentWhite2,
+                                        borderWidth: 1,
+                                        borderColor: global.colorFF,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        paddingLeft: 3,
+                                        zIndex: 0
+                                    }}/>
+                </Animated.View>
+            </Animated.View>
+        );
+    }
+    _renderHeading(){
+        const {
+            dataLike,
+            usersAction,
+            dataDetail: {
+                info,
+                language,
+            }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
+        } = this.props;
+        let {title, overview, backdrop_path} = this.props.navigation.state.params.movie;
+        let check = !!dataDetail && !!dataDetail.info && dataLike.map((e) => {
+            return e.id
+        }).indexOf(info.id) <= -1;
+        const imageTranslate = this.nScroll.interpolate({
+            inputRange: [0,height / 3 - 35/2 - 5],
+            outputRange: [height / 3 - 35/2 -5, 0],
+            extrapolate: 'clamp',
+        });
+        const textOpacity = this.nScroll.interpolate({
+            inputRange: [0, height / 3 - 35/2],
+            outputRange: [0 ,1],
+            extrapolate: 'clamp',
+        });
+        return Object.keys(dataDetail).length > 0 ? (
+                <Animated.View style ={[{
+                    backgroundColor: this.state.isShowHeader ? '#232635' : 'transparent',
+                    paddingLeft:5,
+                    paddingRight:5,
+                    zIndex:3,
+                    padding:5,
+                    flex:1,
+                    alignItems: 'center',
+                    flexDirection:'row',
+                    width: width,
+                    elevation: this.state.isShowHeader ? 1 :0,
+                    shadowColor: "#000",
+                    shadowOffset: {width: 0, height: 0},
+                    shadowOpacity: 0.3,
+                    justifyContent: 'space-between',
+                    position: 'absolute', top: 0},{
+                    transform: [
+                        { translateY: imageTranslate },
+                    ],
+                }]}>
+                    <ButtonWithIcon nameIcon={'ios-arrow-back-outline'}
+                                    onClick={this.onGoBack}
+                                    icoStyle={{fontSize: this.state.isShowHeader ? global.sizeP30: global.sizeP25 , color: global.colorFF, margin: 0}}
+                                    style={{
+                                        height: 35,
+                                        width: 45,
+                                        borderRadius: 40 / 3,
+                                        backgroundColor:  this.state.isShowHeader ? 'transparent':global.transparentWhite50,
+                                        borderColor:'transparent',
+                                        borderWidth: 0,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        paddingRight: 3,
+                                        paddingTop: 2,
+                                        zIndex: 2
+                                    }}/>
+                    <Animated.View style ={{opacity: textOpacity}}>
+                        <TextComponent text={title} size={global.sizeP18} color={global.colorFF}/>
+                    </Animated.View>
+                    <IconButton nameIcon={check ? 'ios-heart-outline' : 'ios-heart'}
                                 onClick={this._onClickToLike}
-                                icoStyle={{fontSize: global.sizeP40, color: check ? global.colorFF : global.yellowColor, margin: 0}}
-                                style={{
+                                iconStyle={{
+                                    fontSize: global.sizeP40,
+                                    color: check ? global.colorFF : global.yellowColor,
+                                }}
+                                btnStyle={{
                                     height: 35,
                                     width: 40,
-                                    borderRadius: 40 / 3,
                                     backgroundColor: 'transparent',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    paddingLeft: 3,
-                                    paddingTop: 2,
-                                    flex: 1,
                                     elevation: 1,
-                                    position: 'absolute', top: height / 3 - 40 / 2, right: 10, zIndex: 2
-                                }}/>
-                <ButtonWithIcon nameIcon={'ios-play-outline'}
-                                icoStyle={{fontSize: global.sizeP40, color: global.colorFF, margin: 0}}
-                                style={{
-                                    height: 40,
-                                    width: 50,
-                                    borderRadius: 40 / 3,
-                                    backgroundColor: global.transparentWhite2,
-                                    borderWidth: 1,
-                                    borderColor: global.colorFF,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    alignSelf: 'center',
-                                    paddingLeft: 3,
-                                    flex: 1,
-                                    position: 'absolute', top: height / 3 / 2 - 40 / 2,
                                     zIndex: 2
                                 }}/>
-                <FastImage
-                resizeMode={FastImage.resizeMode.cover}
-                style={{height: height / 3, width: null,zIndex:0}}
-                source={{
-                uri: backdrop_path,
-                priority: FastImage.priority.normal,
-                }}/>
-            </View>
-        );
+                </Animated.View>
+        ) : null;
     }
-
     _renderDescription() {
         const {
             dataDetail: {
@@ -200,7 +301,7 @@ class MoviesDetailView extends Component {
                                   languageAndRuntime={languageAndRuntime}
                                   releaseDate={releaseDate}
                                   partAndEpisode={partAndEpisode}/>
-        );
+        )
     }
 
     _renderSubDescription() {
@@ -209,10 +310,21 @@ class MoviesDetailView extends Component {
                 actor,
                 director,
                 genres,
+                episodes
             }, dataRecommend, isRecommendLoading, isRecommendError
         } = this.props;
+        console.log(this.props.dataDetail);
         return (
             <View style={{flex: 1}}>
+                <WrapperView heading={'Số tập'}
+                             styleHeading={{fontSize: global.sizeP16}}
+                             children={
+                                 <VerticalListView
+                                     horizontal={true}
+                                     data={episodes}
+                                     renderItem={({item, index}) =>
+                                         <ItemGenres key={index} item={item} type={'detail'}/>
+                                     }/>}/>
                 <WrapperView heading={'Thể loại'}
                              styleHeading={{fontSize: global.sizeP16}}
                              children={
@@ -265,17 +377,47 @@ class MoviesDetailView extends Component {
             </View>
         );
     }
-
+    _onScroll(event){
+        const currentOffset = event.nativeEvent.contentOffset.y;
+        const onScrolling = currentOffset >= height / 3 - 35/2;
+        if (
+            onScrolling !== this.state.isShowHeader
+        ) {
+            this.setState({isShowHeader: onScrolling});
+        }
+    }
     render() {
+        const {
+            dataDetail: {
+                info,
+                language,
+            }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
+        } = this.props;
+        const headerTranslate = this.nScroll.interpolate({
+            inputRange: [0,height / 3 - 35/2 - 5],
+            outputRange: [height / 3 - 35/2 -5, 0],
+            extrapolate: 'clamp',
+        });
         return (
             <View style={{flex: 1, backgroundColor: '#232635'}}>
-                <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+                {this._renderHeading()}
+                <Animated.ScrollView
+                    scrollEventThrottle={1}
+                    removeClippedSubview={true}
+                    style={{flex: 1}}
+                    onScroll={Animated.event(
+                        [{nativeEvent: {contentOffset: {y: this.nScroll}}}],
+                        {useNativeDriver: true,listener: this._onScroll.bind(this)}
+                    )} showsVerticalScrollIndicator={false}>
                     {this._renderHeader()}
-                    <View style={{paddingLeft: 10,paddingRight:10, flex: 1, zIndex: 0}}>
-                        {this._renderDescription()}
-                        {this._renderSubDescription()}
-                    </View>
-                </ScrollView>
+                    {
+                        Object.keys(dataDetail).length > 0 ?  <View style={{backgroundColor: '#232635', paddingLeft: 10, paddingRight: 10, flex: 1, zIndex: 3}}>
+                            {this._renderDescription()}
+                            {this._renderSubDescription()}
+                        </View> : <SkypeIndicator color={global.yellowColor}/>
+                    }
+
+                </Animated.ScrollView>
             </View>
 
         );

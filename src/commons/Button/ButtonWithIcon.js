@@ -28,7 +28,7 @@ const ButtonWithIcon = ({nameIcon, icoStyle, style, buttonText, styleText, onCli
         color: 'white'
     };
     return (
-        <TouchableOpacity style={[buttonStyle, style]} onPress={onClick}>
+        <TouchableOpacity activeOpacity={0.85} style={[buttonStyle, style]} onPress={onClick}>
             {!nameIcon ? (null) : (<Icon name={nameIcon} style={[iconStyle, icoStyle]}/>)}
             {!buttonText ? (null) : (<Text style={[textStyle, styleText]}>{buttonText}</Text>)}
         </TouchableOpacity>
