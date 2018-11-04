@@ -46,6 +46,7 @@ export default class HistoryView extends Component {
                 return (
                     <View key={1} style={{flex: 1, marginTop: 10}}>
                         <VerticalListView
+
                             ItemSeparatorComponent={() => <View
                                 style={{
                                     height: 15,

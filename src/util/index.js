@@ -13,3 +13,26 @@ export const navigateToDetail = (action, navigation, data) =>{
     navigation.push('MoviesDetail',{movie: data.movie});
     action.addUserHistoryMovies(data);
 };
+
+export const makeTextReview = (value) =>{
+    let text ='';
+    switch (value) {
+        case 1:
+            text = 'Dỡ tệ';
+            break;
+        case 2:
+            text = 'Tạm được';
+            break;
+        case 3:
+            text = 'Hay';
+            break;
+        case 4:
+            text = 'Rất hay';
+            break;
+        case 5:
+            text = 'Tuyệt vời';
+            break;
+        default: break;
+    }
+    return text;
+};

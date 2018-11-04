@@ -9,6 +9,10 @@ const RoundAvatar = ({size, icSrc, onPress, canClick, style, styleIc, isShowDot}
     let styleDot = null;
     let styleAvatar = {};
 
+    if(size === 'tiny'){
+        styleAvatar = styles.avatarTiny;
+        styleRadiusSize = 20;
+    }
     if (size === 'small') {
         styleAvatar = styles.avatarSmall;
         styleRadiusSize = 25;
@@ -69,7 +73,7 @@ RoundAvatar.defaultProps = {
 };
 
 RoundAvatar.propTypes = {
-    size: PropTypes.oneOf(["small", "x-small", "large", "x-large", "xx-large"]),
+    size: PropTypes.oneOf(["tiny","small", "x-small", "large", "x-large", "xx-large"]),
     style: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     styleIc: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     onPress: PropTypes.func,

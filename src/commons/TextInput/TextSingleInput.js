@@ -11,7 +11,7 @@ const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multil
                                 onChangeText,autoCapitalize,secureTextEntry,onEndEditing,
                                 returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning,styleForm,onChange}) => {
     const borderColor = warning ? styles.borderWarning : null;
-    const height = multiline ? 100 : 40;
+    const height = multiline ? 150 : 40;
     return (
         <View style={borderColor}>
             <View style ={[{
@@ -22,7 +22,7 @@ const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multil
             },styleForm]}>
                 <Icon name = {nameIcon} style={{marginLeft:10,alignSelf: 'center',fontSize:30, color: global.darkBlue, marginTop:2}}/>
                 {
-                    multiline ?  <View style={[styles.divider, {height: 145}]}/> : <View style={styles.divider}/>
+                    multiline ?  <View style={[styles.divider, {height: 150}]}/> : <View style={styles.divider}/>
                 }
 
                 <TextInput

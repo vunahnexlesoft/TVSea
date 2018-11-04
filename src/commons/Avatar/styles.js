@@ -3,6 +3,10 @@ import global from "../../themes/global";
 
 const {width, height} = Dimensions.get("window");
 const styles = StyleSheet.create({
+    avatarTiny: {
+        height:35,
+        width:35,
+    },
     avatarSmall:{
         height:50,
         width:50,

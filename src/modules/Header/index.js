@@ -6,6 +6,7 @@ import global from "../../themes/global";
 import IconButton from "../../commons/Button/IconButton";
 import PropTypes from "prop-types";
 import moment from 'moment';
+import RoundAvatar from "../../commons/Avatar/RoundAvatar";
 const {height, width} = Dimensions.get('window');
 class Header extends Component{
     render(){
@@ -27,12 +28,15 @@ class Header extends Component{
                               color={global.colorFF}
                               size={global.sizeP25}/>
                     </View>
-                        <IconButton nameIcon={'ios-contact'}
-                                    iconStyle={{
-                                        fontSize: height / 14,
-                                        color: global.borderLeftColor,
-                                        alignSelf: 'center'
-                                    }}/>
+                    <RoundAvatar size={'small'}
+                                 canClick={false}
+                                 icSrc={'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.0-9/29197246_2062594664016900_292927065248317668_n.jpg?_nc_cat=107&oh=0582839f39e11a69ab0f4ebe2c9b8ea1&oe=5C6341A6'}/>
+                        {/*<IconButton nameIcon={'ios-contact'}*/}
+                                    {/*iconStyle={{*/}
+                                        {/*fontSize: height / 14,*/}
+                                        {/*color: global.borderLeftColor,*/}
+                                        {/*alignSelf: 'center'*/}
+                                    {/*}}/>*/}
                 </View>
         );
     }

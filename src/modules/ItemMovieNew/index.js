@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, Dimensions, Image} from 'react-native';
+import {View, TouchableOpacity, Dimensions, Image,Platform} from 'react-native';
 import styles from './styles';
 import Text from '../../commons/Text/Text';
 import PropTypes from 'prop-types';
@@ -12,6 +12,7 @@ import Swipeout from 'react-native-swipeout';
 import IconButton from "../../commons/Button/IconButton";
 import * as STRING from "../../themes/string";
 
+let IS_IOS = Platform.OS === "ios";
 class ItemMovieNew extends Component {
     constructor(props) {
         super(props);
@@ -121,7 +122,7 @@ class ItemMovieNew extends Component {
                                 nameIcon={'ios-add'}
                                 iconStyle={{fontSize: global.sizeP35, color: global.colorFF}}
                                 btnStyle={{
-                                    bottom: 70 / 4,
+                                    bottom: IS_IOS ? 70 / 4 : 70 / 3,
                                     right: 20,
                                     position: 'absolute',
                                     height: null,

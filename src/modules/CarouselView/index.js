@@ -4,6 +4,8 @@ import styles from './styles';
 import global from "../../themes/global";
 import PropTypes from "prop-types";
 import Carousel, { Pagination } from "react-native-snap-carousel";
+import Swiper from '../../commons/Swipe/Swiper';
+import SkypeIndicator from "react-native-indicators/src/components/skype-indicator/index";
 const {height, width} = Dimensions.get('window');
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -13,11 +15,11 @@ function wp (percentage) {
     return Math.round(value);
 }
 const slideHeight = viewportHeight * 0.36;
-const slideWidth = wp(85);
-const itemHorizontalMargin = wp(7);
+const slideWidth = wp(95);
+const itemHorizontalMargin = wp(3);
 
 const sliderWidth = viewportWidth;
-const itemWidth = slideWidth + itemHorizontalMargin;
+const itemWidth = viewportWidth + itemHorizontalMargin;
 class CarouselView extends Component{
     constructor(props) {
         super(props);
@@ -54,13 +56,14 @@ class CarouselView extends Component{
                 <Carousel
                     {...this.props}
                     data={data}
+                    inactiveSlideScale={0.9}
+                    inactiveSlideOpacity={0.5}
+                    useScrollView
                     renderItem={renderItem}
                     onSnapToItem={(index) => this.setState({index})}
                     containerCustomStyle={{flex:1,overflow: 'hidden'}}
                     contentContainerCustomStyle={{paddingVertical: 10}}
-                    inactiveSlideScale={1}
-                    inactiveSlideOpacity={0.5}
-                    sliderWidth={sliderWidth}
+                    sliderWidth={width-20}
                     itemWidth={itemWidth}
                 />
                 {

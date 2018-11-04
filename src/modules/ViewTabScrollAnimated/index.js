@@ -81,7 +81,8 @@ export default class ViewTabScrollAnimated extends Component {
                     <Animated.ScrollView
                         style={{flex: 1}}
                         showsVerticalScrollIndicator={false}
-                        scrollEventThrottle={16}
+                        scrollEventThrottle={1}
+                        overScrollMode={'never'}
                         contentContainerStyle={{paddingTop: height / 15}}
                         removeClippedSubviews={false}
                         onScroll={Animated.event(

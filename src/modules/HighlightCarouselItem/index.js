@@ -21,11 +21,12 @@ const slideWidth = wp(80);
 const itemHorizontalMargin = wp(7);
 
 const sliderWidth = viewportWidth;
-const itemWidth = slideWidth + itemHorizontalMargin;
+const itemWidth = viewportWidth - 20;
 const HighlightCarouselItem = ({onClick, item}) => {
     let viewGroup = {
         flex: 1,
         width: itemWidth,
+        //paddingHorizontal: itemHorizontalMargin,
         zIndex:0
     };
     let imageOneNum = {
@@ -41,6 +42,7 @@ const HighlightCarouselItem = ({onClick, item}) => {
                 backgroundColor: global.transparentBlack2,
                 position: 'absolute',
                 flex:1,
+                borderRadius: 10,
                 top: 0,
                 left: 0,
                 right: 0,

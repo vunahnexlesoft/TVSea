@@ -11,7 +11,7 @@ class WrapperView extends Component{
     render(){
         const {heading, children, isShowAll,styleHeading}=this.props;
         return (
-            <View style={{flex:1, marginTop: 10}}>
+            <View style={{flex:1, marginTop: 15}}>
                 <View style = {{flexDirection:'row', justifyContent: 'space-between'}}>
                     <View style ={{flexDirection: 'row', alignItems: 'center'}}>
                         <View style={{height: 8, width:8, borderRadius:4, backgroundColor: global.yellowColor, marginRight: 5, alignSelf: 'center'}}/>
@@ -26,7 +26,7 @@ class WrapperView extends Component{
                                                     style={{backgroundColor:'transparent', height:null ,padding: 5}}/> : null
                     }
                 </View>
-                <View style={{marginTop:10}}>
+                <View style={{flex:1,marginTop:15}}>
                     {children}
                 </View>
             </View>
