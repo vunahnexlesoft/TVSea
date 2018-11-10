@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import TextComponent from "../Text/Text";
 import global from "../../themes/global";
 
-const IconButton = ({nameIcon, btnStyle, iconStyle, badge, onClick}) => {
+const IconButton = ({nameIcon, btnStyle, iconStyle, badge, onClick,disabled}) => {
     let buttonStyle = {
         alignItems: 'center',
     };
@@ -17,7 +17,7 @@ const IconButton = ({nameIcon, btnStyle, iconStyle, badge, onClick}) => {
         textAlign:'center'
     };
     return (
-        <TouchableOpacity style={[buttonStyle, btnStyle]} onPress={onClick}>
+        <TouchableOpacity style={[buttonStyle, btnStyle]} onPress={onClick} disabled={disabled}>
                 <Icon name={nameIcon} style={iconStyle}/>
                 {badge && <TextComponent text={badge} size={global.sizeP15} color={global.colorF4} style={badgeStyle}/>}
         </TouchableOpacity>
@@ -28,6 +28,7 @@ TextComponent.defaultProps = {
     nameIcon: ''
 };
 IconButton.propTypes = {
+    disabled:PropTypes.bool,
     nameIcon: PropTypes.string,
     badge: PropTypes.string,
     btnStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),

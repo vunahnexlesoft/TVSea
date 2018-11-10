@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, LayoutAnimation, Dimensions, ScrollView, Animated, Platform, StatusBar,Image} from 'react-native';
+import {View, LayoutAnimation, Dimensions, ScrollView, Animated, Platform, StatusBar, Image} from 'react-native';
 import styles from './styles';
 import global from "../../themes/global";
 import * as STRING from '../../themes/string';
@@ -27,6 +27,7 @@ import SkypeIndicator from "react-native-indicators/src/components/skype-indicat
 import RoundAvatar from "../../commons/Avatar/RoundAvatar";
 import Swiper from "../../commons/Swipe/Swiper";
 import localImage from "../../themes/localImage";
+
 const HeaderAnimated = Animated.createAnimatedComponent(Header);
 
 const {height, width} = Dimensions.get('window');
@@ -102,6 +103,8 @@ export default class DiscoverView extends Component {
                 />
                 <WrapperView heading={'Phim mới cập nhật'}
                              isShowAll
+                             onClickViewAll={() => {
+                                 UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Phim Mới',type:'PHIM_MOI'})}}
                              children={
                                  <VerticalListView
                                      ItemSeparatorComponent={() => <View
@@ -120,6 +123,7 @@ export default class DiscoverView extends Component {
                 />
                 <WrapperView heading={'Phim lẻ hay'}
                              isShowAll
+                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Phim Lẻ', type:'PHIM_LE'})}
                              children={
                                  <VerticalListView
                                      horizontal={true}
@@ -136,6 +140,7 @@ export default class DiscoverView extends Component {
                 />
                 <WrapperView heading={'Phim bộ 2018'}
                              isShowAll
+                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Phim Bộ',type:'PHIM_BO'})}
                              children={
                                  <VerticalListView
                                      horizontal={true}
@@ -151,10 +156,11 @@ export default class DiscoverView extends Component {
                                      }/>}
                 />
 
-                <Image source={localImage.posterAvd} style={{marginTop:15, height: height/6, width: width - 20}}/>
+                <Image source={localImage.posterAvd} style={{marginTop: 15, height: height / 6, width: width - 20}}/>
 
                 <WrapperView heading={'Phim hoạt hình'}
                              isShowAll
+                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Phim Hoạt Hình',type:'ANIME'})}
                              children={
                                  <VerticalListView
                                      horizontal={true}
@@ -216,10 +222,10 @@ export default class DiscoverView extends Component {
                     <RoundAvatar size={'tiny'}
                                  style={{
                                      position: 'absolute',
-                                     top: 13/2, right: 10
+                                     top: 13 / 2, right: 10
                                  }}
                                  canClick={false}
-                                 icSrc={'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.0-9/29197246_2062594664016900_292927065248317668_n.jpg?_nc_cat=107&oh=0582839f39e11a69ab0f4ebe2c9b8ea1&oe=5C6341A6'}/>
+                                 icSrc={this.props.userInfo.url_avatar}/>
                 </Animated.View>
                 <Animated.ScrollView
                     scrollEventThrottle={1}
@@ -230,7 +236,7 @@ export default class DiscoverView extends Component {
                         [{nativeEvent: {contentOffset: {y: this.scrollY}}}],
                         {useNativeDriver: true}
                     )} showsVerticalScrollIndicator={false}>
-                    <Header heading={STRING.HEADER.NAME.DISCOVER}/>
+                    <Header heading={STRING.HEADER.NAME.DISCOVER} url={this.props.userInfo.url_avatar}/>
                     {
                         dataTopMovie.length > 0 ?
                             this.renderScene() : <SkypeIndicator color={global.yellowColor}/>

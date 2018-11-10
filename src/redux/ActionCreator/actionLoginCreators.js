@@ -89,7 +89,7 @@ export function addUserHistoryMovies(data) {
         let method = data.actionType === 'ADD' ? "post" : "put";
         let token = store.getState().userLoginReducer.token;
         restClient.excuteAPI(method, url, token, null, data.params).then(res => {
-            console.log(res, data);
+            console.log('res', res);
             if (res.success) {
                 dispatch(addOrDeleteUserPropertyMoviesSuccess(data))
             } else {

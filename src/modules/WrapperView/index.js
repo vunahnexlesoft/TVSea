@@ -9,7 +9,7 @@ import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 const {height, width} = Dimensions.get('window');
 class WrapperView extends Component{
     render(){
-        const {heading, children, isShowAll,styleHeading}=this.props;
+        const {heading, children, isShowAll,styleHeading,onClickViewAll}=this.props;
         return (
             <View style={{flex:1, marginTop: 15}}>
                 <View style = {{flexDirection:'row', justifyContent: 'space-between'}}>
@@ -21,8 +21,9 @@ class WrapperView extends Component{
                                        color={global.colorFF}/>
                     </View>
                     {
-                        isShowAll ? <ButtonWithIcon buttonText={'Xem thêm'}
-                                                    styleText={{fontSize: global.sizeP14, textDecorationLine: 'underline'}}
+                        isShowAll ? <ButtonWithIcon buttonText={'Tất cả'}
+                                                    onClick={onClickViewAll}
+                                                    styleText={{fontSize: global.sizeP14}}
                                                     style={{backgroundColor:'transparent', height:null ,padding: 5}}/> : null
                     }
                 </View>
@@ -41,6 +42,7 @@ WrapperView.propTypes = {
     heading: PropTypes.string,
     isShowAll: PropTypes.bool,
     children: PropTypes.object,
+    onClickViewAll: PropTypes.func
 };
 
 export default WrapperView;

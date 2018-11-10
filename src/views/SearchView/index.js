@@ -14,6 +14,8 @@ import ItemHistorySearch from "../../modules/ItemHistorySearch";
 import ItemMovieNew from "../../modules/ItemMovieNew";
 import EmptyView from "../../modules/EmptyView";
 import * as UTIL_FUCTION from "../../util";
+import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
+
 const {height, width} = Dimensions.get('window');
 
 export default class SearchView extends Component {
@@ -30,11 +32,11 @@ export default class SearchView extends Component {
     }
 
     onChangeTextToSearch(value) {
-        const {moviesAction,search} = this.props;
+        const {moviesAction, search} = this.props;
         if (value.length >= 3) {
             moviesAction.getDataSearchMovie({query: UTIL_FUCTION.convertText(value)});
-        }else if (value.length <=0){
-            moviesAction.resetStateDataMovies({key: "search" ,value: {...search, data: []}})
+        } else if (value.length <= 0) {
+            moviesAction.resetStateDataMovies({key: "search", value: {...search, data: []}})
         }
         this.setState({
             searchText: value,
@@ -42,35 +44,36 @@ export default class SearchView extends Component {
         });
     }
 
-    onEndEditing(){
+    onEndEditing() {
         const {moviesAction} = this.props;
         console.log('onSubmitEditing');
-        if(this.addHistoryTimeOut){
+        if (this.addHistoryTimeOut) {
             clearTimeout(this.addHistoryTimeOut);
             this.addHistoryTimeOut = null;
         }
-        this.addHistoryTimeOut = setTimeout(()=>{
-            if(this.state.searchText.length >= 3){
-                moviesAction.updateSearchHistory({type :'ADD_SEARCH_HISTORY_MOVIE', name : this.state.searchText});
+        this.addHistoryTimeOut = setTimeout(() => {
+            if (this.state.searchText.length >= 3) {
+                moviesAction.updateSearchHistory({type: 'ADD_SEARCH_HISTORY_MOVIE', name: this.state.searchText});
             }
             clearTimeout(this.addHistoryTimeOut);
             this.addHistoryTimeOut = null;
-        },200);
+        }, 200);
     }
 
-    onClickHistoryItem(value){
+    onClickHistoryItem(value) {
         this.setState({
-            searchText : value,
-            changeText : true
-        },()=>{
+            searchText: value,
+            changeText: true
+        }, () => {
             this.props.moviesAction.getDataSearchMovie({query: UTIL_FUCTION.convertText(value)});
         })
     }
+
     render() {
         const {dataSearch, dataHistory} = this.props;
         return (
             <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
-                <Header date={'Chủ nhật'} heading={STRING.HEADER.NAME.SEARCH}/>
+                <Header heading={STRING.HEADER.NAME.SEARCH} url={this.props.userInfo.url_avatar}/>
                 <View style={{marginLeft: 10, marginRight: 10, flex: 1}}>
                     <TextSingleInput styleForm={{
                         height: height / 18,
@@ -116,10 +119,12 @@ export default class SearchView extends Component {
                                               />}
                                               renderItem={({item, index}) => {
                                                   return this.state.changeText ? (
-                                                          <ItemMovieNew item={item} isNew onClick={() => this.props.navigation.navigate('MoviesDetail',{movie: item})}/>
+                                                          <ItemMovieNew item={item} isNew
+                                                                        onClick={() => this.props.navigation.navigate('MoviesDetail', {movie: item})}/>
                                                       )
                                                       :
-                                                      (<ItemHistorySearch item={item} onClick={this.onClickHistoryItem.bind(this, item)}/>);
+                                                      (<ItemHistorySearch item={item}
+                                                                          onClick={this.onClickHistoryItem.bind(this, item)}/>);
                                               }}/>
                             : <EmptyView nameIcon={'ios-pulse'} textDes={'Chưa có lịch sử tìm kiếm'}/>
                     }

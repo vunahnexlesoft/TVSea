@@ -39,7 +39,7 @@ export default class ViewTabScrollAnimated extends Component {
             outputRange: [0, 30],
             extrapolate: 'clamp',
         });
-        const {textHeader, numTab, renderScene, routes, index, onIndexChange} = this.props;
+        const {textHeader, numTab, renderScene, routes, index, onIndexChange,url} = this.props;
         return (
             <View key={textHeader} style={{flex: 1, backgroundColor: global.backgroundColor}}>
                 <Animated.View style={{
@@ -49,7 +49,7 @@ export default class ViewTabScrollAnimated extends Component {
                     right: 0,
                     overflow: 'hidden', opacity: Opacity, transform: [{translateY: animatedYHeader}]
                 }}>
-                    <HeaderAnimated heading={textHeader}/>
+                    <HeaderAnimated heading={textHeader} url={url}/>
                 </Animated.View>
 
                 <Animated.View style={[{zIndex: 2, elevation:  1,
@@ -62,7 +62,7 @@ export default class ViewTabScrollAnimated extends Component {
                         routes={routes}
                         onIndexChange={onIndexChange}
                         selectedTabItem={index}
-                        isUpperCase
+                        isUpperCase={false}
                         numTab={numTab}
                         styleText={{fontSize: global.sizeP14, fontWeight: '700'}}
                         styleTab={{

@@ -4,6 +4,7 @@ import {bindActionCreators} from "redux";
 import * as moviesAction from "../../redux/ActionCreator/actionMovieCreator";
 function mapStateToProps(state) {
     const {category} = state.moviesReducer;
+    const userInfo = state.userInfoReducer.data;
     return {
         dataPhimle: category.phimle.data,
         dataPhimbo: category.phimbo.data,
@@ -16,6 +17,8 @@ function mapStateToProps(state) {
         isPhimleError: category.phimle.isError,
         isPhimboError: category.phimbo.isError,
         isTvshowError: category.tvshow.isError,
+
+        userInfo
     };
 }
 function mapDispatchToProps(dispatch) {

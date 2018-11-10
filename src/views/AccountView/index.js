@@ -36,21 +36,22 @@ export default class AccountView extends Component {
     }
 
     renderScene() {
-        const {data, isLoading} = this.props;
+        const {data, isLoading,userInfo} = this.props;
+        console.log(userInfo);
         switch (this.state.index) {
             case 1:
                 return (
                     <View style={{flex: 1, marginTop: 10}}>
-                        <View style={{backgroundColor: '#232635', padding: 10}}>
+                        <View style={{backgroundColor: global.backgroundColor23, padding: 10,borderRadius:10}}>
                             <View style={{alignItems: 'center'}}>
                                 <RoundAvatar
                                     size={'x-small'}
-                                    icSrc={'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.0-9/29197246_2062594664016900_292927065248317668_n.jpg?_nc_cat=107&oh=0582839f39e11a69ab0f4ebe2c9b8ea1&oe=5C6341A6'}/>
-                                <TextComponent text={'Vũ Nguyễn'} size={global.sizeP18} color={global.colorFF}
+                                    icSrc={userInfo.url_avatar}/>
+                                <TextComponent text={userInfo.display_name} size={global.sizeP18} color={global.colorFF}
                                                style={{marginTop: 2}}/>
-                                <TextComponent text={'huyvu0505@gmail.com'} size={global.sizeP16}
+                                <TextComponent text={userInfo.email} size={global.sizeP16}
                                                color={global.grayDarkColor} style={{marginTop: 5}}/>
-                                <TextComponent text={'01696075444'} size={global.sizeP16} color={global.grayDarkColor}
+                                <TextComponent text={userInfo.number_phone} size={global.sizeP16} color={global.grayDarkColor}
                                                style={{marginTop: 2}}/>
                                 <TextComponent text={'20/07/1996'} size={global.sizeP16} color={global.grayDarkColor}
                                                style={{marginTop: 2, marginBottom: 2}}/>
@@ -87,14 +88,14 @@ export default class AccountView extends Component {
                                 </View>
                             </View>
                         </View>
-                        <View style={{backgroundColor: '#28343f', padding: 10, marginTop: 5}}>
+                        <View style={{backgroundColor: global.backgroundColor23, padding: 10,borderRadius:10,marginTop: 5}}>
                             <TextComponent text={'Xếp hạng thành viên'} size={global.sizeP18}
                                            color={global.grayDarkColor}
                                            style={{marginTop: 2}}/>
                             <TextComponent text={'Starter'} size={global.sizeP18} color={global.colorFF}
                                            style={{marginTop: 2}}/>
                         </View>
-                        <View style={{backgroundColor: '#232635', padding: 10, marginTop: 5}}>
+                        <View style={{backgroundColor: global.backgroundColor23, padding: 10,borderRadius:10,marginTop: 5}}>
                             <TouchableOpacity activeOpacity={0.8}>
                                 <View style={{
                                     flexDirection: 'row',

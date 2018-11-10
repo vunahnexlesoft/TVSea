@@ -17,7 +17,26 @@ import SignUp from './containers/SignUpContainer';
 import Search from './containers/SearchContainer';
 import MoviesDetail from './containers/MoviesDetailContainer';
 import VideoItemView from './modules/VideoItemView';
-
+import ViewAll from './containers/ViewAllContainer';
+import moment from 'moment';
+moment.updateLocale("en", {
+    relativeTime: {
+        future: "sau đó %s",
+        past: "%s trước",
+        s: "1 giây",
+        ss: "%d giây",
+        m: "1 phút",
+        mm: "%d phút",
+        h: "1 giờ",
+        hh: "%d giờ",
+        d: "1 ngày",
+        dd: "%d ngày",
+        M: "1 tháng",
+        MM: "%d tháng",
+        y: "1 năm",
+        yy: "%d năm"
+    }
+});
 const {height, width} = Dimensions.get('window');
 
 const TabBar = createBottomTabNavigator({
@@ -78,7 +97,8 @@ const TabBar = createBottomTabNavigator({
 const RootNavigator = createStackNavigator({
         TabBar: {screen: TabBar},
         Video: {screen: VideoItemView},
-        MoviesDetail: {screen: MoviesDetail}
+        MoviesDetail: {screen: MoviesDetail},
+        ViewAll: {screen: ViewAll}
     },
     {
         initialRouteName: "TabBar",
@@ -94,7 +114,7 @@ export default class App extends Component {
         return (
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <SafeAreaView style={{flex: 1}}>
+                    <SafeAreaView style={{flex: 1, backgroundColor:global.blackTab}}>
                         <RootNavigator/>
                     </SafeAreaView>
                 </PersistGate>

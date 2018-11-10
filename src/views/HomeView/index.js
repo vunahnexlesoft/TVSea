@@ -12,7 +12,7 @@ import ItemChannel from "../../modules/ItemChannel";
 import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
 import firebaseService from "../../services/firebase";
 const {height, width} = Dimensions.get('window');
-
+import * as UTIL_FUNCTION from '../../util';
 export default class HomeView extends Component {
     constructor(props) {
         super(props);
@@ -32,7 +32,6 @@ export default class HomeView extends Component {
             uid: '2',
             name: 'Huy Vu'
         };
-        firebaseService.setUserInfo(userInfo);
         LayoutAnimation.easeInEaseOut();
         this.setState({index: item.id});
     }
@@ -74,6 +73,7 @@ export default class HomeView extends Component {
             <ViewTabScrollAnimated
                 {...this.props}
                 textHeader={STRING.HEADER.NAME.TODAY}
+                url={this.props.userInfo.url_avatar}
                 textDate={'Sunday, Feb 5, 2018'}
                 numTab={2}
                 onIndexChange={this._onIndexChange}

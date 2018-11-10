@@ -4,7 +4,8 @@ import {bindActionCreators} from "redux";
 import * as usersAction from "../../redux/ActionCreator/actionLoginCreators";
 
 function mapStateToProps(state) {
-    const {like, history, userInfo} = state.userLoginReducer;
+    const {like, history} = state.userLoginReducer;
+    const userInfo = state.userInfoReducer.data;
     return {
         dataHistory: history.data,
         isHistoryLoading: history.isLoading,

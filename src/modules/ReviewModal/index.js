@@ -29,6 +29,11 @@ export default class ReviewModal extends ModalOder {
     }
 
     openModal(params) {
+        console.log(params);
+        this.setState({
+            note: params.note ? params.note : '',
+            rating : params.rating ? params.rating : 4
+        });
         super.openModal();
     }
 
@@ -128,7 +133,6 @@ export default class ReviewModal extends ModalOder {
                     returnKeyLabel={'Done'}
                     keyboardType={'email-address'}
                     numberOfLines={4}/>
-
             </View>
         );
     }
@@ -157,7 +161,10 @@ export default class ReviewModal extends ModalOder {
                     }}
                 />
                 <ButtonWithIcon
-                    onClick={() => this.onAddCartToSever()}
+                    onClick={() => {
+                        this.onCloseModal();
+                        this.props.onAddComment({comment: this.state.note, rate: this.state.rating})
+                    }}
                     buttonText={'Gửi bình luận'}
                     style={{
                         margin: 5,

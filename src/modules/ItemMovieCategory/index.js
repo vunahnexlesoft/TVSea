@@ -9,7 +9,7 @@ import localImage from "../../themes/localImage";
 
 const {height, width} = Dimensions.get('window');
 
-const ItemMovieCategory = ({item, onClick}) => {
+const ItemMovieCategory = ({item, onClick,numCol}) => {
     let viewGroup = {
         flex: 1,
         alignItems: 'center',
@@ -19,17 +19,31 @@ const ItemMovieCategory = ({item, onClick}) => {
         borderRadius: 10,
         height: height / 4
     };
+    let imageThreeNum = {
+        width: (width - 6 * 4) / 3,
+        margin: 3,
+        borderRadius: 10,
+        height: height / 4.3
+    };
+    let iconStyleOneNum = {width: 30, height: 30,
+        position:'absolute', top: 0, left:5,
+        alignItems: 'center',
+        justifyContent: 'center'};
+    let iconStyleThreeNum = {width: 25, height: 25,
+        position:'absolute', top: 5, left:5,
+        alignItems: 'center',
+        justifyContent: 'center'};
     return (
         <TouchableOpacity activeOpacity={0.85} style={viewGroup} onPress={onClick}>
             <FastImage
                 resizeMode={FastImage.resizeMode.cover}
-                style={imageOneNum}
+                style={numCol === 3 ? imageThreeNum : imageOneNum}
                 source={{
                     uri: item.poster_path,
                     priority: FastImage.priority.normal,
                 }}/>
             <View style={{
-                width: width / 3,
+                width: numCol === 3 ? ((width - 6 * 2) / 3) : width / 3,
                 height: 30,
                 backgroundColor: global.transparentBlack2,
                 position: 'absolute',
@@ -48,10 +62,7 @@ const ItemMovieCategory = ({item, onClick}) => {
                   style={{marginTop:5,width:width / 3, textAlign:'center'}}
                   numberOfLines={1}/>
             <ImageBackground source={localImage.icStar}
-                             style={{width: 30, height: 30,
-                                 position:'absolute', top: 0, left:5,
-                                 alignItems: 'center',
-                                 justifyContent: 'center'}}>
+                             style={numCol === 3 ? iconStyleThreeNum : iconStyleOneNum}>
                 <Text color={global.colorFF}
                                size={global.sizeP14}
                                style={{textAlign: 'center', lineHeight: global.sizeP14}}
@@ -60,7 +71,9 @@ const ItemMovieCategory = ({item, onClick}) => {
         </TouchableOpacity>
     );
 };
-ItemMovieCategory.defaultProps = {};
+ItemMovieCategory.defaultProps = {
+    numCol:1
+};
 
 ItemMovieCategory.propTypes = {
     uriImage: PropTypes.string,

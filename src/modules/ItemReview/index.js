@@ -8,7 +8,7 @@ import localImage from '../../themes/localImage';
 import Rating from "../../commons/Rating/Rating";
 import RoundAvatar from "../../commons/Avatar/RoundAvatar";
 import Divide from "../../commons/Divide";
-
+import * as UTIL_FUNCTION from '../../util';
 const {height, width} = Dimensions.get('window');
 
 const ItemReview = ({onClick, item, style}) => {
@@ -19,7 +19,7 @@ const ItemReview = ({onClick, item, style}) => {
         paddingBottom: 5,
         paddingRight: 5,
         justifyContent: 'center',
-        backgroundColor: global.backgroundColor,
+        backgroundColor: global.backgroundColor23,
         borderRadius: 8,
         shadowColor: "#000",
         shadowOffset: {width: 0, height: 0},
@@ -47,15 +47,15 @@ const ItemReview = ({onClick, item, style}) => {
         <TouchableOpacity activeOpacity={0.85} style={[viewGroup, style]} onPress={onClick}>
             <View style={viewTop}>
                 <View style={viewTopLeft}>
-                    <RoundAvatar size={'small'}
+                    <RoundAvatar size={'tiny'}
                                  canClick={false}
-                                 icSrc={'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.0-9/29197246_2062594664016900_292927065248317668_n.jpg?_nc_cat=107&oh=0582839f39e11a69ab0f4ebe2c9b8ea1&oe=5C6341A6'}/>
+                                 icSrc={item.url_avatar}/>
                     <View style={{marginLeft: 10}}>
-                        <Text text={'Huy Vu'}
+                        <Text text={item.display_name}
                               numberOfLines={2}
                               size={global.sizeP13}
                               color={global.colorFF}/>
-                        <Text text={'1 phút trước'}
+                        <Text text={UTIL_FUNCTION.convertTimeToString(item.date)}
                               numberOfLines={2}
                               size={global.sizeP12}
                               color={global.colorFF}
@@ -64,13 +64,13 @@ const ItemReview = ({onClick, item, style}) => {
                 </View>
 
                 <View style={viewTopRight}>
-                    <Text text={'Tuyet voi'}
+                    <Text text={UTIL_FUNCTION.makeTextReview(parseInt(item.rate))}
                           size={global.sizeP13}
                           color={global.colorFF}/>
                     <Rating
                         editable={false}
                         selectedStar={localImage.icStar}
-                        initial={4}
+                        initial={parseInt(item.rate)}
                         unselectedStar={localImage.icStarUnFill}
                         config={{
                             easing: Easing.inOut(Easing.ease),
@@ -92,8 +92,9 @@ const ItemReview = ({onClick, item, style}) => {
             <Divide style={{marginTop:5}}/>
 
             <Text numberOfLines={4}
+                  style={{margin:3,marginTop:0}}
                   color={global.grayColor}
-                  text={'askjdnkajsndkjsandksandkjsandkjsandkjasndknasdkjnaskdjnaskjndkajsndkjasndksnadkjadkjasadjddadad'}/>
+                  text={item.comment}/>
         </TouchableOpacity>
     );
 };

@@ -1,3 +1,5 @@
+import moment from 'moment'
+import shallowequal from 'shallowequal';
 export const convertText = (value)=>{
     return value.toLowerCase().replace(/\s+/g, '').
     replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a").
@@ -14,6 +16,9 @@ export const navigateToDetail = (action, navigation, data) =>{
     action.addUserHistoryMovies(data);
 };
 
+export const navigateToViewAll = (action, navigation, data) =>{
+    navigation.navigate('ViewAll', {data})
+};
 export const makeTextReview = (value) =>{
     let text ='';
     switch (value) {
@@ -35,4 +40,13 @@ export const makeTextReview = (value) =>{
         default: break;
     }
     return text;
+};
+
+export const convertTimeToString = (time) =>{
+    let inputTime = moment(time).format();
+    return moment(inputTime).fromNow();
+};
+
+export const compareDifference = (item1, item2) =>{
+  return shallowequal(item1, item2);
 };

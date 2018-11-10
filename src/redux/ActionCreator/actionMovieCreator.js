@@ -3,6 +3,7 @@ import * as URL from '../../services/url';
 import axios from 'axios';
 import * as restClient from "../../services/restClient";
 import configureStore from '../Store/configStore'
+import {addOrDeleteUserPropertyMoviesSuccess} from "./actionLoginCreators";
 const {persistor, store} = configureStore();
 
 export function dataFetchingCategory(category) {
@@ -167,6 +168,14 @@ export function resetStateDataMovies(data) {
         data
     }
 }
+
+export function updateComment(data) {
+    return {
+        type: NAME_ACTION.USER_POST_COMMENT,
+        data
+    }
+}
+
 export function getDataMoviebyCategory(params) {
     return (dispatch) => {
         let url = URL.base_url + URL.GET_MOVIES_BY_CATEGORY;
@@ -255,5 +264,20 @@ export function getDataSearchMovie(params) {
                 dispatch(dataFetchingSearchMovieFail());
             }
         })
+    }
+}
+
+export function updateCommentMovie(data) {
+    return (dispatch) => {
+        var url = URL.base_url + (data.actionType === 'ADD' ? URL.POST_USER_COMMENT_MOVIE : URL.PUT_REMOVE_USER_COMMENT_MOVIE);
+        let method = data.actionType === 'ADD' ? "post" : "put";
+        let token = store.getState().userLoginReducer.token;
+        restClient.excuteAPI(method, url, token, null, data.params).then(res => {
+            if (res.success) {
+                dispatch(updateComment(data))
+            } else {
+                console.log('Add data fail')
+            }
+        });
     }
 }

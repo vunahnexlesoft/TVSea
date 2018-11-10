@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, Dimensions, Image,Platform} from 'react-native';
+import {View, TouchableOpacity, Dimensions, Image, Platform} from 'react-native';
 import styles from './styles';
 import Text from '../../commons/Text/Text';
 import PropTypes from 'prop-types';
@@ -11,16 +11,32 @@ import FastImage from 'react-native-fast-image'
 import Swipeout from 'react-native-swipeout';
 import IconButton from "../../commons/Button/IconButton";
 import * as STRING from "../../themes/string";
+import * as UTIL_FUNCTION from "../../util";
 
 let IS_IOS = Platform.OS === "ios";
+
 class ItemMovieNew extends Component {
     constructor(props) {
         super(props);
         this.state = {
             openRight: false
         };
+        this.onClickToRemove = this.onClickToRemove.bind(this);
+        this.onClickToReSee = this.onClickToReSee.bind(this);
     }
 
+    onClickToRemove(item){
+        const {onClickToRemove, type} = this.props;
+        if(onClickToRemove){
+            onClickToRemove(item, type);
+        }
+    }
+    onClickToReSee(item){
+        const {onClickToReSee} = this.props;
+        if(onClickToReSee){
+            onClickToReSee(item);
+        }
+    }
     render() {
         const {onClick, item, isNew, disabledSwipe, disabledClick} = this.props;
         let viewGroup = {
@@ -59,7 +75,7 @@ class ItemMovieNew extends Component {
                 />
             </View>,
             backgroundColor: 'transparent',
-            //onPress: () => { this.deleteNote(rowData) }
+            onPress: () => {this.onClickToReSee(item)}
         }, {
             component: <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
                 <IconButton
@@ -75,7 +91,7 @@ class ItemMovieNew extends Component {
                 />
             </View>,
             backgroundColor: '#DC524A',
-            //onPress: () => {this.onClickToIgnore()}
+            onPress: () => {this.onClickToRemove(item)}
         }];
         return (
             <Swipeout right={swipeBtns}
@@ -117,19 +133,24 @@ class ItemMovieNew extends Component {
                                                     zIndex: 1
                                                 }}
                                                 styleText={{color: global.colorFF, fontSize: global.sizeP14}}/>
-                            : <IconButton
-                                onClick={() => this.setState({openRight: true})}
-                                nameIcon={'ios-add'}
-                                iconStyle={{fontSize: global.sizeP35, color: global.colorFF}}
-                                btnStyle={{
-                                    bottom: IS_IOS ? 70 / 4 : 70 / 3,
-                                    right: 20,
-                                    position: 'absolute',
-                                    height: null,
-                                    zIndex: 1
-                                }}
-                                disabled
-                            />
+                            : <View style={{bottom: IS_IOS ? 70 / 6 : 70 / 5,
+                                right: 20,
+                                position: 'absolute',
+                                height: null,
+                                zIndex: 1}}>
+                                <Text text={UTIL_FUNCTION.convertTimeToString(item.date_save)}
+                                      numberOfLines={2}
+                                      size={global.sizeP12}
+                                      color={global.colorFF}
+                                      style={{marginTop: 2}}/>
+                                <IconButton
+                                    onClick={() => this.setState({openRight: true})}
+                                    nameIcon={'ios-add'}
+                                    iconStyle={{fontSize: global.sizeP35, color: global.colorFF}}
+                                    btnStyle={{height: null,}}
+                                    disabled
+                                />
+                            </View>
                     }
 
                 </TouchableOpacity>

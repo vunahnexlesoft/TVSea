@@ -7,8 +7,8 @@ export const HEADER = {
         PERSIONAL: 'Cá nhân'
     },
     ROUTE_HOME: [
-        {id: 1, name: 'Đang chiếu'},
-        {id: 2, name: 'Sắp chiếu'},
+        {id: 1, name: 'Đang Chiếu'},
+        {id: 2, name: 'Sắp Chiếu'},
     ],
     ROUTE_DISCOVER: [
         {id: 1, name: 'Phim lẻ'},
@@ -17,16 +17,16 @@ export const HEADER = {
         {id: 4, name: 'Anime'}
     ],
     ROUTE_ACCOUNT: [
-        {id: 1, name: 'Tài khoản'},
-        {id: 2, name: 'Thông báo'},
+        {id: 1, name: 'Tài Khoản'},
+        {id: 2, name: 'Thông Báo'},
     ],
     ROUTE_HISTORY: [
-        {id: 1, name: 'Phim đã xem'},
-        {id: 2, name: 'Phim đã thích'},
+        {id: 1, name: 'Phim Đã xem'},
+        {id: 2, name: 'Phim Đã thích'},
     ],
     ROUTE_DETAIL: [
-        {id: 1, name: 'Thông tin'},
-        {id: 2, name: 'Số tập'},
-        {id: 2, name: 'Bình luận'},
+        {id: 1, name: 'Thông Tin'},
+        {id: 2, name: 'Số Tập'},
+        {id: 2, name: 'Bình Luận'},
     ],
 };

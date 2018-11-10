@@ -18,10 +18,12 @@ export default function loginReducer(state = defaultState.user, action) {
             return state.merge({...state, like: {data: [], isLoading: false, isError: true}});
         case NAME_ACTION.USER_ADD_OR_DELETE_PROPERTY_MOVIES:
             let updateObject = [];
+            let date_save = new Date();
             if (action.data.type === "HISTORY") {
                 if (action.data.actionType === 'ADD' && state.history.data.map((e) => {return e.id}).indexOf(action.data.movie.id) <= -1) {
                     updateObject = [...state.history.data];
-                    updateObject.unshift(action.data.movie);
+                    let dataInsert = {...action.data.movie, date_save};
+                    updateObject.unshift(dataInsert);
                 } else if(action.data.actionType === 'REMOVE' && state.history.data.map((e) => {return e.id}).indexOf(action.data.movie.id) > -1) {
                     let removeFromArray = [...state.history.data];
                     let index = removeFromArray.map((e) => {
@@ -36,7 +38,8 @@ export default function loginReducer(state = defaultState.user, action) {
             } else {
                 if (action.data.actionType === 'ADD' && state.like.data.map((e) => {return e.id}).indexOf(action.data.movie.id) <= -1) {
                     updateObject = [...state.like.data];
-                    updateObject.unshift(action.data.movie);
+                    let dataInsert = {...action.data.movie, date_save};
+                    updateObject.unshift(dataInsert);
                 } else if(action.data.actionType === 'REMOVE' && state.like.data.map((e) => {return e.id}).indexOf(action.data.movie.id) > -1) {
                     let removeFromArray = [...state.like.data];
                     let index = removeFromArray.map((e) => {

@@ -2,7 +2,15 @@ import Immutable from 'seamless-immutable';
 
 export default {
     userInfo: {
-        data: {},
+        data: {
+            id: 1,
+            display_name: 'Huy Vũ',
+            number_phone: '0396075444',
+            sex: 'Nam',
+            email: 'huyvu0505@gmail.com',
+            id_type_user: 4,
+            url_avatar: 'https://scontent.fsgn5-2.fna.fbcdn.net/v/t31.0-8/28947677_2062594664016900_292927065248317668_o.jpg?_nc_cat=107&_nc_ht=scontent.fsgn5-2.fna&oh=1d158bcb754d87391ae93a8a0e600dea&oe=5C5B5F2F',
+        },
         isLoading: false,
         isError: false,
     },
@@ -62,6 +70,7 @@ export default {
             history:[],
             isLoading: false,
             isError: false,
-        }
+        },
+        navigateState: []
     })
 };

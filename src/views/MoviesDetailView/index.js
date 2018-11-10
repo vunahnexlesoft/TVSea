@@ -54,6 +54,7 @@ class MoviesDetailView extends Component {
         super(props);
         this.state = {
             isShowHeader: false,
+            idMovie: this.props.dataDetail.info ? this.props.dataDetail.info.id : null
         };
         this.onGoBack = this.onGoBack.bind(this);
         this._renderHeader = this._renderHeader.bind(this);
@@ -61,8 +62,10 @@ class MoviesDetailView extends Component {
         this._renderSubDescription = this._renderSubDescription.bind(this);
         this._onClickToLike = this._onClickToLike.bind(this);
         this._renderHeading = this._renderHeading.bind(this);
+        this._onGotoRelated = this._onGotoRelated.bind(this);
+        this._onAddComment = this._onAddComment.bind(this);
+        this._onGotoReview= this._onGotoReview.bind(this);
         this.nScroll = new Animated.Value(0);
-
     }
 
     componentDidMount() {
@@ -71,38 +74,28 @@ class MoviesDetailView extends Component {
         getDataDetailMovieByID({id: movie.id});
     }
 
-    componentWillReceiveProps(nextProps) {
-        const {
-            moviesAction: {getDataDetailMovieByID, getDataRelatedMovie}, dataDetail: {
-                info,
-                actor,
-                director,
-                language,
-                genres,
-                episodes
-            }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
-        } = nextProps;
-        if (!!genres && genres !== this.props.dataDetail.genres
-            && !!actor && actor !== this.props.dataDetail.actor) {
-            const params = {
-                idMovie: info.id,
-                Genres: genres.map((e, i) => {
-                    return e.id
-                }).join(","),
-                Peoples: actor.map((e, i) => {
-                    return e.id
-                }).join(",")
-            };
-            getDataRelatedMovie(params);
-        }
-    }
-
     onGoBack() {
         const {
-            moviesAction: {getDataDetailMovieByID, getDataRelatedMovie, resetStateDataMovies}, navigation
+            moviesAction: {getDataDetailMovieByID, getDataRelatedMovie, resetStateDataMovies}, navigation, navigateState
         } = this.props;
-        resetStateDataMovies({key: "detail", value: {data: [], isLoading: false, isError: false}});
+        let removeFromArray = [...navigateState];
+        if (removeFromArray.length > 0) {
+            let index = removeFromArray.indexOf(this.state.idMovie);
+            removeFromArray.splice(index, 1);
+            resetStateDataMovies({key: 'navigateState', value: removeFromArray});
+        } else {
+            resetStateDataMovies({key: "detail", value: {data: [], isLoading: false, isError: false}});
+        }
         navigation.pop();
+    }
+
+    _onGotoRelated(item) {
+        const {
+            moviesAction: {getDataDetailMovieByID, getDataRelatedMovie, resetStateDataMovies}, navigation, navigateState
+        } = this.props;
+        let navArr = [...navigateState];
+        resetStateDataMovies({key: 'navigateState', value: navArr.concat(item.id)});
+        navigation.push('MoviesDetail', {movie: item});
     }
 
     _onClickToLike() {
@@ -130,6 +123,48 @@ class MoviesDetailView extends Component {
         usersAction.addUserHistoryMovies(data);
     }
 
+    _onAddComment(dataComment){
+        const {
+            moviesAction: {updateCommentMovie}, dataDetail: {
+                info}
+        } = this.props;
+        let date = new Date();
+        let data = {
+            actionType: 'ADD',
+            data:{
+                comment: dataComment.comment,
+                date: date,
+                display_name: "Huy Vũ",
+                id_movie: info.id,
+                id_user: 1,
+                rate: dataComment.rate,
+                url_avatar: 'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.0-9/29197246_2062594664016900_292927065248317668_n.jpg?_nc_cat=107&oh=0582839f39e11a69ab0f4ebe2c9b8ea1&oe=5C6341A6'
+            },
+            params: {
+                idMovie: info.id,
+                idUser: 1,
+                rate: dataComment.rate,
+                comment: dataComment.comment
+            }
+        };
+        updateCommentMovie(data);
+    }
+    _onGotoReview(){
+        const {
+            moviesAction: {updateCommentMovie}, dataDetail: {
+                info, comment}, userInfo
+        } = this.props;
+        let {note,rating} = '';
+        console.log(comment);
+        comment.map((item,index)=>{
+           if(item.id_user === userInfo.id){
+               note = item.comment;
+               rating = item.rate;
+           }
+        });
+        console.log(note, rating);
+        this.refs.modalReview.openModal({note,rating})
+    }
     _renderHeader() {
         const {
             dataLike,
@@ -181,26 +216,24 @@ class MoviesDetailView extends Component {
                         priority: FastImage.priority.normal,
                     }}/>
                 <Animated.View style={{
-                    position: 'absolute', top: height / 3 / 2 - 40 / 2,
-                    left: width / 2 - 20,
+                    position: 'absolute', top: height / 3 / 2 - 20,
+                    left:width / 2 - 10,
                     alignSelf: 'center',
                     flex: 1,
                     zIndex: 3
                 }}>
-                    <ButtonWithIcon nameIcon={'ios-play-outline'}
-                                    icoStyle={{fontSize: global.sizeP40, color: global.colorFF, margin: 0}}
-                                    style={{
-                                        height: 40,
-                                        width: 50,
-                                        borderRadius: 40 / 3,
-                                        backgroundColor: global.transparentWhite2,
-                                        borderWidth: 1,
-                                        borderColor: global.colorFF,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        paddingLeft: 3,
-                                        zIndex: 0
-                                    }}/>
+                    <IconButton nameIcon={'ios-play'}
+                                iconStyle={{
+                                    fontSize: global.sizeP45,
+                                    color: global.colorFF
+                                }}
+                                btnStyle={{
+                                    backgroundColor: 'transparent',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    elevation: 1,
+                                    zIndex: 3
+                                }}/>
                 </Animated.View>
             </Animated.View>
         );
@@ -231,7 +264,7 @@ class MoviesDetailView extends Component {
         });
         return Object.keys(dataDetail).length > 0 ? (
             <Animated.View style={[{
-                backgroundColor: this.state.isShowHeader ? '#232635' : 'transparent',
+                backgroundColor: this.state.isShowHeader ? global.backgroundColor : 'transparent',
                 paddingLeft: 5,
                 paddingRight: 5,
                 zIndex: 3,
@@ -324,10 +357,14 @@ class MoviesDetailView extends Component {
                 actor,
                 director,
                 genres,
-                episodes
-            }, dataRecommend, isRecommendLoading, isRecommendError
+                episodes,
+                comment,
+                related
+            }, dataRecommend, isRecommendLoading, isRecommendError,userInfo
         } = this.props;
-        console.log(this.props.dataDetail);
+        let check = comment.map((e) => {
+            return e.id_user
+        }).indexOf(userInfo.id) >= -1;
         return (
             <View style={{flex: 1}}>
                 <WrapperView heading={'Số tập'}
@@ -383,23 +420,23 @@ class MoviesDetailView extends Component {
                              children={
                                  <View style={{flex: 1}}>
                                      <View style={{
-                                         padding:5,
+                                         padding: 5,
                                          alignItems: 'center',
                                          flexDirection: 'row',
                                          marginBottom: 10,
                                      }}>
                                          <RoundAvatar size={'small'}
                                                       canClick={false}
-                                                      icSrc={'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.0-9/29197246_2062594664016900_292927065248317668_n.jpg?_nc_cat=107&oh=0582839f39e11a69ab0f4ebe2c9b8ea1&oe=5C6341A6'}/>
-                                         <ButtonWithIcon buttonText={'Chia sẻ của bạn....'}
+                                                      icSrc={this.props.userInfo.url_avatar}/>
+                                         <ButtonWithIcon buttonText={check ? 'Xem đánh giá phim của bạn':'Đánh giá ngay....'}
                                                          styleText={{fontSize: global.sizeP16}}
-                                                         onClick={() => this.refs.modalReview.openModal()}
+                                                         onClick={this._onGotoReview}
                                                          style={{
                                                              backgroundColor: 'transparent',
-                                                             flex:1,
-                                                             paddingLeft:13,
-                                                             justifyContent:'flex-start',
-                                                             marginLeft:10,
+                                                             flex: 1,
+                                                             paddingLeft: 13,
+                                                             justifyContent: 'flex-start',
+                                                             marginLeft: 10,
                                                              height: 40,
                                                              borderWidth: 1,
                                                              borderColor: global.darkBlue,
@@ -407,26 +444,26 @@ class MoviesDetailView extends Component {
                                                          }}/>
                                      </View>
                                      <VerticalListView
-                                             ItemSeparatorComponent={() => <View
-                                                 style={{
-                                                     height: 10,
-                                                     width: "100%",
-                                                 }}
-                                             />}
-                                             data={director}
-                                             renderItem={({item, index}) =>
-                                                 <ItemReview item={item}/>
-                                             }/>
+                                         ItemSeparatorComponent={() => <View
+                                             style={{
+                                                 height: 10,
+                                                 width: "100%",
+                                             }}
+                                         />}
+                                         data={comment}
+                                         renderItem={({item, index}) =>
+                                             <ItemReview item={item}/>
+                                         }/>
                                  </View>
                              }/>
                 <WrapperView heading={'Phim liên quan'}
                              styleHeading={{fontSize: global.sizeP16}}
                              children={
-                                 dataRecommend.length > 0 ? (
-                                         <VerticalGirdView data={dataRecommend}
+                                 related.length > 0 ? (
+                                         <VerticalGirdView data={related}
                                                            renderItem={({item, index}) =>
                                                                <ItemChannel uriImage={item.poster_path}
-                                                                            onClick={() => this.props.navigation.push('MoviesDetail', {movie: item})}/>
+                                                                            onClick={this._onGotoRelated.bind(this, item)}/>
                                                            }/>) :
                                      <EmptyView nameIcon={'ios-pulse'} textDes={'Không có phim liên quan'}/>
                              }/>
@@ -457,8 +494,10 @@ class MoviesDetailView extends Component {
             outputRange: [height / 3 - 35 / 2 - 5, 0],
             extrapolate: 'clamp',
         });
+        console.log(dataDetail.comment);
+
         return (
-            <View style={{flex: 1, backgroundColor: '#232635'}}>
+            <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
                 {this._renderHeading()}
                 <Animated.ScrollView
                     scrollEventThrottle={1}
@@ -472,7 +511,7 @@ class MoviesDetailView extends Component {
                     {this._renderHeader()}
                     {
                         Object.keys(dataDetail).length > 0 ? <View
-                            style={{backgroundColor: '#232635', paddingLeft: 10, paddingRight: 10, flex: 1, zIndex: 3}}>
+                            style={{backgroundColor: global.backgroundColor, paddingLeft: 10, paddingRight: 10, flex: 1, zIndex: 3}}>
                             {this._renderDescription()}
                             {this._renderSubDescription()}
                         </View> : <SkypeIndicator color={global.yellowColor}/>
@@ -481,6 +520,7 @@ class MoviesDetailView extends Component {
                 </Animated.ScrollView>
                 <ReviewModal
                     {...this.props}
+                    onAddComment={this._onAddComment}
                     styleModalPopupCustom={{backgroundColor: global.backgroundColor23, borderRadius: 10}}
                     ref={'modalReview'}
                 />
