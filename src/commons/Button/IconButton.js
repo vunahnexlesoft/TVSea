@@ -17,13 +17,13 @@ const IconButton = ({nameIcon, btnStyle, iconStyle, badge, onClick,disabled}) =>
         textAlign:'center'
     };
     return (
-        <TouchableOpacity style={[buttonStyle, btnStyle]} onPress={onClick} disabled={disabled}>
+        <TouchableOpacity activeOpacity={0.85} style={[buttonStyle, btnStyle]} onPress={onClick} disabled={disabled}>
                 <Icon name={nameIcon} style={iconStyle}/>
-                {badge && <TextComponent text={badge} size={global.sizeP15} color={global.colorF4} style={badgeStyle}/>}
+                {badge ? <TextComponent text={badge} size={global.sizeP15} color={global.colorF4} style={badgeStyle}/> : null}
         </TouchableOpacity>
     );
 };
-TextComponent.defaultProps = {
+IconButton.defaultProps = {
     badge: '',
     nameIcon: ''
 };

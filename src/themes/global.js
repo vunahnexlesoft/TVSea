@@ -76,6 +76,7 @@ export default  {
     transparentWhite0: 'rgba(255, 255, 255, 0)',
     transparentBlack3: 'rgba(0, 0, 0, .3)',
     transparentBlack2: 'rgba(0, 0, 0, .2)',
+    transparentBlack5: 'rgba(0, 0, 0, .5)',
     transparentWhite4: 'rgba(255, 255, 255, .4)',
     transparent204: 'rgba(204, 204, 204, .5)',
     transparent77: 'rgba(77,77,77,.4)',

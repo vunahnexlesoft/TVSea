@@ -50,3 +50,7 @@ export const convertTimeToString = (time) =>{
 export const compareDifference = (item1, item2) =>{
   return shallowequal(item1, item2);
 };
+
+export const secondsToTime = (time) =>{
+    return ~~(time / 60) + ":" + (time % 60 < 10 ? "0" : "") + time % 60;
+};

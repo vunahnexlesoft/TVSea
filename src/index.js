@@ -17,6 +17,7 @@ import SignUp from './containers/SignUpContainer';
 import Search from './containers/SearchContainer';
 import MoviesDetail from './containers/MoviesDetailContainer';
 import VideoItemView from './modules/VideoItemView';
+import Video from './containers/VideoContainer';
 import ViewAll from './containers/ViewAllContainer';
 import moment from 'moment';
 moment.updateLocale("en", {
@@ -96,7 +97,7 @@ const TabBar = createBottomTabNavigator({
 );
 const RootNavigator = createStackNavigator({
         TabBar: {screen: TabBar},
-        Video: {screen: VideoItemView},
+        Video: {screen: Video},
         MoviesDetail: {screen: MoviesDetail},
         ViewAll: {screen: ViewAll}
     },
