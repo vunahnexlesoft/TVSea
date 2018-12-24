@@ -99,10 +99,12 @@ const RootNavigator = createStackNavigator({
         TabBar: {screen: TabBar},
         Video: {screen: Video},
         MoviesDetail: {screen: MoviesDetail},
-        ViewAll: {screen: ViewAll}
+        ViewAll: {screen: ViewAll},
+        SignIn: {screen: SignIn},
+        SignUp: {screen: SignUp}
     },
     {
-        initialRouteName: "TabBar",
+        initialRouteName: "SignIn",
         headerMode: "none",
     }
 );

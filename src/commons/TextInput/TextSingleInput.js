@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multiline,value, placeholder, placeholderTextColor, style,
                                 onChangeText,autoCapitalize,secureTextEntry,onEndEditing,
-                                returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning,styleForm,onChange}) => {
+                                returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning,styleForm,onChange,textWarning}) => {
     const borderColor = warning ? styles.borderWarning : null;
     const height = multiline ? 150 : 40;
     return (
@@ -17,10 +17,10 @@ const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multil
             <View style ={[{
                 backgroundColor: 'white',
                 borderRadius: 6,
-                height:height,
+                height: height,
                 flexDirection:'row'
             },styleForm]}>
-                <Icon name = {nameIcon} style={{marginLeft:10,alignSelf: 'center',fontSize:30, color: global.darkBlue, marginTop:2}}/>
+                <Icon name = {nameIcon} style={{marginLeft:10,alignSelf: 'center',fontSize:30, color: global.darkBlue, height:30, width:25}}/>
                 {
                     multiline ?  <View style={[styles.divider, {height: 150}]}/> : <View style={styles.divider}/>
                 }
@@ -53,7 +53,7 @@ const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multil
             </View>
             {
                 warning ? <View style={styles.footerWarningWrapper}>
-                    <TextComponent text={'Số điện thoại không đúng'} style={styles.textFooterWarning}/>
+                    <TextComponent text={textWarning} style={styles.textFooterWarning}/>
                 </View> : <View style={{height:10}}/>
             }
         </View>
@@ -67,6 +67,7 @@ TextSingleInput.defaultProps = {
     placeholder: "",
     secureTextEntry: false,
     placeholderTextColor: "white",
+    textWarning: '',
     warning:false,
     multiline: false
 };
@@ -74,6 +75,7 @@ TextSingleInput.defaultProps = {
 TextSingleInput.propTypes = {
     value: PropTypes.string,
     placeholder: PropTypes.string,
+    textWarning: PropTypes.string,
     style: PropTypes.oneOfType([PropTypes.number,PropTypes.object,PropTypes.array]),
     styleForm: PropTypes.oneOfType([PropTypes.number,PropTypes.object,PropTypes.array]),
     onChangeText: PropTypes.func,

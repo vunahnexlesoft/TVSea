@@ -80,7 +80,7 @@ export default  {
     transparentWhite4: 'rgba(255, 255, 255, .4)',
     transparent204: 'rgba(204, 204, 204, .5)',
     transparent77: 'rgba(77,77,77,.4)',
-    transparentPrimary: 'rgba(126,195,77,.5)',
+    transparentPrimary: 'rgba(255, 204, 0,.5)',
     //for fontSize
     sizeP10: 10,
     sizeP12: 12,

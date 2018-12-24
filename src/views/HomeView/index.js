@@ -36,7 +36,8 @@ export default class HomeView extends Component {
         this.setState({index: item.id});
     }
     renderScene() {
-        const{dataPhimle, isPhimleLoading} = this.props;
+        const{dataPhimle, isPhimleLoading, userInfo} = this.props;
+        console.log(userInfo);
         switch (this.state.index) {
             case 1:
                 return (
@@ -50,7 +51,7 @@ export default class HomeView extends Component {
                                           />}
                                           renderItem={({item, index}) =>
                                               <ItemChannel numCol={1}
-                                                           onClick={()=> this.props.navigation.navigate('Video',{host:"https://firebasestorage.googleapis.com/v0/b/livestreaming-46229.appspot.com/o/tranformer5.mp4?alt=media&token=06006234-38c4-465b-87e5-d8adc1efb85f"})}
+                                                           onClick={()=> this.props.navigation.navigate('Video',{host: STRING.VAR.VIDEO_DEFAULT, url: item.backdrop_path})}
                                                            uriImage={item.backdrop_path}/>
                                           }/>
                     </View>

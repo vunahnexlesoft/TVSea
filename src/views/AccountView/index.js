@@ -36,13 +36,13 @@ export default class AccountView extends Component {
     }
 
     renderScene() {
-        const {data, isLoading,userInfo} = this.props;
+        const {data, isLoading, userInfo} = this.props;
         console.log(userInfo);
         switch (this.state.index) {
             case 1:
                 return (
-                    <View style={{flex: 1, marginTop: 10}}>
-                        <View style={{backgroundColor: global.backgroundColor23, padding: 10,borderRadius:10}}>
+                    <View style={styles.containerScreen}>
+                        <View style={styles.viewHeaderTop}>
                             <View style={{alignItems: 'center'}}>
                                 <RoundAvatar
                                     size={'x-small'}
@@ -51,51 +51,47 @@ export default class AccountView extends Component {
                                                style={{marginTop: 2}}/>
                                 <TextComponent text={userInfo.email} size={global.sizeP16}
                                                color={global.grayDarkColor} style={{marginTop: 5}}/>
-                                <TextComponent text={userInfo.number_phone} size={global.sizeP16} color={global.grayDarkColor}
+                                <TextComponent text={userInfo.number_phone} size={global.sizeP16}
+                                               color={global.grayDarkColor}
                                                style={{marginTop: 2}}/>
                                 <TextComponent text={'20/07/1996'} size={global.sizeP16} color={global.grayDarkColor}
                                                style={{marginTop: 2, marginBottom: 2}}/>
                                 <ButtonWithIcon buttonText={'Đăng xuất'}
                                                 styleText={{fontSize: global.sizeP15, color: global.grayDarkColor}}
-                                                style={{
-                                                    position: 'absolute',
-                                                    right: 0,
-                                                    top: 0,
-                                                    backgroundColor: 'transparent', height: null, padding: 5
-                                                }}/>
+                                                style={styles.btnLogOut}/>
                             </View>
                             <Divide/>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <View style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    borderRightWidth: 0.5,
-                                    borderRightColor: global.darkBlue
-                                }}>
+                            <View style={styles.viewCount}>
+                                <View style={styles.viewContentCount}>
                                     <TextComponent text={'100K'} color={global.lightGreen} size={global.sizeP18}/>
                                     <TextComponent text={'Tiền hiện tại'} size={global.sizeP16}
                                                    color={global.grayLightColor}/>
                                 </View>
-                                <View style={{
-                                    flex: 1,
-                                    alignItems: 'center',
-                                    borderLeftWidth: 0.5,
-                                    borderLeftColor: global.darkBlue
-                                }}>
+                                <View style={styles.viewContentCount1}>
                                     <TextComponent text={'56'} color={global.lightGreen} size={global.sizeP18}/>
                                     <TextComponent text={'Số lần xem'} size={global.sizeP16}
                                                    color={global.grayLightColor}/>
                                 </View>
                             </View>
                         </View>
-                        <View style={{backgroundColor: global.backgroundColor23, padding: 10,borderRadius:10,marginTop: 5}}>
+                        <View style={{
+                            backgroundColor: global.backgroundColor23,
+                            padding: 10,
+                            borderRadius: 10,
+                            marginTop: 5
+                        }}>
                             <TextComponent text={'Xếp hạng thành viên'} size={global.sizeP18}
                                            color={global.grayDarkColor}
                                            style={{marginTop: 2}}/>
                             <TextComponent text={'Starter'} size={global.sizeP18} color={global.colorFF}
                                            style={{marginTop: 2}}/>
                         </View>
-                        <View style={{backgroundColor: global.backgroundColor23, padding: 10,borderRadius:10,marginTop: 5}}>
+                        <View style={{
+                            backgroundColor: global.backgroundColor23,
+                            padding: 10,
+                            borderRadius: 10,
+                            marginTop: 5
+                        }}>
                             <TouchableOpacity activeOpacity={0.8}>
                                 <View style={{
                                     flexDirection: 'row',
@@ -183,6 +179,3 @@ export default class AccountView extends Component {
         );
     }
 }
-
-
-

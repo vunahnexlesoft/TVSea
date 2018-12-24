@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     textFooterWarning: {
         color: 'white',
         fontSize: global.sizeP13,
-        fontFamily: global.fontRegular,
+        //fontFamily: global.fontRegular,
         //paddingLeft: 5,
     },
     divider: {

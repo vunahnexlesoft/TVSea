@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as restClient from "../../services/restClient";
 import configureStore from '../Store/configStore'
 import {addOrDeleteUserPropertyMoviesSuccess} from "./actionLoginCreators";
+import userInfoReducer from "../Reducer/userInfoReducer";
 const {persistor, store} = configureStore();
 
 export function dataFetchingCategory(category) {
@@ -179,7 +180,7 @@ export function updateComment(data) {
 export function getDataMoviebyCategory(params) {
     return (dispatch) => {
         let url = URL.base_url + URL.GET_MOVIES_BY_CATEGORY;
-        let token = store.getState().userLoginReducer.token;
+        let token = store.getState().userInfoReducer.token;
         dispatch(dataFetchingCategory(params.category));
         restClient.excuteAPI("get",url,token,params).then(res =>{
             if(res.success){
@@ -194,7 +195,7 @@ export function getDataMoviebyCategory(params) {
 export function getDataTopMovie(params) {
     return (dispatch) => {
         let url = URL.base_url + URL.GET_TOP_MOVIES_BY_CATEGORY;
-        let token = store.getState().userLoginReducer.token;
+        let token = store.getState().userInfoReducer.token;
         dispatch(dataFetchingTop());
         restClient.excuteAPI("get",url,token,params).then(res =>{
             if(res.success){
@@ -209,7 +210,7 @@ export function getDataTopMovie(params) {
 export function getAllDataGenres(params) {
     return (dispatch) => {
         var url = URL.base_url + URL.GET_ALL_GENRES;
-        let token = store.getState().userLoginReducer.token;
+        let token = store.getState().userInfoReducer.token;
         dispatch(dataFetchingAllGenres());
         restClient.excuteAPI("get",url,token,params).then(res =>{
             if(res.success){
@@ -224,7 +225,7 @@ export function getAllDataGenres(params) {
 export function getDataDetailMovieByID(params) {
     return (dispatch) => {
         var url = URL.base_url + URL.GET_DETAIL_MOVIES_BY_ID;
-        let token = store.getState().userLoginReducer.token;
+        let token = store.getState().userInfoReducer.token;
         dispatch(dataFetchingDetailMovie());
         restClient.excuteAPI("get",url,token,params).then(res =>{
             if(res.success){
@@ -239,7 +240,7 @@ export function getDataDetailMovieByID(params) {
 export function getDataRelatedMovie(params) {
     return (dispatch) => {
         var url = URL.base_url + URL.GET_RECOMMEND_MOVIES;
-        let token = store.getState().userLoginReducer.token;
+        let token = store.getState().userInfoReducer.token;
         dispatch(dataFetchingRelatedMovie());
         restClient.excuteAPI("get",url,token,params).then(res =>{
             if(res.success){
@@ -254,7 +255,7 @@ export function getDataRelatedMovie(params) {
 export function getDataSearchMovie(params) {
     return (dispatch) => {
         var url = URL.base_url + URL.GET_SERACH_MOVIES;
-        let token = store.getState().userLoginReducer.token;
+        let token = store.getState().userInfoReducer.token;
         dispatch(dataFetchingSearchMovie());
         restClient.excuteAPI("get",url,token,params).then(res =>{
             console.log(res,params);
@@ -271,7 +272,7 @@ export function updateCommentMovie(data) {
     return (dispatch) => {
         var url = URL.base_url + (data.actionType === 'ADD' ? URL.POST_USER_COMMENT_MOVIE : URL.PUT_REMOVE_USER_COMMENT_MOVIE);
         let method = data.actionType === 'ADD' ? "post" : "put";
-        let token = store.getState().userLoginReducer.token;
+        let token = store.getState().userInfoReducer.token;
         restClient.excuteAPI(method, url, token, null, data.params).then(res => {
             if (res.success) {
                 dispatch(updateComment(data))

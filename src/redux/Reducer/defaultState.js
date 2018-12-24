@@ -13,9 +13,9 @@ export default {
         },
         isLoading: false,
         isError: false,
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eXZ1MTExQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaWF0IjoxNTQwMTc1NjczfQ.7nLnF2dwzgbdMK5gmiCI_2_DvqzOC7Stqf2jRaeg-eI",
     },
     user: Immutable({
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imh1eXZ1MTExQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaWF0IjoxNTQwMTc1NjczfQ.7nLnF2dwzgbdMK5gmiCI_2_DvqzOC7Stqf2jRaeg-eI",
         history: {
             data: [],
             isLoading: false,
