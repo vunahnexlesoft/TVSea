@@ -67,7 +67,7 @@ export default class DiscoverView extends Component {
             actionType: 'ADD',
             params: {
                 idMovie: movie.id,
-                idUser: 1,
+                idUser: this.props.userInfo.id,
                 Key: 1
             }
         };

@@ -32,5 +32,6 @@ export const HEADER = {
 };
 
 export const VAR = {
-    VIDEO_DEFAULT: 'https://firebasestorage.googleapis.com/v0/b/livestreaming-46229.appspot.com/o/guardians2.mp4?alt=media&token=ad0219b2-0b04-4988-9b5c-3783b24801a3'
+    VIDEO_DEFAULT: 'https://firebasestorage.googleapis.com/v0/b/livestreaming-46229.appspot.com/o/guardians2.mp4?alt=media&token=ad0219b2-0b04-4988-9b5c-3783b24801a3',
+    STEAMING_URL: 'http://127.0.0.1:5080/live/streaming.m3u8'
 };

@@ -97,7 +97,7 @@ export default class VideoPlayer extends Component {
                     source={{uri: host}}
                     //source={localImage.icVideos}
                     style={videoStyle}
-                    poster={url}
+                    //poster={url}
                     rate={this.state.rate}
                     paused={this.state.paused}
                     volume={this.state.volume}

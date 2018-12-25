@@ -33,8 +33,8 @@ export default class HistoryView extends Component {
 
     componentDidMount() {
         const {usersAction: {getDataUserHistoryMovie, getDataUserLikeMovie}, userInfo} = this.props;
-        getDataUserHistoryMovie({id: 1});
-        getDataUserLikeMovie({id: 1});
+        getDataUserHistoryMovie({id: userInfo.id});
+        getDataUserLikeMovie({id: userInfo.id});
     }
     static getDerivedStateFromProps(nextProps, prevState){
         if(UTIL_FUNCTION.compareDifference(nextProps.dataHistory,prevState.dataHistory)

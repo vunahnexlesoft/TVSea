@@ -51,7 +51,7 @@ export default class HomeView extends Component {
                                           />}
                                           renderItem={({item, index}) =>
                                               <ItemChannel numCol={1}
-                                                           onClick={()=> this.props.navigation.navigate('Video',{host: STRING.VAR.VIDEO_DEFAULT, url: item.backdrop_path})}
+                                                           onClick={()=> this.props.navigation.navigate('Video',{host: STRING.VAR.STEAMING_URL, url: item.backdrop_path})}
                                                            uriImage={item.backdrop_path}/>
                                           }/>
                     </View>

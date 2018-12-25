@@ -100,6 +100,7 @@ class MoviesDetailView extends Component {
 
     _onClickToLike() {
         const {
+            userInfo,
             usersAction,
             dataLike,
             dataDetail: {
@@ -116,7 +117,7 @@ class MoviesDetailView extends Component {
             actionType: check ? 'ADD' : 'REMOVE',
             params: {
                 idMovie: info.id,
-                idUser: 1,
+                idUser: userInfo.id,
                 Key: 2
             }
         };
@@ -125,6 +126,7 @@ class MoviesDetailView extends Component {
 
     _onAddComment(dataComment){
         const {
+            userInfo,
             moviesAction: {updateCommentMovie}, dataDetail: {
                 info}
         } = this.props;
@@ -134,15 +136,15 @@ class MoviesDetailView extends Component {
             data:{
                 comment: dataComment.comment,
                 date: date,
-                display_name: "Huy Vũ",
+                display_name: userInfo.display_name,
                 id_movie: info.id,
-                id_user: 1,
+                id_user: userInfo.id,
                 rate: dataComment.rate,
-                url_avatar: 'https://scontent.fsgn5-2.fna.fbcdn.net/v/t1.0-9/29197246_2062594664016900_292927065248317668_n.jpg?_nc_cat=107&oh=0582839f39e11a69ab0f4ebe2c9b8ea1&oe=5C6341A6'
+                url_avatar: userInfo.url_avatar
             },
             params: {
                 idMovie: info.id,
-                idUser: 1,
+                idUser: userInfo.id,
                 rate: dataComment.rate,
                 comment: dataComment.comment
             }
