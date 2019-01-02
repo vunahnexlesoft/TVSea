@@ -124,10 +124,10 @@ export default class SignIn extends Component {
                                                  nameIcon={'ios-lock'}/>
                             </View>
                             <ButtonWithIcon buttonText={'Đăng nhập'.toUpperCase()}
-                                            styleText={{fontSize: global.sizeP16}}
+                                            styleText={{fontSize: global.sizeP16, fontWeight: "700"}}
                                             onClick={this.onClickLogin}
                                             style={{
-                                                backgroundColor: global.grayDarkColor,
+                                                backgroundColor: global.yellowColor,
                                                 marginTop: 20,
                                                 height: 40,
                                                 width: width / 2 - 30,
