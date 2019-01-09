@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multiline,value, placeholder, placeholderTextColor, style,
                                 onChangeText,autoCapitalize,secureTextEntry,onEndEditing,
-                                returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning,styleForm,onChange,textWarning,styleIcon}) => {
+                                returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning,styleForm,onChange,textWarning,styleIcon,styleDivider}) => {
     const borderColor = warning ? styles.borderWarning : null;
     const height = multiline ? 150 : 40;
     return (
@@ -22,7 +22,7 @@ const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multil
             },styleForm]}>
                 <Icon name = {nameIcon} style={[{marginLeft:10,alignSelf: 'center',fontSize:30, color: global.darkBlue, height:30, width:25},styleIcon]}/>
                 {
-                    multiline ?  <View style={[styles.divider, {height: 150}]}/> : <View style={styles.divider}/>
+                    multiline ?  <View style={[styles.divider, {height: 150}, styleDivider]}/> : <View style={[styles.divider,styleDivider]}/>
                 }
 
                 <TextInput
@@ -98,5 +98,6 @@ TextSingleInput.propTypes = {
     returnKeyLabel:PropTypes.string,
     numberOfLines:PropTypes.number,
     styleIcon: PropTypes.oneOfType([PropTypes.number,PropTypes.object,PropTypes.array]),
+    styleDivider: PropTypes.oneOfType([PropTypes.number,PropTypes.object,PropTypes.array]),
 };
 export default TextSingleInput;

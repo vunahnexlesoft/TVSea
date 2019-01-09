@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, Image, View, KeyboardAvoidingView,Alert} from 'react-native';
+import {Animated, Dimensions, Image, View, KeyboardAvoidingView,Alert,ImageBackground} from 'react-native';
 import styles from './styles';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import global from "../../themes/global";
@@ -63,16 +63,18 @@ export default class SignIn extends Component {
     render() {
         const {isLoading, isError} = this.props;
         return (
-            <View style={{
+            <ImageBackground style={{
                 flex: 1,
                 backgroundColor: global.backgroundColor23,
                 paddingLeft: 20,
                 paddingRight: 20,
-                alignItems: 'center'
-            }}>
+                alignItems: 'center',
+                zIndex:1
+            }} blurRadius={5} source={localImage.background}>
                 {
                     !isLoading ? <View style={{
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        zIndex:1
                     }}>
                         <KeyboardAvoidingView behavior="padding" enabled style={{
                             alignItems: 'center'
@@ -93,7 +95,7 @@ export default class SignIn extends Component {
                                     flexDirection: 'row',
                                     backgroundColor: 'transparent',
                                     borderWidth: 1,
-                                    borderColor: global.darkBlue,
+                                    borderColor: global.colorFF,//global.darkBlue,
                                     borderRadius: 8, alignItems: 'center'
                                 }}
                                                  warning={this.state.isWarningEmail}
@@ -101,7 +103,9 @@ export default class SignIn extends Component {
                                                  value={this.state.email}
                                                  onChangeText={(email) => this.setState({email, isWarningEmail: false})}
                                                  placeholder={'Email'}
-                                                 placeholderTextColor={global.darkBlue}
+                                                 placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                                 styleIcon={{color: global.colorFF}}
+                                                 styleDivider={{backgroundColor: global.colorFF}}
                                                  style={{fontSize: global.sizeP18, color: global.colorFF}}
                                                  nameIcon={'ios-mail'}/>
 
@@ -110,7 +114,7 @@ export default class SignIn extends Component {
                                     flexDirection: 'row',
                                     backgroundColor: 'transparent',
                                     borderWidth: 1,
-                                    borderColor: global.darkBlue,
+                                    borderColor: global.colorFF,//global.darkBlue,
                                     borderRadius: 8, alignItems: 'center'
                                 }}
                                                  warning={this.state.isWarningPassword}
@@ -119,7 +123,9 @@ export default class SignIn extends Component {
                                                  onChangeText={(password) => this.setState({password,isWarningPassword: false})}
                                                  placeholder={'Mật khẩu'}
                                                  secureTextEntry
-                                                 placeholderTextColor={global.darkBlue}
+                                                 placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                                 styleIcon={{color: global.colorFF}}
+                                                 styleDivider={{backgroundColor: global.colorFF}}
                                                  style={{fontSize: global.sizeP18, color: global.colorFF}}
                                                  nameIcon={'ios-lock'}/>
                             </View>
@@ -173,8 +179,7 @@ export default class SignIn extends Component {
                         </View>
                     </View> : <SkypeIndicator color={global.yellowColor}/>
                 }
-
-            </View>
+            </ImageBackground>
         );
     }
 }

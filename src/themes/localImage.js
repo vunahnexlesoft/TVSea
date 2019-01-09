@@ -6,6 +6,6 @@ const images = {
     icStar: require("../images/star.png"),
     icStarUnFill: require("../images/starNoActive.png"),
     posterAvd: require("../images/trailer.png"),
-    background: require("../images/background_movie.jpg")
+    background: require("../images/background1.jpg")
 };
 export default images;

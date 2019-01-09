@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, Image, View, Keyboard, KeyboardAvoidingView, Alert} from 'react-native';
+import {Animated, Dimensions, Image, View, Keyboard, KeyboardAvoidingView, Alert,ImageBackground} from 'react-native';
 import styles from './styles';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import global from "../../themes/global";
@@ -78,87 +78,91 @@ export default class SignUp extends Component {
     }
     render() {
         return (
-            <KeyboardAvoidingView behavior="padding" enabled style={{
-                flex: 1,
-                backgroundColor: global.backgroundColor23,
-                paddingLeft: 20,
-                paddingRight: 20,
-                alignItems: 'center'
-            }}>
-                <Text text={'Vui lòng nhập thông tin bên dưới'} color={global.colorFF} size={global.sizeP30}
-                      numberOfLines={2}
-                      style={{
-                          alignSelf: 'center',
-                          width: width / 2 + 70,
-                          marginTop: width / 2 - 70, textAlign: 'center'
-                      }}/>
-                <View style={{marginTop: 20}}>
-                    <TextSingleInput styleForm={{
-                        height: height / 15,
-                        flexDirection: 'row',
-                        backgroundColor: 'transparent',
-                        borderWidth: 1,
-                        borderColor: global.darkBlue,
-                        borderRadius: 8, alignItems: 'center'
-                    }}
-                                     warning={this.state.isWarningName}
-                                     textWarning={this.state.warningName}
-                                     value={this.state.name}
-                                     onChangeText={(name) => this.setState({name,isWarningName: false})}
-                                     placeholder={'Họ & tên'}
-                                     placeholderTextColor={global.darkBlue}
-                                     style={{fontSize: global.sizeP18, color: global.colorFF}}
-                                     nameIcon={'ios-contact'}/>
-                    <TextSingleInput styleForm={{
-                        height: height / 15,
-                        flexDirection: 'row',
-                        backgroundColor: 'transparent',
-                        borderWidth: 1,
-                        borderColor: global.darkBlue,
-                        borderRadius: 8, alignItems: 'center'
-                    }}
-                                     warning={this.state.isWarningEmail}
-                                     textWarning={this.state.warningEmail}
-                                     value={this.state.email}
-                                     onChangeText={(email) => this.setState({email,isWarningEmail:false})}
-                                     placeholder={'Email'}
-                                     placeholderTextColor={global.darkBlue}
-                                     style={{fontSize: global.sizeP18, color: global.colorFF}}
-                                     nameIcon={'ios-mail'}/>
+            <ImageBackground style={{flex:1,backgroundColor: global.backgroundColor23, alignItems: 'center',zIndex:1}} source={localImage.background}  blurRadius={5}>
+                <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={100} style={{zIndex:1,flex: 1,alignItems: 'center',paddingLeft: 20, paddingRight: 20}}>
+                    <Text text={'Vui lòng nhập thông tin bên dưới'} color={global.colorFF} size={global.sizeP30}
+                          numberOfLines={2}
+                          style={{
+                              alignSelf: 'center',
+                              width: width / 2 + 70,
+                              marginTop: width / 2 - 70, textAlign: 'center'
+                          }}/>
+                    <View style={{marginTop: 20}}>
+                        <TextSingleInput styleForm={{
+                            height: height / 15,
+                            flexDirection: 'row',
+                            backgroundColor: 'transparent',
+                            borderWidth: 1,
+                            borderColor: global.colorFF,//global.darkBlue,
+                            borderRadius: 8, alignItems: 'center'
+                        }}
+                                         warning={this.state.isWarningName}
+                                         textWarning={this.state.warningName}
+                                         value={this.state.name}
+                                         onChangeText={(name) => this.setState({name,isWarningName: false})}
+                                         placeholder={'Họ & tên'}
+                                         placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                         styleIcon={{color: global.colorFF}}
+                                         styleDivider={{backgroundColor: global.colorFF}}
+                                         style={{fontSize: global.sizeP18, color: global.colorFF}}
+                                         nameIcon={'ios-contact'}/>
+                        <TextSingleInput styleForm={{
+                            height: height / 15,
+                            flexDirection: 'row',
+                            backgroundColor: 'transparent',
+                            borderWidth: 1,
+                            borderColor: global.colorFF,//global.darkBlue,
+                            borderRadius: 8, alignItems: 'center'
+                        }}
+                                         warning={this.state.isWarningEmail}
+                                         textWarning={this.state.warningEmail}
+                                         value={this.state.email}
+                                         onChangeText={(email) => this.setState({email,isWarningEmail:false})}
+                                         placeholder={'Email'}
+                                         placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                         styleIcon={{color: global.colorFF}}
+                                         styleDivider={{backgroundColor: global.colorFF}}
+                                         style={{fontSize: global.sizeP18, color: global.colorFF}}
+                                         nameIcon={'ios-mail'}/>
 
-                    <TextSingleInput styleForm={{
-                        height: height / 15,
-                        flexDirection: 'row',
-                        backgroundColor: 'transparent',
-                        borderWidth: 1,
-                        borderColor: global.darkBlue,
-                        borderRadius: 8, alignItems: 'center'
-                    }}
-                                     warning={this.state.isWarningPassword}
-                                     textWarning={this.state.warningPassword}
-                                     value={this.state.password}
-                                     onChangeText={(password) => this.setState({password, isWarningPassword:false})}
-                                     placeholder={'Mật khẩu'}
-                                     secureTextEntry
-                                     placeholderTextColor={global.darkBlue}
-                                     style={{fontSize: global.sizeP18, color: global.colorFF}}
-                                     nameIcon={'ios-lock'}/>
-                </View>
-                <ButtonWithIcon buttonText={'Xác nhận'.toUpperCase()}
-                                styleText={{fontSize: global.sizeP16}}
-                                onClick={this.onClickRegister}
-                                style={{
-                                    backgroundColor: global.grayDarkColor,
-                                    marginTop: 20,
-                                    height: 40,
-                                    width: width / 2 - 30,
-                                    borderWidth: 0,
-                                    borderRadius: 20
-                                }}/>
+                        <TextSingleInput styleForm={{
+                            height: height / 15,
+                            flexDirection: 'row',
+                            backgroundColor: 'transparent',
+                            borderWidth: 1,
+                            borderColor: global.colorFF,//global.darkBlue,
+                            borderRadius: 8, alignItems: 'center'
+                        }}
+                                         warning={this.state.isWarningPassword}
+                                         textWarning={this.state.warningPassword}
+                                         value={this.state.password}
+                                         onChangeText={(password) => this.setState({password, isWarningPassword:false})}
+                                         placeholder={'Mật khẩu'}
+                                         secureTextEntry
+                                         placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                         styleIcon={{color: global.colorFF}}
+                                         styleDivider={{backgroundColor: global.colorFF}}
+                                         style={{fontSize: global.sizeP18, color: global.colorFF}}
+                                         nameIcon={'ios-lock'}/>
+                    </View>
+                    <ButtonWithIcon buttonText={'Xác nhận'.toUpperCase()}
+                                    styleText={{fontSize: global.sizeP16}}
+                                    onClick={this.onClickRegister}
+                                    style={{
+                                        backgroundColor: global.yellowColor,
+                                        marginTop: 20,
+                                        height: 40,
+                                        width: width / 2 - 30,
+                                        borderWidth: 0,
+                                        borderRadius: 20
+                                    }}/>
+
+                </KeyboardAvoidingView>
                 <View style={{justifyContent: 'flex-end', flex: 1, alignItems: 'center'}}>
                     <ButtonWithIcon buttonText={'Tôi đã đọc và đồng ý với các điều khoản sử dụng của TVs'}
                                     styleText={{fontSize: global.sizeP16}}
                                     style={{
+                                        paddingRight:20, paddingLeft:20,
                                         backgroundColor: 'transparent',
                                         marginTop: 8,
                                         marginBottom: 10,
@@ -188,7 +192,7 @@ export default class SignUp extends Component {
                                     paddingTop: 2,
                                     zIndex: 2
                                 }}/>
-            </KeyboardAvoidingView>
+            </ImageBackground>
         );
     }
 }

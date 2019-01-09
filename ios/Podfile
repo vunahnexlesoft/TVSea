@@ -9,6 +9,7 @@ pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
-  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+#pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+pod 'react-native-ksyvideo', :path => '../node_modules/react-native-ksyvideo'
 
 end
