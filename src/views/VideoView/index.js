@@ -21,6 +21,9 @@ import ProgressTimeVideo from "../../commons/ProgressBar/ProgressTimeVideo";
 import * as UTIL_FUNCTION from '../../util';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import SkypeIndicator from "react-native-indicators/src/components/skype-indicator/index";
+import firebaseUtil from "../../services/firebase";
+import firebase from 'react-native-firebase';
+
 const {height, width} = Dimensions.get('window');
 
 export default class VideoPlayer extends Component {
@@ -31,6 +34,8 @@ export default class VideoPlayer extends Component {
         this.onProgress = this.onProgress.bind(this);
         this.onBuffer = this.onBuffer.bind(this);
         this.onClickPropress = this.onClickPropress.bind(this);
+        this._onGoBackScreen = this._onGoBackScreen.bind(this);
+        this._onCallBack = this._onCallBack.bind(this);
     }
 
     state = {
@@ -44,17 +49,35 @@ export default class VideoPlayer extends Component {
         paused: false,
         ignoreSilentSwitch: null,
         isBuffering: false,
-        isLoadingVideo: false
+        isLoadingVideo: false,
+        counter: 0
     };
-    onClickPropress(e){
+
+    componentDidMount() {
+        firebase.database().ref('Channel').on('value', (snap) => {
+            const items = [];
+            snap.forEach((child) => {
+                let item = child.val();
+                item['key'] = child.key;
+                items.push(item);
+            });
+            this.setState({
+                counter: items.length
+            });
+        });
+    }
+
+    onClickPropress(e) {
         const position = e.nativeEvent.locationX;
-        const propress = (position / (width - 110))*  this.state.duration;
+        const propress = (position / (width - 110)) * this.state.duration;
         this.refs.player.seek(propress);
     }
-    onLoadStart(data){
+
+    onLoadStart(data) {
         console.log('onLoadStart');
         this.setState({isLoadingVideo: true})
     }
+
     onLoad(data) {
         console.log('onLoad');
         this.setState({duration: data.duration, isLoadingVideo: false});
@@ -69,19 +92,29 @@ export default class VideoPlayer extends Component {
         this.setState({isBuffering});
     }
 
+    _onGoBackScreen() {
+        firebaseUtil.removeNewUserOnline(this.props.userInfo);
+        this.props.navigation.goBack()
+    }
+
+    _onCallBack() {
+        firebaseUtil.getUserOnlineOnStream('Channel', (callback) => {
+            if (callback) return callback;
+        });
+    }
+
     renderNativeSkin() {
         const videoStyle = styles.fullScreen;
         const getTime = Math.floor(this.state.currentTime * this.state.duration);
-        const {host, url} = this.props.navigation.state.params;
-        console.log('isLoadingVideo',this.state.isLoadingVideo);
+        const {host, url, type} = this.props.navigation.state.params;
         return (
             <View style={styles.container}>
                 <ButtonWithIcon nameIcon={'ios-arrow-back-outline'}
-                                onClick={() => this.props.navigation.goBack()}
+                                onClick={this._onGoBackScreen}
                                 icoStyle={{
                                     fontSize: global.sizeP25,
                                     color: global.colorFF,
-                                    marginRight:6
+                                    marginRight: 6
                                 }}
                                 style={{
                                     height: 35,
@@ -92,6 +125,18 @@ export default class VideoPlayer extends Component {
                                     justifyContent: 'center',
                                     position: 'absolute', top: 10, left: 10, zIndex: 1
                                 }}/>
+                {
+                    type === "stream" ? <ButtonWithIcon buttonText={"Live: " + this.state.counter} style={{
+                        height: 30,
+                        //width: 50,
+                        paddingHorizontal: 10,
+                        borderRadius: 35 / 3,
+                        backgroundColor: global.red,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        position: 'absolute', top: 10, right: 10, zIndex: 1
+                    }}/> : null
+                }
                 <Video
                     ref={'player'}
                     source={{uri: host}}
@@ -112,14 +157,9 @@ export default class VideoPlayer extends Component {
                     repeat={true}
                     controls={this.state.controls}
                 />
-                {
-                    this.state.isLoadingVideo ? <View style={{flex:1,position:'absolute', top:0, bottom: 0, left: 0, right:0,zIndex:1}}>
-                        <SkypeIndicator color={global.yellowColor}/>
-                    </View> : null
-                }
                 <View style={{
                     backgroundColor: global.transparentWhite1,
-                    alignSelf:'center',
+                    alignSelf: 'center',
                     width: width - 10,
                     bottom: 10,
                     borderRadius: 10,
@@ -135,11 +175,17 @@ export default class VideoPlayer extends Component {
                     <ProgressTimeVideo progress={this.state.currentTime} onClick={this.onClickPropress}/>
                     <TextComponent text={UTIL_FUNCTION.secondsToTime(getTime)} color={global.colorFF}/>
                 </View>
+                {
+                    this.state.isLoadingVideo ? <View style={{alignSelf: 'center', height: 100, width: 100}}>
+                        <SkypeIndicator color={global.yellowColor}/>
+                    </View> : null
+                }
             </View>
         );
     }
 
     render() {
+        console.log('UserOnline', this.state.counter);
         return this.renderNativeSkin();
     }
 }

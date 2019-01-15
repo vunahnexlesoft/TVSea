@@ -4,7 +4,6 @@ import android.app.Application;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.react.ReactApplication;
-import com.ksyun.media.reactnative.ReactKSYVideoPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -37,7 +36,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactKSYVideoPackage(),
             new FBSDKPackage(mCallbackManager),
             new ReactVideoPackage(),
             new VectorIconsPackage(),

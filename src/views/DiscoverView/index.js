@@ -54,9 +54,11 @@ export default class DiscoverView extends Component {
     }
 
     componentDidMount() {
-        const {moviesAction: {getDataTopMovie, getAllDataGenres}} = this.props;
+        const {moviesAction: {getDataTopMovie, getAllDataGenres}, usersAction: {getDataUserHistoryMovie, getDataUserLikeMovie}, userInfo} = this.props;
         getDataTopMovie({page: 1, size: 6, category: 'Phim le'});
         getAllDataGenres({page: 1, size: 8});
+        getDataUserHistoryMovie({id: userInfo.id});
+        getDataUserLikeMovie({id: userInfo.id});
     }
 
     _navigateToDetail(movie) {
@@ -99,6 +101,23 @@ export default class DiscoverView extends Component {
                                      renderItem={({item, index}) =>
                                          <HighlightCarouselItem item={item}
                                                                 onClick={() => this._navigateToDetail(item)}/>
+                                     }/>}
+                />
+                <WrapperView heading={'Phim dành cho bạn'}
+                             isShowAll
+                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Phim Lẻ', type:'PHIM_LE'})}
+                             children={
+                                 <VerticalListView
+                                     horizontal={true}
+                                     ItemSeparatorComponent={() => <View
+                                         style={{
+                                             width: 15,
+                                         }}
+                                     />}
+                                     data={dataTopMovie}
+                                     renderItem={({item, index}) =>
+                                         <ItemMovieCategory item={item}
+                                                            onClick={() => this._navigateToDetail(item)}/>
                                      }/>}
                 />
                 <WrapperView heading={'Phim mới cập nhật'}

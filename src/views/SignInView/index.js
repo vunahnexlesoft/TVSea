@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, Image, View, KeyboardAvoidingView,Alert,ImageBackground} from 'react-native';
+import {Animated, Dimensions, Image, View, KeyboardAvoidingView,Alert,ImageBackground,AsyncStorage} from 'react-native';
 import styles from './styles';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import global from "../../themes/global";
 import Text from "../../commons/Text/Text";
+import {NavigationActions,StackActions }from 'react-navigation';
 import localImage from "../../themes/localImage";
 import TextSingleInput from "../../commons/TextInput/TextSingleInput";
 import IconButton from "../../commons/Button/IconButton";
@@ -25,6 +26,18 @@ export default class SignIn extends Component {
         warningEmail: '',
         warningPassword: ''
     };
+    componentWillMount() {
+        AsyncStorage.getItem("REMEMBER.ME", (result) => {
+        }).then(result => {
+            let {email, password} = JSON.parse(result);
+            this.setState({
+                email,
+                password
+            });
+        }).catch(error => {
+            console.log("AsyncStorage.getItem error: ", error);
+        });
+    }
     onClickLogin() {
         const {userInfoAction: {postDataLogin}, isLoading, isError} = this.props;
         const {email, password} = this.state;
@@ -34,9 +47,16 @@ export default class SignIn extends Component {
         };
         if (!isLoading && email && password) {
             postDataLogin(params).then(res => {
-                console.log(res);
                 if (res.success) {
-                    this.props.navigation.navigate('TabBar');
+                    AsyncStorage.setItem("REMEMBER.ME", JSON.stringify({email, password})).catch(error => {
+                        console.log("AsyncStorage.setItem error:", error);
+                    });
+                    const resetAction = StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({ routeName: 'TabBar' })],
+                    });
+                    this.props.navigation.dispatch(resetAction);
+                   // this.props.navigation.navigate('TabBar');
                 } else {
                     Alert.alert(
                         null,

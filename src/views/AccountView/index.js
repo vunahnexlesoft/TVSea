@@ -16,6 +16,7 @@ import Divide from "../../commons/Divide";
 import IconButton from "../../commons/Button/IconButton";
 import ItemMovieNew from "../../modules/ItemMovieNew";
 import ItemNotification from "../../modules/ItemNotification";
+import {NavigationActions, StackActions} from "react-navigation";
 
 const {height, width} = Dimensions.get('window');
 
@@ -28,16 +29,23 @@ export default class AccountView extends Component {
         };
         this.renderScene = this.renderScene.bind(this);
         this._onIndexChange = this._onIndexChange.bind(this);
+        this._onLogOut = this._onLogOut.bind(this);
     }
 
     _onIndexChange(item) {
         LayoutAnimation.easeInEaseOut();
         this.setState({index: item.id});
     }
-
+    _onLogOut(){
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
+        });
+        this.props.navigation.dispatch(resetAction);
+    }
     renderScene() {
         const {data, isLoading, userInfo} = this.props;
-        console.log(userInfo);
+        let number_phone = userInfo.number_phone ? userInfo.number_phone : 'Chưa cập nhật SĐT';
         switch (this.state.index) {
             case 1:
                 return (
@@ -51,12 +59,12 @@ export default class AccountView extends Component {
                                                style={{marginTop: 2}}/>
                                 <TextComponent text={userInfo.email} size={global.sizeP16}
                                                color={global.grayDarkColor} style={{marginTop: 5}}/>
-                                <TextComponent text={userInfo.number_phone} size={global.sizeP16}
+                                <TextComponent text={number_phone} size={global.sizeP16}
                                                color={global.grayDarkColor}
                                                style={{marginTop: 2}}/>
-                                <TextComponent text={'20/07/1996'} size={global.sizeP16} color={global.grayDarkColor}
-                                               style={{marginTop: 2, marginBottom: 2}}/>
-                                <ButtonWithIcon buttonText={'Đăng xuất'}
+                                {/*<TextComponent text={'20/07/1996'} size={global.sizeP16} color={global.grayDarkColor}*/}
+                                               {/*style={{marginTop: 2, marginBottom: 2}}/>*/}
+                                <ButtonWithIcon onClick={this._onLogOut} buttonText={'Đăng xuất'}
                                                 styleText={{fontSize: global.sizeP15, color: global.grayDarkColor}}
                                                 style={styles.btnLogOut}/>
                             </View>

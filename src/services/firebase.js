@@ -20,19 +20,29 @@ class firebaseUtil {
     static async saveDataPropduct(callback) {
         await firebase.database().ref().child(`Propduct`).push(callback);
     }
-    static getProductByCategory(){
+    static getUserOnlineOnStream(name,callback){
         let items = [];
-        firebase.database().ref('Propduct').on('value', (snap) => {
+        // firebase.database().ref(`Channel`).on('child_added', (snap)=>{
+        //     let item = snap.val();
+        //     item['key'] = snap.key;
+        //     items.push(item);
+        // });
+        firebase.database().ref(name).on('value', (snap) => {
             snap.forEach((child) => {
                 let item = child.val();
                 item['key'] = child.key;
                 items.push(item);
             });
+            callback(items);
         });
-        return items;
+        //console.log(typeof items);
+        //return items;
     }
-    static async saveProductCart(callback, uid){
-        await firebase.database().ref().child(`Cart/${uid}`).push(callback);
+    static async setNewUserOnline(callback){
+        await firebase.database().ref().child(`Channel/${callback.id}`).set(callback);
+    }
+    static async removeNewUserOnline(callback){
+        await firebase.database().ref().child(`Channel/${callback.id}`).remove();
     }
 }
 module.exports = firebaseUtil;

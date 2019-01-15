@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, Image, View, Keyboard, KeyboardAvoidingView, Alert,ImageBackground} from 'react-native';
+import {
+    Animated,
+    Dimensions,
+    Image,
+    View,
+    Keyboard,
+    KeyboardAvoidingView,
+    Alert,
+    ImageBackground,
+    AsyncStorage
+} from 'react-native';
 import styles from './styles';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import global from "../../themes/global";
@@ -8,6 +18,7 @@ import localImage from "../../themes/localImage";
 import TextSingleInput from "../../commons/TextInput/TextSingleInput";
 import IconButton from "../../commons/Button/IconButton";
 import {postDataLogin, postDataRegister} from "../../redux/ActionCreator/actionUserInfoCreator";
+import {NavigationActions, StackActions} from "react-navigation";
 
 const {height, width} = Dimensions.get('window');
 
@@ -46,7 +57,15 @@ export default class SignUp extends Component {
                     };
                     postDataLogin(params).then(res => {
                         if (res.success) {
-                            this.props.navigation.navigate('TabBar');
+                            AsyncStorage.setItem("REMEMBER.ME", JSON.stringify({email: this.state.email, password: this.state.password})).catch(error => {
+                                console.log("AsyncStorage.setItem error:", error);
+                            });
+                            const resetAction = StackActions.reset({
+                                index: 0,
+                                actions: [NavigationActions.navigate({ routeName: 'TabBar' })],
+                            });
+                            this.props.navigation.dispatch(resetAction);
+                            //this.props.navigation.navigate('TabBar');
                         }else{
                             alert(res.message)
                         }
