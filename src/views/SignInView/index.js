@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, Image, View, KeyboardAvoidingView,Alert,ImageBackground,AsyncStorage} from 'react-native';
+import {Animated, Dimensions, Image, View, KeyboardAvoidingView,Alert,ImageBackground,AsyncStorage,ScrollView} from 'react-native';
 import styles from './styles';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import global from "../../themes/global";
@@ -86,31 +86,25 @@ export default class SignIn extends Component {
             <ImageBackground style={{
                 flex: 1,
                 backgroundColor: global.backgroundColor23,
-                paddingLeft: 20,
-                paddingRight: 20,
+
                 alignItems: 'center',
                 zIndex:1
             }} blurRadius={5} source={localImage.background}>
+                <Image
+                    resizeMode={'cover'}
+                    style={{
+                        width: 80,
+                        height: 80,
+                        borderRadius: 70 / 4,
+                        alignSelf: 'center',
+                        marginTop: width / 2 - 70
+                    }}
+                    source={localImage.icApp}/>
                 {
-                    !isLoading ? <View style={{
-                        alignItems: 'center',
-                        zIndex:1
-                    }}>
-                        <KeyboardAvoidingView behavior="padding" enabled style={{
-                            alignItems: 'center'
-                        }}>
-                            <Image
-                                resizeMode={'cover'}
-                                style={{
-                                    width: 80,
-                                    height: 80,
-                                    borderRadius: 70 / 4,
-                                    alignSelf: 'center',
-                                    marginTop: width / 2 - 70
-                                }}
-                                source={localImage.icApp}/>
-                            <View style={{marginTop: 20}}>
-                                <TextSingleInput styleForm={{
+                    !isLoading ? <ScrollView keyboardShouldPersistTaps={"handled"} style={{flex:1,paddingLeft: 20,
+                        paddingRight: 20,}}>
+                        <KeyboardAvoidingView behavior="padding" enabled style={{flex:1, marginTop:20}}>
+                            <TextSingleInput styleForm={{
                                     height: height / 15,
                                     flexDirection: 'row',
                                     backgroundColor: 'transparent',
@@ -128,7 +122,6 @@ export default class SignIn extends Component {
                                                  styleDivider={{backgroundColor: global.colorFF}}
                                                  style={{fontSize: global.sizeP18, color: global.colorFF}}
                                                  nameIcon={'ios-mail'}/>
-
                                 <TextSingleInput styleForm={{
                                     height: height / 15,
                                     flexDirection: 'row',
@@ -148,7 +141,7 @@ export default class SignIn extends Component {
                                                  styleDivider={{backgroundColor: global.colorFF}}
                                                  style={{fontSize: global.sizeP18, color: global.colorFF}}
                                                  nameIcon={'ios-lock'}/>
-                            </View>
+                        </KeyboardAvoidingView>
                             <ButtonWithIcon buttonText={'Đăng nhập'.toUpperCase()}
                                             styleText={{fontSize: global.sizeP16, fontWeight: "700"}}
                                             onClick={this.onClickLogin}
@@ -156,13 +149,12 @@ export default class SignIn extends Component {
                                                 backgroundColor: global.yellowColor,
                                                 marginTop: 20,
                                                 height: 40,
+                                                alignSelf: 'center',
                                                 width: width / 2 - 30,
                                                 borderWidth: 0,
                                                 borderRadius: 20
                                             }}/>
-                        </KeyboardAvoidingView>
-
-                        <View style={{justifyContent: 'flex-end', flex: 1, alignItems: 'center'}}>
+                        <View style={{height:height/3,justifyContent:'flex-end', flex: 1, alignItems: 'center'}}>
                             <ButtonWithIcon nameIcon={'logo-facebook'}
                                             buttonText={'Facebook'}
                                             onClick={this.onGoBack}
@@ -197,7 +189,7 @@ export default class SignIn extends Component {
                                                 borderWidth: 0,
                                             }}/>
                         </View>
-                    </View> : <SkypeIndicator color={global.yellowColor}/>
+                    </ScrollView> : <SkypeIndicator color={global.yellowColor}/>
                 }
             </ImageBackground>
         );

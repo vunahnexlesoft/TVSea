@@ -8,7 +8,7 @@ import {
     KeyboardAvoidingView,
     Alert,
     ImageBackground,
-    AsyncStorage
+    AsyncStorage, ScrollView
 } from 'react-native';
 import styles from './styles';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
@@ -98,7 +98,7 @@ export default class SignUp extends Component {
     render() {
         return (
             <ImageBackground style={{flex:1,backgroundColor: global.backgroundColor23, alignItems: 'center',zIndex:1}} source={localImage.background}  blurRadius={5}>
-                <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={100} style={{zIndex:1,flex: 1,alignItems: 'center',paddingLeft: 20, paddingRight: 20}}>
+                <ScrollView keyboardShouldPersistTaps={"handled"} contentContainerStyle={{flex:1}}>
                     <Text text={'Vui lòng nhập thông tin bên dưới'} color={global.colorFF} size={global.sizeP30}
                           numberOfLines={2}
                           style={{
@@ -106,89 +106,94 @@ export default class SignUp extends Component {
                               width: width / 2 + 70,
                               marginTop: width / 2 - 70, textAlign: 'center'
                           }}/>
-                    <View style={{marginTop: 20}}>
-                        <TextSingleInput styleForm={{
-                            height: height / 15,
-                            flexDirection: 'row',
-                            backgroundColor: 'transparent',
-                            borderWidth: 1,
-                            borderColor: global.colorFF,//global.darkBlue,
-                            borderRadius: 8, alignItems: 'center'
-                        }}
-                                         warning={this.state.isWarningName}
-                                         textWarning={this.state.warningName}
-                                         value={this.state.name}
-                                         onChangeText={(name) => this.setState({name,isWarningName: false})}
-                                         placeholder={'Họ & tên'}
-                                         placeholderTextColor={global.colorFF}//{global.darkBlue}
-                                         styleIcon={{color: global.colorFF}}
-                                         styleDivider={{backgroundColor: global.colorFF}}
-                                         style={{fontSize: global.sizeP18, color: global.colorFF}}
-                                         nameIcon={'ios-contact'}/>
-                        <TextSingleInput styleForm={{
-                            height: height / 15,
-                            flexDirection: 'row',
-                            backgroundColor: 'transparent',
-                            borderWidth: 1,
-                            borderColor: global.colorFF,//global.darkBlue,
-                            borderRadius: 8, alignItems: 'center'
-                        }}
-                                         warning={this.state.isWarningEmail}
-                                         textWarning={this.state.warningEmail}
-                                         value={this.state.email}
-                                         onChangeText={(email) => this.setState({email,isWarningEmail:false})}
-                                         placeholder={'Email'}
-                                         placeholderTextColor={global.colorFF}//{global.darkBlue}
-                                         styleIcon={{color: global.colorFF}}
-                                         styleDivider={{backgroundColor: global.colorFF}}
-                                         style={{fontSize: global.sizeP18, color: global.colorFF}}
-                                         nameIcon={'ios-mail'}/>
+                    <KeyboardAvoidingView behavior="padding" enabled
+                                          keyboardVerticalOffset={100}
+                                          style={{zIndex:1,alignItems: 'center',paddingLeft: 20, paddingRight: 20, marginTop:20}}>
+                            <TextSingleInput styleForm={{
+                                height: height / 15,
+                                flexDirection: 'row',
+                                backgroundColor: 'transparent',
+                                borderWidth: 1,
+                                borderColor: global.colorFF,//global.darkBlue,
+                                borderRadius: 8, alignItems: 'center'
+                            }}
+                                             warning={this.state.isWarningName}
+                                             textWarning={this.state.warningName}
+                                             value={this.state.name}
+                                             onChangeText={(name) => this.setState({name,isWarningName: false})}
+                                             placeholder={'Họ & tên'}
+                                             placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                             styleIcon={{color: global.colorFF}}
+                                             styleDivider={{backgroundColor: global.colorFF}}
+                                             style={{fontSize: global.sizeP18, color: global.colorFF}}
+                                             nameIcon={'ios-contact'}/>
+                            <TextSingleInput styleForm={{
+                                height: height / 15,
+                                flexDirection: 'row',
+                                backgroundColor: 'transparent',
+                                borderWidth: 1,
+                                borderColor: global.colorFF,//global.darkBlue,
+                                borderRadius: 8, alignItems: 'center'
+                            }}
+                                             warning={this.state.isWarningEmail}
+                                             textWarning={this.state.warningEmail}
+                                             value={this.state.email}
+                                             onChangeText={(email) => this.setState({email,isWarningEmail:false})}
+                                             placeholder={'Email'}
+                                             placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                             styleIcon={{color: global.colorFF}}
+                                             styleDivider={{backgroundColor: global.colorFF}}
+                                             style={{fontSize: global.sizeP18, color: global.colorFF}}
+                                             nameIcon={'ios-mail'}/>
 
-                        <TextSingleInput styleForm={{
-                            height: height / 15,
-                            flexDirection: 'row',
-                            backgroundColor: 'transparent',
-                            borderWidth: 1,
-                            borderColor: global.colorFF,//global.darkBlue,
-                            borderRadius: 8, alignItems: 'center'
-                        }}
-                                         warning={this.state.isWarningPassword}
-                                         textWarning={this.state.warningPassword}
-                                         value={this.state.password}
-                                         onChangeText={(password) => this.setState({password, isWarningPassword:false})}
-                                         placeholder={'Mật khẩu'}
-                                         secureTextEntry
-                                         placeholderTextColor={global.colorFF}//{global.darkBlue}
-                                         styleIcon={{color: global.colorFF}}
-                                         styleDivider={{backgroundColor: global.colorFF}}
-                                         style={{fontSize: global.sizeP18, color: global.colorFF}}
-                                         nameIcon={'ios-lock'}/>
-                    </View>
+                            <TextSingleInput styleForm={{
+                                height: height / 15,
+                                flexDirection: 'row',
+                                backgroundColor: 'transparent',
+                                borderWidth: 1,
+                                borderColor: global.colorFF,//global.darkBlue,
+                                borderRadius: 8, alignItems: 'center'
+                            }}
+                                             warning={this.state.isWarningPassword}
+                                             textWarning={this.state.warningPassword}
+                                             value={this.state.password}
+                                             onChangeText={(password) => this.setState({password, isWarningPassword:false})}
+                                             placeholder={'Mật khẩu'}
+                                             secureTextEntry
+                                             placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                             styleIcon={{color: global.colorFF}}
+                                             styleDivider={{backgroundColor: global.colorFF}}
+                                             style={{fontSize: global.sizeP18, color: global.colorFF}}
+                                             nameIcon={'ios-lock'}/>
+                    </KeyboardAvoidingView>
+
                     <ButtonWithIcon buttonText={'Xác nhận'.toUpperCase()}
-                                    styleText={{fontSize: global.sizeP16}}
-                                    onClick={this.onClickRegister}
-                                    style={{
-                                        backgroundColor: global.yellowColor,
-                                        marginTop: 20,
-                                        height: 40,
-                                        width: width / 2 - 30,
-                                        borderWidth: 0,
-                                        borderRadius: 20
-                                    }}/>
+                                        styleText={{fontSize: global.sizeP16}}
+                                        onClick={this.onClickRegister}
+                                        style={{
+                                            backgroundColor: global.yellowColor,
+                                            marginTop: 20,
+                                            height: 40,
+                                            alignSelf: 'center',
+                                            width: width / 2 - 30,
+                                            borderWidth: 0,
+                                            borderRadius: 20
+                                        }}/>
 
-                </KeyboardAvoidingView>
-                <View style={{justifyContent: 'flex-end', flex: 1, alignItems: 'center'}}>
-                    <ButtonWithIcon buttonText={'Tôi đã đọc và đồng ý với các điều khoản sử dụng của TVs'}
-                                    styleText={{fontSize: global.sizeP16}}
-                                    style={{
-                                        paddingRight:20, paddingLeft:20,
-                                        backgroundColor: 'transparent',
-                                        marginTop: 8,
-                                        marginBottom: 10,
-                                        height: 40,
-                                        borderWidth: 0,
-                                    }}/>
-                </View>
+                    <View style={{justifyContent: 'flex-end', flex: 1, alignItems: 'center'}}>
+                        <ButtonWithIcon buttonText={'Tôi đã đọc và đồng ý với các điều khoản sử dụng của TVs'}
+                                        styleText={{fontSize: global.sizeP16}}
+                                        style={{
+                                            paddingRight:20, paddingLeft:20,
+                                            backgroundColor: 'transparent',
+                                            marginTop: 8,
+                                            marginBottom: 10,
+                                            height: 40,
+                                            borderWidth: 0,
+                                        }}/>
+                    </View>
+                </ScrollView>
+
                 <ButtonWithIcon nameIcon={'ios-arrow-back-outline'}
                                 onClick={() => this.props.navigation.goBack()}
                                 icoStyle={{
