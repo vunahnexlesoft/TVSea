@@ -76,6 +76,16 @@ export default {
             isLoading: false,
             isError: false,
         },
-        navigateState: []
+        navigateState: [],
+        channel:{
+            data:[],
+            isLoading: false,
+            isError: false,
+        },
+        calender:{
+            data:[],
+            isLoading: false,
+            isError: false,
+        }
     })
 };

@@ -9,10 +9,11 @@ import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 
 const {height, width} = Dimensions.get('window');
 
-const ItemChannel = ({uriImage, onClick, numCol, counter}) => {
+const ItemChannel = ({uriImage, onClick, numCol, counter, text}) => {
     let viewGroup = {
         flex: 1,
         alignItems: numCol === 1 ? 'center' : null,
+
     };
     let imageTwoNum = {
         width: (width - 6 * 7) / 2,
@@ -23,6 +24,8 @@ const ItemChannel = ({uriImage, onClick, numCol, counter}) => {
         flex: 1
     };
     let imageOneNum = {
+        borderColor: numCol === 1 ? 'white' : 'transparent',
+        borderWidth: numCol === 1 ? 0.5 : 0,
         width: width - 20,
         borderRadius: 10,
         height: height / 3
@@ -37,7 +40,32 @@ const ItemChannel = ({uriImage, onClick, numCol, counter}) => {
                     priority: FastImage.priority.normal,
                 }}/>
             {
-                numCol === 1 ?  <ButtonWithIcon buttonText={"Live: " + counter} style={{
+                numCol !== 1 ? <View style={{
+                    width: (width - 6 * 7) / 2 + 5,
+                    height: 30,
+                    backgroundColor: global.transparentBlack5,
+                    position: 'absolute',
+                    borderTopLeftRadius: 10,
+                    borderTopRightRadius: 10,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 1
+                }}/> : null
+            }
+            {
+                numCol !== 1 ? <View style={{
+                    position: 'absolute',
+                    top: 10,
+                    left: 10,
+                    zIndex: 1
+                }}>
+                    <Text text={'Xem vào: ' + text} size={global.sizeP16} color={global.colorFF} style={{lineHeight: global.sizeP18}}/>
+                </View> : null
+            }
+            {
+                numCol === 1 ? <ButtonWithIcon buttonText={"Live: " + counter} style={{
                     height: 30,
                     //width: 50,
                     paddingHorizontal: 10,
@@ -47,6 +75,21 @@ const ItemChannel = ({uriImage, onClick, numCol, counter}) => {
                     justifyContent: 'center',
                     position: 'absolute', top: 10, right: 10, zIndex: 1
                 }}/> : null
+            }
+            {
+                numCol === 1 ? <View style={{
+                    position: 'absolute', top: 10, left: 10, zIndex: 1
+                }}>
+                    <Text text={text} size={global.sizeP16} color={global.colorFF}/>
+                </View> : null
+            }
+            {
+                numCol === 1 ? <View style={{
+                    position: 'absolute', bottom: 10, left: 10, zIndex: 1
+                }}>
+                    <Text text={'Đang chiếu: Transformer 4 Kỷ nguyên mới'} size={global.sizeP16}
+                          color={global.colorFF}/>
+                </View> : null
             }
         </TouchableOpacity>
     );

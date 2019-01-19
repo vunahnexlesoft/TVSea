@@ -177,6 +177,44 @@ export function updateComment(data) {
     }
 }
 
+export function dataFetchingChannelMovie() {
+    return {
+        type: NAME_ACTION.GET_CHANNEL_MOVIES_FETCHING
+    };
+}
+
+export function dataFetchingChannelMovieSuccess(data) {
+    return {
+        type: NAME_ACTION.GET_CHANNEL_MOVIES_SUCCESS,
+        data,
+    }
+}
+
+export function dataFetchingChannelMovieFail() {
+    return {
+        type: NAME_ACTION.GET_CHANNEL_MOVIES_FAIL,
+    }
+}
+
+export function dataFetchingCalenderMovie() {
+    return {
+        type: NAME_ACTION.GET_CALENDER_MOVIES_FETCHING
+    };
+}
+
+export function dataFetchingCalenderMovieSuccess(data) {
+    return {
+        type: NAME_ACTION.GET_CALENDER_MOVIES_SUCCESS,
+        data,
+    }
+}
+
+export function dataFetchingCalenderMovieFail() {
+    return {
+        type: NAME_ACTION.GET_CALENDER_MOVIES_FAIL,
+    }
+}
+
 export function getDataMoviebyCategory(params) {
     return (dispatch) => {
         let url = URL.base_url + URL.GET_MOVIES_BY_CATEGORY;
@@ -247,6 +285,36 @@ export function getDataRelatedMovie(params) {
                 dispatch(dataFetchingRelatedMovieSuccess(res.data));
             }else{
                 dispatch(dataFetchingRelatedMovieFail());
+            }
+        })
+    }
+}
+
+export function getDataChannelMovie() {
+    return (dispatch) => {
+        var url = URL.base_url + URL.GET_CHANNEL_MOVIE;
+        let token = store.getState().userInfoReducer.token;
+        dispatch(dataFetchingChannelMovie());
+        restClient.excuteAPI("get",url,token,null).then(res =>{
+            if(res.success){
+                dispatch(dataFetchingChannelMovieSuccess(res.data));
+            }else{
+                dispatch(dataFetchingChannelMovieFail());
+            }
+        })
+    }
+}
+
+export function getDataCalenderMovie() {
+    return (dispatch) => {
+        var url = URL.base_url + URL.GET_CALENDER_MOVIE;
+        let token = store.getState().userInfoReducer.token;
+        dispatch(dataFetchingCalenderMovie());
+        restClient.excuteAPI("get",url,token,null).then(res =>{
+            if(res.success){
+                dispatch(dataFetchingCalenderMovieSuccess(res.data));
+            }else{
+                dispatch(dataFetchingCalenderMovieFail());
             }
         })
     }

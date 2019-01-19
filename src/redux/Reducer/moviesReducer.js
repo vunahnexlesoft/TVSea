@@ -64,6 +64,20 @@ export default function moviesReducer(state = defaultState.movies, action) {
             return state.merge({...state, top: {data: action.data, isLoading: false, isError: false}});
         case NAME_ACTION.GET_TOP_MOVIE_FAIL:
             return state.merge({...state, top: {data: [], isLoading: false, isError: true}});
+        //Channel
+        case NAME_ACTION.GET_CHANNEL_MOVIES_FETCHING:
+            return state.setIn(['channel', 'isLoading'], true);
+        case NAME_ACTION.GET_CHANNEL_MOVIES_SUCCESS:
+            return state.merge({...state, channel: {data: action.data, isLoading: false, isError: false}});
+        case NAME_ACTION.GET_CHANNEL_MOVIES_FAIL:
+            return state.merge({...state, channel: {data: [], isLoading: false, isError: true}});
+        //Calender
+        case NAME_ACTION.GET_CALENDER_MOVIES_FETCHING:
+            return state.setIn(['calender', 'isLoading'], true);
+        case NAME_ACTION.GET_CALENDER_MOVIES_SUCCESS:
+            return state.merge({...state, calender: {data: action.data, isLoading: false, isError: false}});
+        case NAME_ACTION.GET_CALENDER_MOVIES_FAIL:
+            return state.merge({...state, calender: {data: [], isLoading: false, isError: true}});
         // //Related Movie in Days
         // case NAME_ACTION.GET_RECOMMEND_MOVIES_FETCHING:
         //     return state.setIn(['recommend', 'isLoading'], true);

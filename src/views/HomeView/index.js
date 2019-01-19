@@ -28,8 +28,10 @@ export default class HomeView extends Component {
         this._onGotoSteamingScreen = this._onGotoSteamingScreen.bind(this);
     }
     componentDidMount(){
-        const {moviesAction:{getDataMoviebyCategory}} = this.props;
+        const {moviesAction:{getDataMoviebyCategory,getDataChannelMovie,getDataCalenderMovie}} = this.props;
         getDataMoviebyCategory({page: 1, category: 1});
+        getDataChannelMovie();
+        getDataCalenderMovie();
         firebase.database().ref('Channel').on('value', (snap) => {
             const items = [];
             snap.forEach((child) => {
@@ -51,12 +53,13 @@ export default class HomeView extends Component {
         this.props.navigation.navigate('Video',{host: STRING.VAR.STEAMING_URL, url: item.backdrop_path, type:"stream"})
     }
     renderScene() {
-        const{dataPhimle} = this.props;
+        const{dataPhimle,dataChannel, dataCalender} = this.props;
+        console.log(dataCalender);
         switch (this.state.index) {
             case 1:
                 return (
                     <View style={{flex: 1,marginTop:10}}>
-                        <VerticalListView data={dataPhimle}
+                        <VerticalListView data={dataChannel}
                                           ItemSeparatorComponent={() => <View
                                               style={{
                                                   height: 20,
@@ -68,7 +71,8 @@ export default class HomeView extends Component {
                                                   <ItemChannel numCol={1}
                                                                counter={this.state.counter}
                                                                onClick={this._onGotoSteamingScreen.bind(this, item)}
-                                                               uriImage={item.backdrop_path}/>
+                                                               text={item.name_channel}
+                                                               uriImage={item.url_image}/>
                                               ): null
                                           }
 
@@ -78,9 +82,9 @@ export default class HomeView extends Component {
             case 2:
                 return (
                     <View style={{flex: 1,marginTop:10}}>
-                        <VerticalGirdView data={dataPhimle}
+                        <VerticalGirdView data={dataCalender}
                                           renderItem={({item, index}) =>
-                                              <ItemChannel uriImage={item.poster_path}/>
+                                              <ItemChannel uriImage={item.poster_path} text={item.start_time}/>
                                           }/>
                     </View>
                 );
