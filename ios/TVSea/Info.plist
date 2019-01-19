@@ -35,22 +35,21 @@
 			</dict>
 		</dict>
 	</dict>
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>fb865976250271001</string>
-      </array>
-    </dict>
-  </array>
-  <key>FacebookAppID</key>
-  <string>865976250271001</string>
-  <key>FacebookDisplayName</key>
-  <string>TVSea</string>
-  
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb865976250271001</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>865976250271001</string>
+	<key>FacebookDisplayName</key>
+	<string>TVSea</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

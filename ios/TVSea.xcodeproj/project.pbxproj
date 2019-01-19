@@ -53,11 +53,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		84472D312188ABE500DABC46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84472D302188ABE500DABC46 /* GoogleService-Info.plist */; };
 		8470D806218ADAB400B1E788 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8470D7E1218ADA9800B1E788 /* libRCTFBSDK.a */; };
-		8470D80A218ADC4700B1E788 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8470D807218ADC4700B1E788 /* FBSDKCoreKit.framework */; };
-		8470D80B218ADC4700B1E788 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8470D808218ADC4700B1E788 /* FBSDKLoginKit.framework */; };
-		8470D80C218ADC4700B1E788 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8470D809218ADC4700B1E788 /* FBSDKShareKit.framework */; };
 		84FFDDC221E65130007055C9 /* KSYMediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FFDD4621E645C9007055C9 /* KSYMediaPlayer.framework */; };
-		84FFDE2C21E655B0007055C9 /* KSYMediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FFDE0021E655B0007055C9 /* KSYMediaPlayer.framework */; };
 		9C2F24B456CA494E988329F3 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57804D65E4734F9BACB0F9BB /* libRNFirebase.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		F0CE63F51D874FE3A5A0A613 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E29E0FF01FA643AF8587CF90 /* libRCTVideo.a */; };
@@ -418,9 +414,6 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		84472D302188ABE500DABC46 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "TVSea/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8470D7D6218ADA9800B1E788 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
-		8470D807218ADC4700B1E788 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		8470D808218ADC4700B1E788 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		8470D809218ADC4700B1E788 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		84FFDD4621E645C9007055C9 /* KSYMediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSYMediaPlayer.framework; path = "../node_modules/react-native-ksyvideo/ios/KSYMediaPlayer.framework"; sourceTree = "<group>"; };
 		84FFDE0021E655B0007055C9 /* KSYMediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KSYMediaPlayer.framework; path = "../node_modules/react-native-ksyvideo/ios/KSYMediaPlayer.framework"; sourceTree = "<group>"; };
 		884C8158E2204D75A750F893 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -453,14 +446,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				84FFDDC221E65130007055C9 /* KSYMediaPlayer.framework in Frameworks */,
-				8470D80A218ADC4700B1E788 /* FBSDKCoreKit.framework in Frameworks */,
-				8470D80B218ADC4700B1E788 /* FBSDKLoginKit.framework in Frameworks */,
-				8470D80C218ADC4700B1E788 /* FBSDKShareKit.framework in Frameworks */,
 				8470D806218ADAB400B1E788 /* libRCTFBSDK.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
-				84FFDE2C21E655B0007055C9 /* KSYMediaPlayer.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -626,9 +615,6 @@
 			isa = PBXGroup;
 			children = (
 				84FFDD4621E645C9007055C9 /* KSYMediaPlayer.framework */,
-				8470D807218ADC4700B1E788 /* FBSDKCoreKit.framework */,
-				8470D808218ADC4700B1E788 /* FBSDKLoginKit.framework */,
-				8470D809218ADC4700B1E788 /* FBSDKShareKit.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				66EE62F41E455D5F729AB685 /* libPods-TVSea.a */,
 			);
@@ -833,6 +819,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				C432B945585C2EBD2DA7EAD3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1394,6 +1381,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C432B945585C2EBD2DA7EAD3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TVSea/Pods-TVSea-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TVSea/Pods-TVSea-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1549,6 +1558,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = TVSea/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1585,6 +1595,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = TVSea/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

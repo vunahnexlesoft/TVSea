@@ -29,6 +29,7 @@ export default class SearchView extends Component {
         this.onChangeTextToSearch = this.onChangeTextToSearch.bind(this);
         this.onClickHistoryItem = this.onClickHistoryItem.bind(this);
         this.onEndEditing = this.onEndEditing.bind(this);
+        this._navigateToDetail = this._navigateToDetail.bind(this);
     }
 
     onChangeTextToSearch(value) {
@@ -68,7 +69,20 @@ export default class SearchView extends Component {
             this.props.moviesAction.getDataSearchMovie({query: UTIL_FUCTION.convertText(value)});
         })
     }
-
+    _navigateToDetail(movie) {
+        //{type: LIKE : HISTORY, actionType: ADD : REMOVE, MOVIE : DATAMOVIE , PARAMS: IDUSER, IDMOVIE, KEY: 1 HISTORY, 2 LIKE}
+        let data = {
+            movie,
+            type: 'HISTORY',
+            actionType: 'ADD',
+            params: {
+                idMovie: movie.id,
+                idUser: this.props.userInfo.id,
+                Key: 1
+            }
+        };
+        UTIL_FUCTION.navigateToDetail(this.props.usersAction, this.props.navigation, data);
+    }
     render() {
         const {dataSearch, dataHistory} = this.props;
         return (
@@ -120,7 +134,7 @@ export default class SearchView extends Component {
                                               renderItem={({item, index}) => {
                                                   return this.state.changeText ? (
                                                           <ItemMovieNew item={item} isNew
-                                                                        onClick={() => this.props.navigation.navigate('MoviesDetail', {movie: item})}/>
+                                                                        onClick={this._navigateToDetail.bind(this, item)}/>
                                                       )
                                                       :
                                                       (<ItemHistorySearch item={item}

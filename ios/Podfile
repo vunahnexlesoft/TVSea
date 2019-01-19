@@ -1,14 +1,46 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+ platform :ios, '9.0'
 
 target 'TVSea' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
+  node_modules_path = '../node_modules'
+  react_path = File.join(node_modules_path, 'react-native')
+  yoga_path = File.join(react_path, 'ReactCommon/yoga')
+  folly_spec_path = File.join(react_path, 'third-party-podspecs/Folly.podspec')
+  glog_spec_path = File.join(react_path, 'third-party-podspecs/glog.podspec')
+  double_conversion_spec_path = File.join(react_path, 'third-party-podspecs/DoubleConversion.podspec')
  # Pods for TVSea
+ pod 'React', path: '../node_modules/react-native', subspecs: [
+ 'DevSupport',
+ 'Core',
+ 'ART',
+ 'CxxBridge',
+ 'RCTActionSheet',
+ 'RCTAnimation',
+ 'RCTCameraRoll',
+ 'RCTGeolocation',
+ 'RCTImage',
+ 'RCTNetwork',
+ 'RCTPushNotification',
+ 'RCTSettings',
+ 'RCTText',
+ 'RCTVibration',
+ 'RCTWebSocket',
+ 'RCTLinkingIOS',
+ ]
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
+pod 'FBSDKCoreKit'
+pod 'FBSDKShareKit'
+pod 'FBSDKLoginKit'
 #pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+pod 'yoga', path: yoga_path
+pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+pod 'DoubleConversion', podspec: double_conversion_spec_path
+pod 'glog', podspec: glog_spec_path
+  pod 'react-native-ksyvideo', :path => '../node_modules/react-native-ksyvideo'
 
 end
