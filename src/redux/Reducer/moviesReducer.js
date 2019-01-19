@@ -46,16 +46,16 @@ export default function moviesReducer(state = defaultState.movies, action) {
             });
         //TV Show
         case NAME_ACTION.GET_MOVIES_TV_SHOW_FETCHING:
-            return state.setIn(['category', 'tvshow', 'isLoading'], true);
+            return state.setIn(['category', 'anime', 'isLoading'], true);
         case NAME_ACTION.GET_MOVIES_TV_SHOW_SUCCESS:
             return state.merge({
                 ...state,
-                category: {...state.category, tvshow: {data: [], isLoading: false, isError: true}}
+                category: {...state.category, anime: {data: [], isLoading: false, isError: true}}
             });
         case NAME_ACTION.GET_MOVIES_TV_SHOW_FAIL:
             return state.merge({
                 ...state,
-                category: {...state.category, tvshow: {data: [], isLoading: false, isError: true}}
+                category: {...state.category, anime: {data: [], isLoading: false, isError: true}}
             });
         //Top Movie in Days
         case NAME_ACTION.GET_TOP_MOVIE_FETCHING:
@@ -64,13 +64,13 @@ export default function moviesReducer(state = defaultState.movies, action) {
             return state.merge({...state, top: {data: action.data, isLoading: false, isError: false}});
         case NAME_ACTION.GET_TOP_MOVIE_FAIL:
             return state.merge({...state, top: {data: [], isLoading: false, isError: true}});
-        //Related Movie in Days
-        case NAME_ACTION.GET_RECOMMEND_MOVIES_FETCHING:
-            return state.setIn(['recommend', 'isLoading'], true);
-        case NAME_ACTION.GET_RECOMMEND_MOVIES_SUCCESS:
-            return state.merge({...state, recommend: {data: action.data, isLoading: false, isError: false}});
-        case NAME_ACTION.GET_RECOMMEND_MOVIES_FAIL:
-            return state.merge({...state, recommend: {data: [], isLoading: false, isError: true}});
+        // //Related Movie in Days
+        // case NAME_ACTION.GET_RECOMMEND_MOVIES_FETCHING:
+        //     return state.setIn(['recommend', 'isLoading'], true);
+        // case NAME_ACTION.GET_RECOMMEND_MOVIES_SUCCESS:
+        //     return state.merge({...state, recommend: {data: action.data, isLoading: false, isError: false}});
+        // case NAME_ACTION.GET_RECOMMEND_MOVIES_FAIL:
+        //     return state.merge({...state, recommend: {data: [], isLoading: false, isError: true}});
         //Search Movie
         case NAME_ACTION.GET_SEARCH_MOVIES_FETCHING:
             return state.setIn(['search', 'isLoading'], true);

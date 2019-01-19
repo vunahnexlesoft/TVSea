@@ -52,6 +52,13 @@ export default function loginReducer(state = defaultState.user, action) {
                 }
                 return state.setIn(['like', 'data'], updateObject);
             }
+        //Related Movie in Days
+        case NAME_ACTION.GET_RECOMMEND_MOVIES_FETCHING:
+            return state.setIn(['recommend', 'isLoading'], true);
+        case NAME_ACTION.GET_RECOMMEND_MOVIES_SUCCESS:
+            return state.merge({...state, recommend: {data: action.data, isLoading: false, isError: false}});
+        case NAME_ACTION.GET_RECOMMEND_MOVIES_FAIL:
+            return state.merge({...state, recommend: {data: [], isLoading: false, isError: true}});
         default:
             return state;
     }

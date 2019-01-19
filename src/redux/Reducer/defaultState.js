@@ -26,6 +26,11 @@ export default {
             isLoading: false,
             isError: false
         },
+        recommend:{
+            data:[],
+            isLoading: false,
+            isError: false,
+        },
     }),
     movies: Immutable({
         detail: {
@@ -44,7 +49,7 @@ export default {
                 isLoading: false,
                 isError: false
             },
-            tvshow: {
+            anime: {
                 data: [],
                 isLoading: false,
                 isError: false

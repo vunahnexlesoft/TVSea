@@ -19,40 +19,48 @@ export default class ViewAll extends Component {
         this.state = {
             data: ''
         };
+        this.generateDataMovies = this.generateDataMovies.bind(this);
+        this._navigateToDetail = this._navigateToDetail.bind(this);
+
     }
-    static getDerivedStateFromProps(nextProps, prevState){
-        switch (nextProps.navigation.state.params.data.type) {
+    generateDataMovies(type){
+        const {recommendData,dataTopMovie} =this.props;
+        switch (type) {
             case 'PHIM_LE':
-                return {
-                    data: 'PHIM_LE'
-                };
+                return dataTopMovie;
             case 'PHIM_BO':
-                return {
-                    data: 'PHIM_BO'
-                };
+                return recommendData;
             case 'ANIME':
-                return {
-                    data: 'ANIME'
-                };
-            case 'PHIM_MOI':
-                return {
-                    data: 'PHIM_MOI'
-                };
+                return recommendData;
+            case 'RECOMMEND':
+                return recommendData;
             default: return null
         }
     }
+    _navigateToDetail(movie) {
+        //{type: LIKE : HISTORY, actionType: ADD : REMOVE, MOVIE : DATAMOVIE , PARAMS: IDUSER, IDMOVIE, KEY: 1 HISTORY, 2 LIKE}
+        let data = {
+            movie,
+            type: 'HISTORY',
+            actionType: 'ADD',
+            params: {
+                idMovie: movie.id,
+                idUser: this.props.userInfo.id,
+                Key: 1
+            }
+        };
+        UTIL_FUNCTION.navigateToDetail(this.props.usersAction, this.props.navigation, data);
+    }
     render() {
-        const {dataTopMovie} = this.props;
-        console.log(this.state.data);
         const {data} = this.props.navigation.state.params;
         return (
             <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
                 <Header isMain heading={data.heading} url={this.props.userInfo.url_avatar} onClickBack={() => this.props.navigation.goBack()}/>
                 <VerticalGirdView
                     numColumns={3}
-                    data={dataTopMovie}
+                    data={this.generateDataMovies(data.type)}
                     renderItem={({item, index}) =>
-                        <ItemMovieCategory numCol={3} item={item}/>
+                        <ItemMovieCategory numCol={3} item={item} onClick={() => this._navigateToDetail(item)}/>
                     }/>
             </View>
         );

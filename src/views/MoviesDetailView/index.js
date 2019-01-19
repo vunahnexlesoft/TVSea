@@ -225,7 +225,7 @@ class MoviesDetailView extends Component {
                     zIndex: 3
                 }}>
                     <IconButton nameIcon={'ios-play'}
-                                onClick={()=>this.props.navigation.navigate('Video',{host: STRING.VAR.VIDEO_DEFAULT, url: backdrop_path})}
+                                onClick={()=>this.props.navigation.navigate('Video',{host: STRING.VAR.VIDEO_DEFAULT, url: backdrop_path, type: "on-demend"})}
                                 iconStyle={{
                                     fontSize: global.sizeP45,
                                     color: global.colorFF
@@ -497,7 +497,6 @@ class MoviesDetailView extends Component {
             outputRange: [height / 3 - 35 / 2 - 5, 0],
             extrapolate: 'clamp',
         });
-        console.log(dataDetail.comment);
 
         return (
             <View style={{flex: 1, backgroundColor: global.backgroundColor}}>

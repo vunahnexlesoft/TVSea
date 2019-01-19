@@ -137,3 +137,10 @@ export function isValidUserName(userName) {
     // if return true proceed to duplicate name check on the backend
     return [isValid, usernameValidationString];
 }
+export function convertItemArray(array) {
+    let newArr = [];
+    array.map((item, index) =>{
+        newArr.push(item.id);
+    });
+    return newArr.join(",");
+}

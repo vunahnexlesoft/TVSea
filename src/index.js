@@ -118,6 +118,11 @@ export default class App extends Component {
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     <SafeAreaView style={{flex: 1, backgroundColor:global.blackTab}}>
+                        <StatusBar
+                            animated
+                            barStyle= "light-content"
+                            backgroundColor="#000000"
+                        />
                         <RootNavigator/>
                     </SafeAreaView>
                 </PersistGate>

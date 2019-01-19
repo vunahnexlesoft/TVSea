@@ -9,15 +9,15 @@ const {persistor, store} = configureStore();
 
 export function dataFetchingCategory(category) {
     switch(category){
-        case 'Phim lẻ':
+        case 1:
             return {
                 type: NAME_ACTION.GET_MOVIES_PHIM_LE_FETCHING
             };
-        case 'Phim bộ':
+        case 2:
             return {
                 type: NAME_ACTION.GET_MOVIES_PHIM_BO_FETCHING
             };
-        case 'TV Show':
+        case 4:
             return {
                 type: NAME_ACTION.GET_MOVIES_TV_SHOW_FETCHING
             };
@@ -26,17 +26,17 @@ export function dataFetchingCategory(category) {
 }
 export function dataFetchingCategorySuccess(data, category) {
     switch(category){
-        case 'Phim lẻ':
+        case 1:
             return {
                 type: NAME_ACTION.GET_MOVIES_PHIM_LE_SUCCESS,
                 data
             };
-        case 'Phim bộ':
+        case 2:
             return {
                 type: NAME_ACTION.GET_MOVIES_PHIM_BO_SUCCESS,
                 data
             };
-        case 'TV Show':
+        case 4:
             return {
                 type: NAME_ACTION.GET_MOVIES_TV_SHOW_SUCCESS,
                 data
@@ -46,15 +46,15 @@ export function dataFetchingCategorySuccess(data, category) {
 }
 export function dataFetchingCategoryFail(category) {
     switch(category){
-        case 'Phim lẻ':
+        case 1:
             return {
                 type: NAME_ACTION.GET_MOVIES_PHIM_LE_FAIL,
             };
-        case 'Phim bộ':
+        case 2:
             return {
                 type: NAME_ACTION.GET_MOVIES_PHIM_BO_FAIL,
             };
-        case 'TV Show':
+        case 4:
             return {
                 type: NAME_ACTION.GET_MOVIES_TV_SHOW_FAIL,
             };
@@ -182,7 +182,7 @@ export function getDataMoviebyCategory(params) {
         let url = URL.base_url + URL.GET_MOVIES_BY_CATEGORY;
         let token = store.getState().userInfoReducer.token;
         dispatch(dataFetchingCategory(params.category));
-        restClient.excuteAPI("get",url,token,params).then(res =>{
+        restClient.excuteAPI("get",url,token, params).then(res =>{
             if(res.success){
                 dispatch(dataFetchingCategorySuccess(res.data, params.category))
             }else{

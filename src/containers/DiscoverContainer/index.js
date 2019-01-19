@@ -5,7 +5,8 @@ import * as moviesAction from '../../redux/ActionCreator/actionMovieCreator';
 import * as usersAction from "../../redux/ActionCreator/actionLoginCreators";
 
 function mapStateToProps(state) {
-    const {genres, top} = state.moviesReducer;
+    const {genres, top, category} = state.moviesReducer;
+    const {recommend} = state.userLoginReducer;
     const userInfo = state.userInfoReducer.data;
     return {
         dataAllGenres: genres.data,
@@ -14,7 +15,11 @@ function mapStateToProps(state) {
         userInfo,
         dataTopMovie: top.data,
         isTopMovieLoading: top.isLoading,
-        isTopMovieError: top.isError
+        isTopMovieError: top.isError,
+        recommendData : recommend.data,
+        dataPhimle: category.phimle.data,
+        dataPhimbo: category.phimbo.data,
+        dataAnime: category.anime.data,
     };
 }
 

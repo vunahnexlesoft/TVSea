@@ -29,7 +29,7 @@ export default class HomeView extends Component {
     }
     componentDidMount(){
         const {moviesAction:{getDataMoviebyCategory}} = this.props;
-        getDataMoviebyCategory({page: 1, category:'Phim lẻ'});
+        getDataMoviebyCategory({page: 1, category: 1});
         firebase.database().ref('Channel').on('value', (snap) => {
             const items = [];
             snap.forEach((child) => {
@@ -51,7 +51,7 @@ export default class HomeView extends Component {
         this.props.navigation.navigate('Video',{host: STRING.VAR.STEAMING_URL, url: item.backdrop_path, type:"stream"})
     }
     renderScene() {
-        const{dataPhimle, isPhimleLoading, userInfo} = this.props;
+        const{dataPhimle} = this.props;
         switch (this.state.index) {
             case 1:
                 return (

@@ -4,7 +4,7 @@ import React, {
 
 import {
     AlertIOS, Animated, Dimensions,
-    Platform,
+    Platform, StatusBar,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -25,7 +25,6 @@ import firebaseUtil from "../../services/firebase";
 import firebase from 'react-native-firebase';
 import KSYVideo from 'react-native-ksyvideo';
 import * as STRING from "../../themes/string";
-import ProgressController from "../../commons/Video/ProgressController"
 const {height, width} = Dimensions.get('window');
 
 export default class VideoPlayer extends Component {
@@ -37,9 +36,6 @@ export default class VideoPlayer extends Component {
         this.onBuffer = this.onBuffer.bind(this);
         this.onClickPropress = this.onClickPropress.bind(this);
         this._onGoBackScreen = this._onGoBackScreen.bind(this);
-        this._onCallBack = this._onCallBack.bind(this);
-        this.getCurrentTimePercentage = this.getCurrentTimePercentage.bind(this);
-        this.onProgressChanged = this.onProgressChanged.bind(this);
     }
 
     state = {
@@ -87,7 +83,7 @@ export default class VideoPlayer extends Component {
 
     onLoad(data) {
         console.log('onLoad');
-        this.setState({duration: data.duration, isLoadingVideo: false});
+        this.setState({duration: data.duration});
     }
 
     onProgress(data) {
@@ -103,43 +99,21 @@ export default class VideoPlayer extends Component {
         this.props.navigation.goBack()
     }
 
-    _onCallBack() {
-        firebaseUtil.getUserOnlineOnStream('Channel', (callback) => {
-            if (callback) return callback;
-        });
-    }
-
-    onProgressChanged(newPercent, paused) {
-        if (paused){
-            this.setState({paused: !this.state.paused});
-        }
-        else if (newPercent >= 0)
-        {
-            let {duration} = this.state;
-            if (duration > 0){
-                let newTime = newPercent * duration / 100;
-                this.setState({currentTime: newTime});
-                this.video.seek(newTime);
-            }
-        }
-    }
-
-    getCurrentTimePercentage(currentTime, duration) {
-        if (currentTime > 0) {
-            return parseFloat(currentTime) / parseFloat(duration);
-        } else {
-            return 0.0;
-        }
-    }
-
     renderNativeSkin() {
         const videoStyle = styles.fullScreen;
         const getTime = Math.floor(this.state.currentTime * this.state.duration);
         const {host, url, type} = this.props.navigation.state.params;
         return (
             <View style={styles.container}>
+                <StatusBar
+                    animated
+                    barStyle= "light-content"
+                    hidden
+                    backgroundColor="#000000"
+                    translucent = {true}
+                />
                 {
-                    this.state.showbar ? <ButtonWithIcon nameIcon={'ios-arrow-back-outline'}
+                    this.state.showbar ? (<ButtonWithIcon nameIcon={'ios-arrow-back-outline'}
                                                          onClick={this._onGoBackScreen}
                                                          icoStyle={{
                                                              fontSize: global.sizeP25,
@@ -154,40 +128,19 @@ export default class VideoPlayer extends Component {
                                                              alignItems: 'center',
                                                              justifyContent: 'center',
                                                              position: 'absolute', top: 10, left: 10, zIndex: 1
-                                                         }}/> : null
+                                                         }}/>) : (null)
                 }
                 {
                     this.state.showbar ? (type === "stream" ? <ButtonWithIcon buttonText={"Live: " + this.state.counter} style={{
                         height: 30,
-                        //width: 50,
                         paddingHorizontal: 10,
                         borderRadius: 35 / 3,
                         backgroundColor: global.red,
                         alignItems: 'center',
                         justifyContent: 'center',
                         position: 'absolute', top: 10, right: 10, zIndex: 1
-                    }}/> : null) : null
+                    }}/> : null) : (null)
                 }
-                {/*<Video*/}
-                {/*ref={'player'}*/}
-                {/*source={{uri: host}}*/}
-                {/*style={videoStyle}*/}
-                {/*rate={this.state.rate}*/}
-                {/*paused={this.state.paused}*/}
-                {/*volume={this.state.volume}*/}
-                {/*muted={this.state.muted}*/}
-                {/*ignoreSilentSwitch={this.state.ignoreSilentSwitch}*/}
-                {/*resizeMode={this.state.resizeMode}*/}
-                {/*onLoadStart={this.onLoadStart}*/}
-                {/*onLoad={this.onLoad}*/}
-                {/*onBuffer={this.onBuffer}*/}
-                {/*onProgress={this.onProgress}*/}
-                {/*// onEnd={() => {*/}
-                {/*//     AlertIOS.alert('Done!')*/}
-                {/*// }}*/}
-                {/*repeat={true}*/}
-                {/*controls={this.state.controls}*/}
-                {/*/>*/}
                 <KSYVideo
                     ref={(video) => {
                         this.video = video
@@ -197,22 +150,19 @@ export default class VideoPlayer extends Component {
                     bufferTime={4}
                     paused={this.state.paused}
                     onTouch={() => {
-                        this.setState({showbar: !this.state.showbar}
-                        )
-                    }
+                        this.setState({showbar: !this.state.showbar})}
                     }
                     timeout={{prepareTimeout: 60, readTimeout: 60}}
-                    playInBackground={false}
                     onLoad={this.onLoad}
                     onReadyForDisplay={(data) => {
-                        console.log("JS Video render start", data);
+                        this.setState({isLoadingVideo: false});
                     }}
                     onProgress={this.onProgress}
                     resizeMode={'contain'}
                     style={videoStyle}
                 />
                 {
-                    this.state.showbar ? (type !== "stream" ? <View style={{
+                    this.state.showbar ? (type !== "stream" && !this.state.isLoadingVideo ? <View style={{
                         backgroundColor: global.transparentWhite1,
                         alignSelf: 'center',
                         width: width - 10,
@@ -232,9 +182,9 @@ export default class VideoPlayer extends Component {
                     </View> : null) : null
                 }
                 {
-                    this.state.isLoadingVideo ? <View style={{alignSelf: 'center', height: 100, width: 100}}>
+                    this.state.isLoadingVideo ? (<View style={{alignSelf: 'center', height: 100, width: 100}}>
                         <SkypeIndicator color={global.yellowColor}/>
-                    </View> : null
+                    </View>) : null
                 }
             </View>
         );

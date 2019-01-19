@@ -3,6 +3,11 @@ import * as URL from "../../services/url";
 import * as restClient from "../../services/restClient";
 import configureStore from '../Store/configStore'
 import userInfoReducer from "../Reducer/userInfoReducer";
+import {
+    dataFetchingRelatedMovie,
+    dataFetchingRelatedMovieFail,
+    dataFetchingRelatedMovieSuccess
+} from "./actionMovieCreator";
 
 const {persistor, store} = configureStore();
 
@@ -99,4 +104,19 @@ export function addUserHistoryMovies(data) {
         });
     }
 
+}
+
+export function getDataRelatedMovie(params) {
+    return (dispatch) => {
+        var url = URL.base_url + URL.GET_RECOMMEND_MOVIES;
+        let token = store.getState().userInfoReducer.token;
+        dispatch(dataFetchingRelatedMovie());
+        restClient.excuteAPI("get",url,token,params).then(res =>{
+            if(res.success){
+                dispatch(dataFetchingRelatedMovieSuccess(res.data));
+            }else{
+                dispatch(dataFetchingRelatedMovieFail());
+            }
+        })
+    }
 }

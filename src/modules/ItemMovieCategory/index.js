@@ -9,9 +9,9 @@ import localImage from "../../themes/localImage";
 
 const {height, width} = Dimensions.get('window');
 
-const ItemMovieCategory = ({item, onClick,numCol}) => {
+const ItemMovieCategory = ({item, onClick, numCol}) => {
     let viewGroup = {
-        flex: 1,
+        //flex: 1,
         alignItems: 'center',
     };
     let imageOneNum = {
@@ -20,6 +20,7 @@ const ItemMovieCategory = ({item, onClick,numCol}) => {
         height: height / 4
     };
     let imageThreeNum = {
+        backgroundColor:'green',
         width: (width - 6 * 4) / 3,
         margin: 3,
         borderRadius: 10,
@@ -59,7 +60,7 @@ const ItemMovieCategory = ({item, onClick,numCol}) => {
             <Text text={item.title}
                   color={global.colorFF}
                   size={global.sizeP16}
-                  style={{marginTop:5,width:width / 3, textAlign:'center'}}
+                  style={{marginTop:5, width:numCol === 3 ? ((width - 6 * 2) / 3) : width / 3, textAlign:'center'}}
                   numberOfLines={1}/>
             <ImageBackground source={localImage.icStar}
                              style={numCol === 3 ? iconStyleThreeNum : iconStyleOneNum}>

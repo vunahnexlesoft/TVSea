@@ -54,11 +54,17 @@ export default class DiscoverView extends Component {
     }
 
     componentDidMount() {
-        const {moviesAction: {getDataTopMovie, getAllDataGenres}, usersAction: {getDataUserHistoryMovie, getDataUserLikeMovie}, userInfo} = this.props;
+        const {moviesAction: {getDataTopMovie, getAllDataGenres, getDataMoviebyCategory}, usersAction: {getDataUserHistoryMovie, getDataUserLikeMovie,getDataRelatedMovie}, userInfo} = this.props;
         getDataTopMovie({page: 1, size: 6, category: 'Phim le'});
+
+        getDataMoviebyCategory({page: 1, size: 5, category: 1});
+        getDataMoviebyCategory({page: 1, size: 5, category: 2});
+        getDataMoviebyCategory({page: 1, size: 5, category: 4});
+
         getAllDataGenres({page: 1, size: 8});
         getDataUserHistoryMovie({id: userInfo.id});
         getDataUserLikeMovie({id: userInfo.id});
+        getDataRelatedMovie({idMovie: userInfo.id_movie_history})
     }
 
     _navigateToDetail(movie) {
@@ -77,7 +83,7 @@ export default class DiscoverView extends Component {
     }
 
     renderScene() {
-        const {dataTopMovie, dataAllGenres, isAllGenresLoading} = this.props;
+        const {dataTopMovie, dataAllGenres, isAllGenresLoading, recommendData, userInfo,dataPhimle,dataPhimbo,dataAnime} = this.props;
         return (
             <View style={{
                 backgroundColor: global.backgroundColor,
@@ -103,9 +109,9 @@ export default class DiscoverView extends Component {
                                                                 onClick={() => this._navigateToDetail(item)}/>
                                      }/>}
                 />
-                <WrapperView heading={'Phim dành cho bạn'}
+                <WrapperView heading={'Có thể bạn thích'}
                              isShowAll
-                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Phim Lẻ', type:'PHIM_LE'})}
+                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Recommend', type:'RECOMMEND'})}
                              children={
                                  <VerticalListView
                                      horizontal={true}
@@ -114,14 +120,13 @@ export default class DiscoverView extends Component {
                                              width: 15,
                                          }}
                                      />}
-                                     data={dataTopMovie}
+                                     data={recommendData}
                                      renderItem={({item, index}) =>
                                          <ItemMovieCategory item={item}
                                                             onClick={() => this._navigateToDetail(item)}/>
                                      }/>}
                 />
                 <WrapperView heading={'Phim mới cập nhật'}
-                             isShowAll
                              onClickViewAll={() => {
                                  UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Phim Mới',type:'PHIM_MOI'})}}
                              children={
@@ -151,7 +156,7 @@ export default class DiscoverView extends Component {
                                              width: 15,
                                          }}
                                      />}
-                                     data={dataTopMovie}
+                                     data={dataPhimle}
                                      renderItem={({item, index}) =>
                                          <ItemMovieCategory item={item}
                                                             onClick={() => this._navigateToDetail(item)}/>
@@ -168,7 +173,7 @@ export default class DiscoverView extends Component {
                                              width: 15,
                                          }}
                                      />}
-                                     data={dataTopMovie}
+                                     data={dataPhimbo}
                                      renderItem={({item, index}) =>
                                          <ItemMovieCategory item={item}
                                                             onClick={() => this._navigateToDetail(item)}/>
@@ -188,7 +193,7 @@ export default class DiscoverView extends Component {
                                              width: 15,
                                          }}
                                      />}
-                                     data={dataTopMovie}
+                                     data={dataAnime}
                                      renderItem={({item, index}) =>
                                          <ItemMovieCategory item={item}
                                                             onClick={() => this._navigateToDetail(item)}/>
