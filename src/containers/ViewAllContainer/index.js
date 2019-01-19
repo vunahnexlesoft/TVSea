@@ -4,18 +4,24 @@ import {bindActionCreators} from "redux";
 import * as moviesAction from "../../redux/ActionCreator/actionMovieCreator";
 import * as usersAction from "../../redux/ActionCreator/actionLoginCreators";
 function mapStateToProps(state) {
-    const {genres, top} = state.moviesReducer;
+    const {genres, top,category} = state.moviesReducer;
     const {recommend} = state.userLoginReducer;
     const userInfo = state.userInfoReducer.data;
     return {
-        dataAllGenres: genres.data,
         isAllGenresLoading: genres.isLoading,
         isAllGenresError: genres.isError,
         userInfo,
+        token: state.userInfoReducer.token,
         dataTopMovie: top.data,
         isTopMovieLoading: top.isLoading,
         isTopMovieError: top.isError,
-        recommendData : recommend.data
+
+        recommendData : recommend.data,
+        dataPhimle: category.phimle.data,
+        dataPhimbo: category.phimbo.data,
+        dataAnime: category.anime.data,
+        dataAllGenres: genres.data,
+
     };
 }
 function mapDispatchToProps(dispatch) {

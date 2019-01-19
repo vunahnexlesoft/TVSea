@@ -29,9 +29,11 @@ const ItemMovieCategory = ({item, onClick, numCol}) => {
     let iconStyleOneNum = {width: 30, height: 30,
         position:'absolute', top: 0, left:5,
         alignItems: 'center',
+        zIndex:2,
         justifyContent: 'center'};
     let iconStyleThreeNum = {width: 25, height: 25,
         position:'absolute', top: 5, left:5,
+        zIndex:2,
         alignItems: 'center',
         justifyContent: 'center'};
     return (

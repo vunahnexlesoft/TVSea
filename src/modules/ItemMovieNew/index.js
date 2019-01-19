@@ -25,20 +25,22 @@ class ItemMovieNew extends Component {
         this.onClickToReSee = this.onClickToReSee.bind(this);
     }
 
-    onClickToRemove(item){
+    onClickToRemove(item) {
         const {onClickToRemove, type} = this.props;
-        if(onClickToRemove){
+        if (onClickToRemove) {
             onClickToRemove(item, type);
         }
     }
-    onClickToReSee(item){
+
+    onClickToReSee(item) {
         const {onClickToReSee} = this.props;
-        if(onClickToReSee){
+        if (onClickToReSee) {
             onClickToReSee(item);
         }
     }
+
     render() {
-        const {onClick, item, isNew, disabledSwipe, disabledClick} = this.props;
+        const {onClick, item, isNew, disabledSwipe, disabledClick, disabledClickDetail, onClickDetail} = this.props;
         let viewGroup = {
             flex: 1,
             flexDirection: 'row',
@@ -75,7 +77,9 @@ class ItemMovieNew extends Component {
                 />
             </View>,
             backgroundColor: 'transparent',
-            onPress: () => {this.onClickToReSee(item)}
+            onPress: () => {
+                this.onClickToReSee(item)
+            }
         }, {
             component: <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
                 <IconButton
@@ -91,7 +95,9 @@ class ItemMovieNew extends Component {
                 />
             </View>,
             backgroundColor: '#DC524A',
-            onPress: () => {this.onClickToRemove(item)}
+            onPress: () => {
+                this.onClickToRemove(item)
+            }
         }];
         return (
             <Swipeout right={swipeBtns}
@@ -102,24 +108,29 @@ class ItemMovieNew extends Component {
                       backgroundColor={'transparent'}>
                 <TouchableOpacity activeOpacity={0.85} style={viewGroup} disabled={disabledClick}
                                   onPress={() => this.setState({openRight: true})}>
-                    <FastImage
-                        resizeMode={FastImage.resizeMode.cover}
-                        style={imageOneNum}
-                        source={{
-                            uri: item.poster_path,
-                            priority: FastImage.priority.normal,
-                        }}/>
-                    <View style={{marginLeft: 10, width: (width / 2) - 30}}>
-                        <Text text={item.title_en}
-                              numberOfLines={2}
-                              size={global.sizeP14}
-                              color={global.colorFF}/>
-                        <Text text={item.title}
-                              numberOfLines={2}
-                              size={global.sizeP13}
-                              color={global.colorFF}
-                              style={{marginTop: 3}}/>
-                    </View>
+                    <TouchableOpacity style={{
+                        flexDirection: 'row', alignItems: 'center', flex:1
+
+                    }} activeOpacity={0.85} disabled={disabledClickDetail} onPress={onClickDetail}>
+                        <FastImage
+                            resizeMode={FastImage.resizeMode.cover}
+                            style={imageOneNum}
+                            source={{
+                                uri: item.poster_path,
+                                priority: FastImage.priority.normal,
+                            }}/>
+                        <View style={{marginLeft: 10, width: (width / 2) - 30}}>
+                            <Text text={item.title_en}
+                                  numberOfLines={2}
+                                  size={global.sizeP14}
+                                  color={global.colorFF}/>
+                            <Text text={item.title}
+                                  numberOfLines={2}
+                                  size={global.sizeP13}
+                                  color={global.colorFF}
+                                  style={{marginTop: 3}}/>
+                        </View>
+                    </TouchableOpacity>
                     {
                         isNew ? <ButtonWithIcon buttonText={buttonText}
                                                 onClick={onClick}
@@ -133,11 +144,13 @@ class ItemMovieNew extends Component {
                                                     zIndex: 1
                                                 }}
                                                 styleText={{color: global.colorFF, fontSize: global.sizeP14}}/>
-                            : <View style={{bottom: IS_IOS ? 70 / 6 : 70 / 5,
+                            : <View style={{
+                                bottom: IS_IOS ? 70 / 6 : 70 / 5,
                                 right: 20,
                                 position: 'absolute',
                                 height: null,
-                                zIndex: 1}}>
+                                zIndex: 1
+                            }}>
                                 <Text text={UTIL_FUNCTION.convertTimeToString(item.date_save)}
                                       numberOfLines={2}
                                       size={global.sizeP12}
@@ -170,6 +183,8 @@ ItemMovieNew.propTypes = {
     isNew: PropTypes.bool,
     disabledClick: PropTypes.bool,
     disabledSwipe: PropTypes.bool,
+    disabledClickDetail: PropTypes.bool,
+    onClickDetail: PropTypes.func,
 };
 
 export default ItemMovieNew;

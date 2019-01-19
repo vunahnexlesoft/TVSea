@@ -55,15 +55,17 @@ export default class DiscoverView extends Component {
 
     componentDidMount() {
         const {moviesAction: {getDataTopMovie, getAllDataGenres, getDataMoviebyCategory}, usersAction: {getDataUserHistoryMovie, getDataUserLikeMovie,getDataRelatedMovie}, userInfo} = this.props;
+
         getDataTopMovie({page: 1, size: 6, category: 'Phim le'});
 
         getDataMoviebyCategory({page: 1, size: 5, category: 1});
         getDataMoviebyCategory({page: 1, size: 5, category: 2});
         getDataMoviebyCategory({page: 1, size: 5, category: 4});
 
-        getAllDataGenres({page: 1, size: 8});
+        getAllDataGenres({page: 1, size: 100});
         getDataUserHistoryMovie({id: userInfo.id});
         getDataUserLikeMovie({id: userInfo.id});
+
         getDataRelatedMovie({idMovie: userInfo.id_movie_history})
     }
 
@@ -142,6 +144,7 @@ export default class DiscoverView extends Component {
                                          <ItemMovieNew item={item}
                                                        disabledClick
                                                        disabledSwipe
+                                                       onClickDetail={() => this._navigateToDetail(item)}
                                                        onClick={() => this._navigateToDetail(item)}/>
                                      }/>}
                 />
@@ -201,6 +204,7 @@ export default class DiscoverView extends Component {
                 />
                 <WrapperView heading={'Thể loại'}
                              isShowAll
+                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Thể loại',type:'GENRES'})}
                              children={
                                  <VerticalGirdView
                                      numColumns={3}
@@ -211,8 +215,11 @@ export default class DiscoverView extends Component {
                                          }}
                                      />}
                                      data={dataAllGenres}
-                                     renderItem={({item, index}) =>
-                                         <ItemGenres item={item}/>
+                                     renderItem={({item, index}) =>{
+                                         return index < 9 ? (
+                                             <ItemGenres item={item} onClick={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: item.name_genre, type:'GENRE', id: item.id})}/>
+                                         ) : null
+                                     }
                                      }/>}
                 />
             </View>

@@ -103,7 +103,7 @@ export default class HistoryView extends Component {
                             />}
                             data={dataHistory}
                             renderItem={({item, index}) =>
-                                <ItemMovieNew type={'HISTORY'} onClickToRemove={this._removeItemView} onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
+                                <ItemMovieNew type={'HISTORY'} disabledClickDetail onClickToRemove={this._removeItemView} onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
                             }/>
                     </View>
                 );
@@ -120,7 +120,7 @@ export default class HistoryView extends Component {
                             />}
                             data={dataLike}
                             renderItem={({item, index}) =>
-                                <ItemMovieNew type={'LIKE'} onClickToRemove={this._removeItemView} onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
+                                <ItemMovieNew type={'LIKE'} disabledClickDetail onClickToRemove={this._removeItemView} onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
                             }/>
                     </View>
                 );
