@@ -146,30 +146,7 @@ export default class ReviewModal extends ModalOder {
                     style={{
                         margin: 5,
                         height: 40,
-                        backgroundColor: global.colorF3,
-                        borderRadius: 20,
-                        flex: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    styleText={{
-                        color: global.colorTextPrimary,
-                        fontSize: global.sizeP14,
-                        alignSelf: 'center',
-                        textDecorationLine: 'underline',
-                        textAlign: 'center'
-                    }}
-                />
-                <ButtonWithIcon
-                    onClick={() => {
-                        this.onCloseModal();
-                        this.props.onAddComment({comment: this.state.note, rate: this.state.rating})
-                    }}
-                    buttonText={'Gửi bình luận'}
-                    style={{
-                        margin: 5,
-                        height: 40,
-                        backgroundColor: global.colorBlackBlue,
+                        backgroundColor: global.orangeColor,
                         borderRadius: 20,
                         flex: 1,
                         alignItems: 'center',
@@ -177,9 +154,43 @@ export default class ReviewModal extends ModalOder {
                     }}
                     styleText={{
                         color: global.colorFF,
-                        fontSize: global.sizeP14,
+                        fontSize: global.sizeP15,
                         alignSelf: 'center',
-                        textDecorationLine: 'underline',
+                        //textDecorationLine: 'underline',
+                        textAlign: 'center'
+                    }}
+                />
+                <ButtonWithIcon
+                    onClick={() => {
+                        if(this.state.note){
+                            this.onCloseModal();
+                            this.props.onAddComment({comment: this.state.note, rate: this.state.rating})
+                        }else {
+                            Alert.alert(
+                                null,
+                                'Bình luận không thể bỏ trống. Vui lòng nhập lại',
+                                [
+                                    {text: 'OK', onPress: () => console.log('Cancel Pressed')},
+                                ],
+                                {cancelable: false}
+                            )
+                        }
+                    }}
+                    buttonText={'Gửi bình luận'}
+                    style={{
+                        margin: 5,
+                        height: 40,
+                        backgroundColor: global.yellowColor,
+                        borderRadius: 20,
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                    styleText={{
+                        color: global.colorFF,
+                        fontSize: global.sizeP15,
+                        alignSelf: 'center',
+                        //textDecorationLine: 'underline',
                         textAlign: 'center'
                     }}
                 />

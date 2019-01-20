@@ -29,11 +29,12 @@ class MovieDescriptionView extends Component {
         const {title, partAndEpisode, releaseDate, languageAndRuntime, overview, rating, style} = this.props;
         return (
             <View style={[{flex: 1, zIndex: 1}, style]}>
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <View style={{flexDirection: 'row',alignItems:'center',}}>
-                        <TextComponent color={global.colorFF}
-                                       size={global.sizeP18}
-                                       text={title}/>
+                <View style={{flexDirection: 'row', alignItems: 'center',flex:1}}>
+                    <View style={{flexDirection: 'row',alignItems:'center',flex:1, width: width - 20}}>
+                            <TextComponent color={global.colorFF}
+                                           numberOfLines={2}
+                                           size={global.sizeP18}
+                                           text={title}/>
                         <ImageBackground source={localImage.icStar}
                                          style={{width: 30, height: 30,marginLeft:5,alignItems: 'center', justifyContent: 'center'}}>
                             <TextComponent color={global.colorFF}
@@ -42,13 +43,7 @@ class MovieDescriptionView extends Component {
                                            text={rating}/>
                         </ImageBackground>
                     </View>
-
-                    <TextComponent color={global.colorBlackBlue}
-                                   style={{marginRight: 10}}
-                                   size={global.sizeP18}
-                                   text={partAndEpisode}/>
                 </View>
-
                 <TextComponent color={global.colorBlackBlue}
                                size={global.sizeP18}
                                text={releaseDate}/>

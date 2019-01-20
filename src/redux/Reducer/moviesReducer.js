@@ -1,4 +1,5 @@
 import * as NAME_ACTION from '../../Constants/actionTypes';
+import * as STRING from '../../themes/string';
 import defaultState from "./defaultState";
 
 export default function moviesReducer(state = defaultState.movies, action) {
@@ -50,7 +51,7 @@ export default function moviesReducer(state = defaultState.movies, action) {
         case NAME_ACTION.GET_MOVIES_TV_SHOW_SUCCESS:
             return state.merge({
                 ...state,
-                category: {...state.category, anime: {data: [], isLoading: false, isError: true}}
+                category: {...state.category, anime: {data: action.data, isLoading: false, isError: true}}
             });
         case NAME_ACTION.GET_MOVIES_TV_SHOW_FAIL:
             return state.merge({
@@ -143,6 +144,61 @@ export default function moviesReducer(state = defaultState.movies, action) {
         }
         case NAME_ACTION.RESET_STATE_MOVIES:
             return state.merge({...state, [action.data.key]: action.data.value});
+        case NAME_ACTION.LOG_OUT_USER:
+            return state.merge({...state, detail: {
+                    data: [],
+                    isLoading: false,
+                    isError: false
+                },
+                category: {
+                    phimle: {
+                        data: [],
+                        isLoading: false,
+                        isError: false
+                    },
+                    phimbo: {
+                        data: [],
+                        isLoading: false,
+                        isError: false
+                    },
+                    anime: {
+                        data: [],
+                        isLoading: false,
+                        isError: false
+                    }
+                },
+                top: {
+                    data: [],
+                    isLoading: false,
+                    isError: false
+                },
+                genres:{
+                    data:[],
+                    isLoading: false,
+                    isError: false,
+                },
+                recommend:{
+                    data:[],
+                    isLoading: false,
+                    isError: false,
+                },
+                search:{
+                    data:[],
+                    history:[],
+                    isLoading: false,
+                    isError: false,
+                },
+                navigateState: [],
+                channel:{
+                    data:[],
+                    isLoading: false,
+                    isError: false,
+                },
+                calender:{
+                    data:[],
+                    isLoading: false,
+                    isError: false,
+                }});
         default:
             return state;
     }

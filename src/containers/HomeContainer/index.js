@@ -10,7 +10,6 @@ function mapStateToProps(state) {
         dataPhimle: category.phimle.data,
         dataPhimbo: category.phimbo.data,
         dataTvshow: category.anime.data,
-
         isPhimleLoading: category.phimle.isLoading,
         isPhimboLoading: category.phimbo.isLoading,
         isTvshowLoading: category.anime.isLoading,

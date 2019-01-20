@@ -66,7 +66,9 @@ export default class DiscoverView extends Component {
         getDataUserHistoryMovie({id: userInfo.id});
         getDataUserLikeMovie({id: userInfo.id});
 
-        getDataRelatedMovie({idMovie: userInfo.id_movie_history})
+        if(userInfo.id_movie_history){
+            getDataRelatedMovie({idMovie: userInfo.id_movie_history})
+        }
     }
 
     _navigateToDetail(movie) {
@@ -86,6 +88,7 @@ export default class DiscoverView extends Component {
 
     renderScene() {
         const {dataTopMovie, dataAllGenres, isAllGenresLoading, recommendData, userInfo,dataPhimle,dataPhimbo,dataAnime} = this.props;
+        console.log("Phim hoat hinh: ",dataAnime);
         return (
             <View style={{
                 backgroundColor: global.backgroundColor,
@@ -111,23 +114,25 @@ export default class DiscoverView extends Component {
                                                                 onClick={() => this._navigateToDetail(item)}/>
                                      }/>}
                 />
-                <WrapperView heading={'Có thể bạn thích'}
-                             isShowAll
-                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Recommend', type:'RECOMMEND'})}
-                             children={
-                                 <VerticalListView
-                                     horizontal={true}
-                                     ItemSeparatorComponent={() => <View
-                                         style={{
-                                             width: 15,
-                                         }}
-                                     />}
-                                     data={recommendData}
-                                     renderItem={({item, index}) =>
-                                         <ItemMovieCategory item={item}
-                                                            onClick={() => this._navigateToDetail(item)}/>
-                                     }/>}
-                />
+                {
+                    recommendData.length > 0 ?  <WrapperView heading={'Có thể bạn thích'}
+                                                             isShowAll
+                                                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Recommend', type:'RECOMMEND'})}
+                                                             children={
+                                                                 <VerticalListView
+                                                                     horizontal={true}
+                                                                     ItemSeparatorComponent={() => <View
+                                                                         style={{
+                                                                             width: 15,
+                                                                         }}
+                                                                     />}
+                                                                     data={recommendData}
+                                                                     renderItem={({item, index}) =>
+                                                                         <ItemMovieCategory item={item}
+                                                                                            onClick={() => this._navigateToDetail(item)}/>
+                                                                     }/>}
+                    /> : null
+                }
                 <WrapperView heading={'Phim mới cập nhật'}
                              onClickViewAll={() => {
                                  UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Phim Mới',type:'PHIM_MOI'})}}

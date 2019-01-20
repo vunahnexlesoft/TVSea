@@ -54,7 +54,6 @@ export default class HomeView extends Component {
     }
     renderScene() {
         const{dataPhimle,dataChannel, dataCalender} = this.props;
-        console.log(dataCalender);
         switch (this.state.index) {
             case 1:
                 return (
@@ -74,9 +73,7 @@ export default class HomeView extends Component {
                                                                text={item.name_channel}
                                                                uriImage={item.url_image}/>
                                               ): null
-                                          }
-
-                                          }/>
+                                          }}/>
                     </View>
                 );
             case 2:

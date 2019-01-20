@@ -20,6 +20,8 @@ import {
     dataFetchingLikeFail,
     dataFetchingLikeSuccess
 } from "../../redux/ActionCreator/actionLoginCreators";
+import ItemReview from "../../modules/ItemReview";
+import VerticalListView from "../../modules/VerticalListView";
 
 const {height, width} = Dimensions.get('window');
 
@@ -33,6 +35,7 @@ export default class ViewAll extends Component {
         this.generateDataMovies = this.generateDataMovies.bind(this);
         this._navigateToDetail = this._navigateToDetail.bind(this);
         this._pushToAnotherScreen = this._pushToAnotherScreen.bind(this);
+        this._renderItem = this._renderItem.bind(this);
 
     }
 
@@ -74,6 +77,8 @@ export default class ViewAll extends Component {
                 return {url: URL.base_url + URL.GET_ALL_GENRES, params: {page: 1, size: 50}};
             case 'GENRE':
                 return {url: URL.base_url + URL.GET_GENRES_MOVIE, params: {page: 1, size: 50, id}};
+            case 'COMMENT':
+                return {url: URL.base_url + URL.GET_USER_COMMENT, params: {page: 1, size: 50, id}};
             default:
                 return null
         }
@@ -94,10 +99,25 @@ export default class ViewAll extends Component {
         UTIL_FUNCTION.navigateToDetail(this.props.usersAction, this.props.navigation, data);
     }
 
-    _pushToAnotherScreen(item){
+    _pushToAnotherScreen(item) {
         let data = {heading: item.name_genre, type: 'GENRE', id: item.id};
         this.props.navigation.push('ViewAll', {data});
     }
+
+    _renderItem({item, index}) {
+        const {data} = this.props.navigation.state.params;
+        switch (data.type) {
+            case 'GENRES': {
+                return <ItemGenres item={item} onClick={() => this._pushToAnotherScreen(item)}/>
+            }
+            case 'COMMENT': {
+                return <ItemReview item={item} style={{marginTop:10}}/>
+            }
+            default:
+                return <ItemMovieCategory numCol={3} item={item} onClick={() => this._navigateToDetail(item)}/>
+        }
+    }
+
     render() {
         const {data} = this.props.navigation.state.params;
         return (
@@ -106,17 +126,15 @@ export default class ViewAll extends Component {
                         onClickBack={() => this.props.navigation.goBack()}/>
                 {
                     !this.state.isLoading ? (this.state.data.length > 0 ? <VerticalGirdView
-                            numColumns={3}
+                            numColumns={data.type !== 'COMMENT' ? 3 : 1}
+                            ItemSeparatorComponent={data.type !== 'COMMENT' ? null : () => <View
+                                style={{
+                                    height: 5,
+                                    width: "100%",
+                                }}
+                            />}
                             data={this.state.data}
-                            renderItem={({item, index}) => {
-                                return data.type !== 'GENRES' ? (
-                                        <ItemMovieCategory numCol={3} item={item} onClick={() => this._navigateToDetail(item)}/>
-                                    )
-                                    :
-                                    (<ItemGenres item={item} onClick={() => this._pushToAnotherScreen(item)}/>
-                                    )
-                            }
-                            }/> : <TextComponent text={'Chưa có dữ liệu vui lòng chọn mục khác'}
+                            renderItem={this._renderItem}/> : <TextComponent text={'Chưa có dữ liệu vui lòng chọn mục khác'}
                                                  color={global.colorFF}
                                                  size={global.sizeP18}
                                                  style={{

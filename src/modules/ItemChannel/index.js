@@ -9,7 +9,7 @@ import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 
 const {height, width} = Dimensions.get('window');
 
-const ItemChannel = ({uriImage, onClick, numCol, counter, text}) => {
+const ItemChannel = ({uriImage, onClick, numCol, counter, text, type}) => {
     let viewGroup = {
         flex: 1,
         alignItems: numCol === 1 ? 'center' : null,
@@ -30,6 +30,7 @@ const ItemChannel = ({uriImage, onClick, numCol, counter, text}) => {
         borderRadius: 10,
         height: height / 3
     };
+    let textStr = type === 'related' ? text : 'Xem vào: ' + text;
     return (
         <TouchableOpacity activeOpacity={0.85} style={viewGroup} onPress={onClick}>
             <FastImage
@@ -58,10 +59,12 @@ const ItemChannel = ({uriImage, onClick, numCol, counter, text}) => {
                 numCol !== 1 ? <View style={{
                     position: 'absolute',
                     top: 10,
+                    width: (width - 6 * 7) / 2 + 5,
                     left: 10,
-                    zIndex: 1
+                    zIndex: 1,
+                    flex:1
                 }}>
-                    <Text text={'Xem vào: ' + text} size={global.sizeP16} color={global.colorFF} style={{lineHeight: global.sizeP18}}/>
+                    <Text text={textStr} size={global.sizeP16} color={global.colorFF} style={{lineHeight: global.sizeP18}}/>
                 </View> : null
             }
             {

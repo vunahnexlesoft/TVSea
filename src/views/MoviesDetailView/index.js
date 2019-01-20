@@ -35,6 +35,7 @@ import {
 import TabItems from "../../modules/TabItems";
 import ReviewModal from "../../modules/ReviewModal";
 import ItemReview from "../../modules/ItemReview";
+import * as UTIL_FUCTION from "../../util";
 
 const {height, width} = Dimensions.get('window');
 const statusBarHeight = Platform.select({
@@ -64,7 +65,7 @@ class MoviesDetailView extends Component {
         this._renderHeading = this._renderHeading.bind(this);
         this._onGotoRelated = this._onGotoRelated.bind(this);
         this._onAddComment = this._onAddComment.bind(this);
-        this._onGotoReview= this._onGotoReview.bind(this);
+        this._onGotoReview = this._onGotoReview.bind(this);
         this.nScroll = new Animated.Value(0);
     }
 
@@ -124,16 +125,17 @@ class MoviesDetailView extends Component {
         usersAction.addUserHistoryMovies(data);
     }
 
-    _onAddComment(dataComment){
+    _onAddComment(dataComment) {
         const {
             userInfo,
             moviesAction: {updateCommentMovie}, dataDetail: {
-                info}
+                info
+            }
         } = this.props;
         let date = new Date();
         let data = {
             actionType: 'ADD',
-            data:{
+            data: {
                 comment: dataComment.comment,
                 date: date,
                 display_name: userInfo.display_name,
@@ -151,22 +153,25 @@ class MoviesDetailView extends Component {
         };
         updateCommentMovie(data);
     }
-    _onGotoReview(){
+
+    _onGotoReview() {
         const {
             moviesAction: {updateCommentMovie}, dataDetail: {
-                info, comment}, userInfo
+                info, comment
+            }, userInfo
         } = this.props;
-        let {note,rating} = '';
+        let {note, rating} = '';
         console.log(comment);
-        comment.map((item,index)=>{
-           if(item.id_user === userInfo.id){
-               note = item.comment;
-               rating = item.rate;
-           }
+        comment.map((item, index) => {
+            if (item.id_user === userInfo.id) {
+                note = item.comment;
+                rating = item.rate;
+            }
         });
         console.log(note, rating);
-        this.refs.modalReview.openModal({note,rating})
+        this.refs.modalReview.openModal({note, rating})
     }
+
     _renderHeader() {
         const {
             dataLike,
@@ -219,17 +224,23 @@ class MoviesDetailView extends Component {
                     }}/>
                 <Animated.View style={{
                     position: 'absolute', top: height / 3 / 2 - 20,
-                    left:width / 2 - 10,
+                    left: width / 2 - 10,
                     alignSelf: 'center',
                     flex: 1,
                     zIndex: 3
                 }}>
                     <IconButton nameIcon={'ios-play'}
-                                onClick={()=>this.props.navigation.navigate('Video',{host: STRING.VAR.VIDEO_DEFAULT, url: backdrop_path, type: "on-demend"})}
+                                onClick={() => this.props.navigation.navigate('Video', {
+                                    host: STRING.VAR.VIDEO_DEFAULT,
+                                    url: backdrop_path,
+                                    type: "on-demend"
+                                })}
+                                hitSlop={{top:35, bottom:35, left:35, right:35}}
                                 iconStyle={{
                                     fontSize: global.sizeP45,
                                     color: global.colorFF
                                 }}
+
                                 btnStyle={{
                                     backgroundColor: 'transparent',
                                     alignItems: 'center',
@@ -307,7 +318,7 @@ class MoviesDetailView extends Component {
                                     paddingTop: 2,
                                     zIndex: 2
                                 }}/>
-                <Animated.View style={{opacity: textOpacity}}>
+                <Animated.View style={{opacity: textOpacity, width: width - 150}}>
                     <TextComponent text={title} size={global.sizeP18} color={global.colorFF}/>
                 </Animated.View>
                 <IconButton nameIcon={check ? 'ios-heart-outline' : 'ios-heart'}
@@ -357,13 +368,14 @@ class MoviesDetailView extends Component {
     _renderSubDescription() {
         const {
             dataDetail: {
+                info,
                 actor,
                 director,
                 genres,
                 episodes,
                 comment,
                 related
-            }, dataRecommend, isRecommendLoading, isRecommendError,userInfo
+            }, dataRecommend, isRecommendLoading, isRecommendError, userInfo
         } = this.props;
         let check = comment.map((e) => {
             return e.id_user
@@ -420,6 +432,7 @@ class MoviesDetailView extends Component {
                 <WrapperView heading={'Đánh giá'}
                              styleHeading={{fontSize: global.sizeP16}}
                              isShowAll
+                             onClickViewAll={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Đánh giá', type:'COMMENT', id: info.id})}
                              children={
                                  <View style={{flex: 1}}>
                                      <View style={{
@@ -431,20 +444,21 @@ class MoviesDetailView extends Component {
                                          <RoundAvatar size={'small'}
                                                       canClick={false}
                                                       icSrc={this.props.userInfo.url_avatar}/>
-                                         <ButtonWithIcon buttonText={check ? 'Xem đánh giá phim của bạn':'Đánh giá ngay....'}
-                                                         styleText={{fontSize: global.sizeP16}}
-                                                         onClick={this._onGotoReview}
-                                                         style={{
-                                                             backgroundColor: 'transparent',
-                                                             flex: 1,
-                                                             paddingLeft: 13,
-                                                             justifyContent: 'flex-start',
-                                                             marginLeft: 10,
-                                                             height: 40,
-                                                             borderWidth: 1,
-                                                             borderColor: global.darkBlue,
-                                                             borderRadius: 20
-                                                         }}/>
+                                         <ButtonWithIcon
+                                             buttonText={check ? 'Xem đánh giá phim của bạn' : 'Đánh giá ngay....'}
+                                             styleText={{fontSize: global.sizeP16}}
+                                             onClick={this._onGotoReview}
+                                             style={{
+                                                 backgroundColor: 'transparent',
+                                                 flex: 1,
+                                                 paddingLeft: 13,
+                                                 justifyContent: 'flex-start',
+                                                 marginLeft: 10,
+                                                 height: 40,
+                                                 borderWidth: 1,
+                                                 borderColor: global.darkBlue,
+                                                 borderRadius: 20
+                                             }}/>
                                      </View>
                                      <VerticalListView
                                          ItemSeparatorComponent={() => <View
@@ -466,6 +480,8 @@ class MoviesDetailView extends Component {
                                          <VerticalGirdView data={related}
                                                            renderItem={({item, index}) =>
                                                                <ItemChannel uriImage={item.poster_path}
+                                                                            type={'related'}
+                                                                            text={item.title}
                                                                             onClick={this._onGotoRelated.bind(this, item)}/>
                                                            }/>) :
                                      <EmptyView nameIcon={'ios-pulse'} textDes={'Không có phim liên quan'}/>
@@ -513,7 +529,13 @@ class MoviesDetailView extends Component {
                     {this._renderHeader()}
                     {
                         Object.keys(dataDetail).length > 0 ? <View
-                            style={{backgroundColor: global.backgroundColor, paddingLeft: 10, paddingRight: 10, flex: 1, zIndex: 3}}>
+                            style={{
+                                backgroundColor: global.backgroundColor,
+                                paddingLeft: 10,
+                                paddingRight: 10,
+                                flex: 1,
+                                zIndex: 3
+                            }}>
                             {this._renderDescription()}
                             {this._renderSubDescription()}
                         </View> : <SkypeIndicator color={global.yellowColor}/>

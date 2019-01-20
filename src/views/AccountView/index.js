@@ -41,6 +41,7 @@ export default class AccountView extends Component {
             index: 0,
             actions: [NavigationActions.navigate({ routeName: 'SignIn' })],
         });
+        this.props.moviesAction.logoutUser();
         this.props.navigation.dispatch(resetAction);
     }
     renderScene() {

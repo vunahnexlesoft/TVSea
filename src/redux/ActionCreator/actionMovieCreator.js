@@ -215,6 +215,12 @@ export function dataFetchingCalenderMovieFail() {
     }
 }
 
+export function logoutUser() {
+    return{
+        type: NAME_ACTION.LOG_OUT_USER
+    }
+}
+
 export function getDataMoviebyCategory(params) {
     return (dispatch) => {
         let url = URL.base_url + URL.GET_MOVIES_BY_CATEGORY;
