@@ -17,7 +17,7 @@ export default class TabItems extends Component {
                                 <ItemTab
                                     key={i}
                                     {...this.props}
-                                    text={e.name}
+                                    text={e.name.toUpperCase()}
                                     onChangeTabView={() => onIndexChange(e, i)}
                                     isActive={isActive}/>
                             </View>
