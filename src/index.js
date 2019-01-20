@@ -97,8 +97,8 @@ const TabBar = createBottomTabNavigator({
 );
 const RootNavigator = createStackNavigator({
         TabBar: {screen: TabBar},
-        Video: {screen: Video},
         MoviesDetail: {screen: MoviesDetail},
+        Video: {screen: Video},
         ViewAll: {screen: ViewAll},
         SignIn: {screen: SignIn},
         SignUp: {screen: SignUp}

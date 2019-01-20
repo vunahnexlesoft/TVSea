@@ -66,6 +66,7 @@ class MoviesDetailView extends Component {
         this._onGotoRelated = this._onGotoRelated.bind(this);
         this._onAddComment = this._onAddComment.bind(this);
         this._onGotoReview = this._onGotoReview.bind(this);
+        this._navigateVideo = this._navigateVideo.bind(this);
         this.nScroll = new Animated.Value(0);
     }
 
@@ -171,7 +172,12 @@ class MoviesDetailView extends Component {
         console.log(note, rating);
         this.refs.modalReview.openModal({note, rating})
     }
-
+    _navigateVideo(){
+        this.props.navigation.navigate('Video', {
+            host: STRING.VAR.VIDEO_DEFAULT,
+            type: "on-demend"
+        })
+    }
     _renderHeader() {
         const {
             dataLike,
@@ -230,11 +236,7 @@ class MoviesDetailView extends Component {
                     zIndex: 3
                 }}>
                     <IconButton nameIcon={'ios-play'}
-                                onClick={() => this.props.navigation.navigate('Video', {
-                                    host: STRING.VAR.VIDEO_DEFAULT,
-                                    url: backdrop_path,
-                                    type: "on-demend"
-                                })}
+                                onClick={this._navigateVideo}
                                 hitSlop={{top:35, bottom:35, left:35, right:35}}
                                 iconStyle={{
                                     fontSize: global.sizeP45,

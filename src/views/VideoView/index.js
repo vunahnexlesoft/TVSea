@@ -36,6 +36,7 @@ export default class VideoPlayer extends Component {
         this.onBuffer = this.onBuffer.bind(this);
         this.onClickPropress = this.onClickPropress.bind(this);
         this._onGoBackScreen = this._onGoBackScreen.bind(this);
+        this.getCurrentTimePercentage = this.getCurrentTimePercentage.bind(this);
     }
 
     state = {
@@ -51,10 +52,16 @@ export default class VideoPlayer extends Component {
         isBuffering: false,
         isLoadingVideo: true,
         counter: 0,
-        showbar: true
+        showbar: true,
+        setShowVideo: false
     };
 
     componentDidMount() {
+        setTimeout(() =>{
+            this.setState({
+                setShowVideo: true
+            })
+        },500);
         firebase.database().ref(`Channel`).on('value', (snap) => {
             const items = [];
             snap.forEach((child) => {
@@ -87,7 +94,7 @@ export default class VideoPlayer extends Component {
     }
 
     onProgress(data) {
-        this.setState({currentTime: data.currentTime / this.state.duration });
+        this.setState({currentTime: data.currentTime});
     }
 
     onBuffer({isBuffering}: { isBuffering: boolean }) {
@@ -96,13 +103,25 @@ export default class VideoPlayer extends Component {
 
     _onGoBackScreen() {
         firebaseUtil.removeNewUserOnline(this.props.userInfo);
-        this.props.navigation.goBack()
+        this.setState({
+            setShowVideo: false
+        },()=>{
+            this.props.navigation.goBack()
+        });
     }
 
+    getCurrentTimePercentage(currentTime, duration) {
+        if (currentTime > 0) {
+            return parseFloat(currentTime) / parseFloat(duration);
+        } else {
+            return 0.0;
+        }
+    }
     renderNativeSkin() {
         const videoStyle = styles.fullScreen;
-        const getTime = Math.floor(this.state.currentTime * this.state.duration);
-        const {host, url, type} = this.props.navigation.state.params;
+        const getTime = Math.floor((this.state.currentTime/this.state.duration) * this.state.duration);
+        const completedPercentage = this.getCurrentTimePercentage(this.state.currentTime, this.state.duration);
+        const {host, type} = this.props.navigation.state.params;
         return (
             <View style={styles.container}>
                 <StatusBar
@@ -141,28 +160,30 @@ export default class VideoPlayer extends Component {
                         position: 'absolute', top: 10, right: 10, zIndex: 1
                     }}/> : null) : (null)
                 }
-                <KSYVideo
-                    ref={(video) => {
-                        this.video = video
-                    }}
-                    source={{uri: host}}
-                    bufferSize={30}
-                    bufferTime={4}
-                    paused={this.state.paused}
-                    onTouch={() => {
-                        this.setState({showbar: !this.state.showbar})}
-                    }
-                    timeout={{prepareTimeout: 60, readTimeout: 60}}
-                    onLoad={this.onLoad}
-                    onReadyForDisplay={(data) => {
-                        this.setState({isLoadingVideo: false});
-                    }}
-                    onProgress={this.onProgress}
-                    resizeMode={'contain'}
-                    style={videoStyle}
-                />
                 {
-                    this.state.showbar ? (type !== "stream" && !this.state.isLoadingVideo ? <View style={{
+                    this.state.setShowVideo ? <KSYVideo
+                        ref={(video) => {
+                            this.video = video
+                        }}
+                        source={{uri: host}}
+                        bufferSize={30}
+                        bufferTime={4}
+                        paused={this.state.paused}
+                        onTouch={() => {
+                            this.setState({showbar: !this.state.showbar})}
+                        }
+                        timeout={{prepareTimeout: 60, readTimeout: 60}}
+                        onLoad={this.onLoad}
+                        onReadyForDisplay={(data) => {
+                            this.setState({isLoadingVideo: false});
+                        }}
+                        onProgress={this.onProgress}
+                        resizeMode={'contain'}
+                        style={videoStyle}
+                    /> : null
+                }
+                {
+                    this.state.showbar ? (type !== "stream" && !this.state.isLoadingVideo && this.state.setShowVideo ? <View style={{
                         backgroundColor: global.transparentWhite1,
                         alignSelf: 'center',
                         width: width - 10,
@@ -172,12 +193,13 @@ export default class VideoPlayer extends Component {
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'space-around',
+                        flex:1,
                         paddingHorizontal: 10
                     }}>
                         <IconButton nameIcon={!this.state.paused ? 'ios-pause' : 'ios-play'}
                                     onClick={() => this.setState({paused: !this.state.paused})}
                                     iconStyle={{fontSize: global.sizeP30, color: global.colorFF}}/>
-                        <ProgressTimeVideo progress={this.state.currentTime} onClick={this.onClickPropress}/>
+                        <ProgressTimeVideo progress={completedPercentage} onClick={this.onClickPropress}/>
                         <TextComponent text={UTIL_FUNCTION.secondsToTime(getTime)} color={global.colorFF}/>
                     </View> : null) : null
                 }
