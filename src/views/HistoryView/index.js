@@ -87,7 +87,7 @@ export default class HistoryView extends Component {
             params: {
                 idMovie: movie.id,
                 idUser: this.props.userInfo.id,
-                Key: 1
+                Key: type === 'HISTORY' ? 1 : 2
             }
         };
         this.props.usersAction.addUserHistoryMovies(data);
