@@ -59,7 +59,6 @@ export function addOrDeleteUserPropertyMoviesSuccess(data) {
 export function getDataUserHistoryMovie(params) {
     return (dispatch) => {
         let generateParams = {...params, key: 1};
-        console.log(generateParams);
         let url = URL.base_url + URL.GET_USER_HISTORY_MOVIES;
         let token = store.getState().userInfoReducer.token;
         dispatch(dataFetchingHistory());
@@ -95,11 +94,9 @@ export function addUserHistoryMovies(data) {
         let method = data.actionType === 'ADD' ? "post" : "put";
         let token = store.getState().userInfoReducer.token;
         restClient.excuteAPI(method, url, token, null, data.params).then(res => {
-            console.log('res', res);
             if (res.success) {
                 dispatch(addOrDeleteUserPropertyMoviesSuccess(data))
             } else {
-                console.log('Add data fail')
             }
         });
     }

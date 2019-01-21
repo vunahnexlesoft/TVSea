@@ -88,7 +88,6 @@ export default class DiscoverView extends Component {
 
     renderScene() {
         const {dataTopMovie, dataAllGenres, isAllGenresLoading, recommendData, userInfo,dataPhimle,dataPhimbo,dataAnime} = this.props;
-        console.log("Phim hoat hinh: ",dataAnime);
         return (
             <View style={{
                 backgroundColor: global.backgroundColor,

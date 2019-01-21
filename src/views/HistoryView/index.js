@@ -12,6 +12,7 @@ import ItemChannel from "../../modules/ItemChannel";
 import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
 import ItemMovieNew from "../../modules/ItemMovieNew";
 import * as UTIL_FUNCTION from "../../util";
+import EmptyView from "../../modules/EmptyView";
 
 const {height, width} = Dimensions.get('window');
 
@@ -24,7 +25,7 @@ export default class HistoryView extends Component {
             dataHistory: this.props.dataHistory,
             dataLike: this.props.dataLike,
         };
-        this._isFirstOpen= false;
+        this._isFirstOpen = false;
         this.renderScene = this.renderScene.bind(this);
         this._onIndexChange = this._onIndexChange.bind(this);
         this._navigateToDetail = this._navigateToDetail.bind(this);
@@ -36,9 +37,10 @@ export default class HistoryView extends Component {
         getDataUserHistoryMovie({id: userInfo.id});
         getDataUserLikeMovie({id: userInfo.id});
     }
-    static getDerivedStateFromProps(nextProps, prevState){
-        if(UTIL_FUNCTION.compareDifference(nextProps.dataHistory,prevState.dataHistory)
-            || UTIL_FUNCTION.compareDifference(nextProps.dataLike,prevState.dataLike)){
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (UTIL_FUNCTION.compareDifference(nextProps.dataHistory, prevState.dataHistory)
+            || UTIL_FUNCTION.compareDifference(nextProps.dataLike, prevState.dataLike)) {
             return {
                 dataHistory: nextProps.dataHistory,
                 dataLike: nextProps.dataLike
@@ -47,18 +49,21 @@ export default class HistoryView extends Component {
         return null;
     }
 
-    getSnapshotBeforeUpdate(prevProps, prevState){
+    getSnapshotBeforeUpdate(prevProps, prevState) {
         //console.log('getSnapshotBeforeUpdate',prevProps,prevState);
         return null;
     }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         //console.log('componentDidUpdate ',prevProps,prevState,snapshot);
 
     }
+
     _onIndexChange(item) {
         LayoutAnimation.easeInEaseOut();
         this.setState({index: item.id});
     }
+
     _navigateToDetail(movie) {
         //{type: LIKE : HISTORY, actionType: ADD : REMOVE, MOVIE : DATAMOVIE , PARAMS: IDUSER, IDMOVIE, KEY: 1 HISTORY, 2 LIKE}
         let data = {
@@ -73,7 +78,8 @@ export default class HistoryView extends Component {
         };
         UTIL_FUNCTION.navigateToDetail(this.props.usersAction, this.props.navigation, data);
     }
-    _removeItemView(movie , type){
+
+    _removeItemView(movie, type) {
         let data = {
             movie,
             type: type,
@@ -86,42 +92,52 @@ export default class HistoryView extends Component {
         };
         this.props.usersAction.addUserHistoryMovies(data);
     }
+
     renderScene() {
         const {dataHistory, dataLike} = this.state;
-        console.log('dataHistory: ',this.state.dataHistory);
         switch (this.state.index) {
             case 1: {
                 return (
                     <View key={1} style={{flex: 1, marginTop: 10}}>
-                        <VerticalListView
+                        {
+                            dataHistory.length > 0 ? <VerticalListView
+                                    ItemSeparatorComponent={() => <View
+                                        style={{
+                                            height: 15,
+                                            width: "100%",
+                                        }}
+                                    />}
+                                    data={dataHistory}
+                                    renderItem={({item, index}) =>
+                                        <ItemMovieNew type={'HISTORY'} disabledClickDetail
+                                                      onClickToRemove={this._removeItemView}
+                                                      onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
+                                    }/> :
+                                <EmptyView style={{marginTop: height / 3 - 50}} nameIcon={'ios-book'} textDes={'Bạn chưa có lịch sử xem phim'}/>
+                        }
 
-                            ItemSeparatorComponent={() => <View
-                                style={{
-                                    height: 15,
-                                    width: "100%",
-                                }}
-                            />}
-                            data={dataHistory}
-                            renderItem={({item, index}) =>
-                                <ItemMovieNew type={'HISTORY'} disabledClickDetail onClickToRemove={this._removeItemView} onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
-                            }/>
                     </View>
                 );
             }
             case 2: {
                 return (
                     <View key={2} style={{flex: 1, marginTop: 10}}>
-                        <VerticalListView
-                            ItemSeparatorComponent={() => <View
-                                style={{
-                                    height: 15,
-                                    width: "100%",
-                                }}
-                            />}
-                            data={dataLike}
-                            renderItem={({item, index}) =>
-                                <ItemMovieNew type={'LIKE'} disabledClickDetail onClickToRemove={this._removeItemView} onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
-                            }/>
+                        {
+                            dataLike.length > 0 ? <VerticalListView
+                                    ItemSeparatorComponent={() => <View
+                                        style={{
+                                            height: 15,
+                                            width: "100%",
+                                        }}
+                                    />}
+                                    data={dataLike}
+                                    renderItem={({item, index}) =>
+                                        <ItemMovieNew type={'LIKE'} disabledClickDetail
+                                                      onClickToRemove={this._removeItemView}
+                                                      onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
+                                    }/> :
+                                <EmptyView style={{marginTop: height / 3 - 50}} nameIcon={'ios-book'} textDes={'Bạn chưa yêu thích bất kỳ bộ phim nào'}/>
+                        }
                     </View>
                 );
             }

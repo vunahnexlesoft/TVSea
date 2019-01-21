@@ -1,15 +1,26 @@
 import React, {Component} from 'react';
-import {Animated, Dimensions, Image, View, KeyboardAvoidingView,Alert,ImageBackground,AsyncStorage,ScrollView} from 'react-native';
+import {
+    Animated,
+    Dimensions,
+    Image,
+    View,
+    KeyboardAvoidingView,
+    Alert,
+    ImageBackground,
+    AsyncStorage,
+    ScrollView
+} from 'react-native';
 import styles from './styles';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import global from "../../themes/global";
 import Text from "../../commons/Text/Text";
-import {NavigationActions,StackActions }from 'react-navigation';
+import {NavigationActions, StackActions} from 'react-navigation';
 import localImage from "../../themes/localImage";
 import TextSingleInput from "../../commons/TextInput/TextSingleInput";
 import IconButton from "../../commons/Button/IconButton";
 import SkypeIndicator from "react-native-indicators/src/components/skype-indicator/index";
 import * as UTIL_FUNCTION from "../../util";
+
 const {height, width} = Dimensions.get('window');
 
 export default class SignIn extends Component {
@@ -26,6 +37,7 @@ export default class SignIn extends Component {
         warningEmail: '',
         warningPassword: ''
     };
+
     componentWillMount() {
         AsyncStorage.getItem("REMEMBER.ME", (result) => {
         }).then(result => {
@@ -53,17 +65,17 @@ export default class SignIn extends Component {
                     });
                     const resetAction = StackActions.reset({
                         index: 0,
-                        actions: [NavigationActions.navigate({ routeName: 'TabBar' })],
+                        actions: [NavigationActions.navigate({routeName: 'TabBar'})],
                     });
                     this.props.navigation.dispatch(resetAction);
-                   // this.props.navigation.navigate('TabBar');
                 } else {
                     Alert.alert(
                         null,
                         'Email hoặc mật khẩu không đúng vui lòng kiểm tra lại',
                         [
                             {
-                                text: 'OK', onPress: () => {}
+                                text: 'OK', onPress: () => {
+                                }
                             },
                         ],
                         {cancelable: false}
@@ -71,10 +83,10 @@ export default class SignIn extends Component {
                 }
             })
         } else {
-            if(!email){
+            if (!email) {
                 this.setState({isWarningEmail: true, warningEmail: 'Email không được để trống'})
             }
-            if(!password){
+            if (!password) {
                 this.setState({isWarningPassword: true, warningPassword: 'Mật khẩu không được để trống'})
             }
         }
@@ -88,7 +100,7 @@ export default class SignIn extends Component {
                 backgroundColor: global.backgroundColor23,
 
                 alignItems: 'center',
-                zIndex:1
+                zIndex: 1
             }} blurRadius={5} source={localImage.background}>
                 <Image
                     resizeMode={'cover'}
@@ -101,83 +113,88 @@ export default class SignIn extends Component {
                     }}
                     source={localImage.icApp}/>
                 {
-                    !isLoading ? <ScrollView keyboardShouldPersistTaps={"handled"} style={{flex:1,paddingLeft: 20,
-                        paddingRight: 20,}}>
-                        <KeyboardAvoidingView behavior="padding" enabled style={{flex:1, marginTop:20}}>
+                    !isLoading ? <ScrollView keyboardShouldPersistTaps={"handled"} style={{
+                        flex: 1, paddingLeft: 20,
+                        paddingRight: 20,
+                    }}>
+                        <KeyboardAvoidingView behavior="padding" enabled style={{flex: 1, marginTop: 20}}>
                             <TextSingleInput styleForm={{
-                                    height: height / 15,
-                                    flexDirection: 'row',
-                                    backgroundColor: 'transparent',
-                                    borderWidth: 1,
-                                    borderColor: global.colorFF,//global.darkBlue,
-                                    borderRadius: 8, alignItems: 'center'
-                                }}
-                                                 warning={this.state.isWarningEmail}
-                                                 textWarning={this.state.warningEmail}
-                                                 value={this.state.email}
-                                                 onChangeText={(email) => this.setState({email, isWarningEmail: false})}
-                                                 placeholder={'Email'}
-                                                 placeholderTextColor={global.colorFF}//{global.darkBlue}
-                                                 styleIcon={{color: global.colorFF}}
-                                                 styleDivider={{backgroundColor: global.colorFF}}
-                                                 style={{fontSize: global.sizeP18, color: global.colorFF}}
-                                                 nameIcon={'ios-mail'}/>
-                                <TextSingleInput styleForm={{
-                                    height: height / 15,
-                                    flexDirection: 'row',
-                                    backgroundColor: 'transparent',
-                                    borderWidth: 1,
-                                    borderColor: global.colorFF,//global.darkBlue,
-                                    borderRadius: 8, alignItems: 'center'
-                                }}
-                                                 warning={this.state.isWarningPassword}
-                                                 textWarning={this.state.warningPassword}
-                                                 value={this.state.password}
-                                                 onChangeText={(password) => this.setState({password,isWarningPassword: false})}
-                                                 placeholder={'Mật khẩu'}
-                                                 secureTextEntry
-                                                 placeholderTextColor={global.colorFF}//{global.darkBlue}
-                                                 styleIcon={{color: global.colorFF}}
-                                                 styleDivider={{backgroundColor: global.colorFF}}
-                                                 style={{fontSize: global.sizeP18, color: global.colorFF}}
-                                                 nameIcon={'ios-lock'}/>
+                                height: height / 15,
+                                flexDirection: 'row',
+                                backgroundColor: 'transparent',
+                                borderWidth: 1,
+                                borderColor: global.colorFF,//global.darkBlue,
+                                borderRadius: 8, alignItems: 'center'
+                            }}
+                                             warning={this.state.isWarningEmail}
+                                             textWarning={this.state.warningEmail}
+                                             value={this.state.email}
+                                             onChangeText={(email) => this.setState({email, isWarningEmail: false})}
+                                             placeholder={'Email'}
+                                             placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                             styleIcon={{color: global.colorFF}}
+                                             styleDivider={{backgroundColor: global.colorFF}}
+                                             style={{fontSize: global.sizeP18, color: global.colorFF}}
+                                             nameIcon={'ios-mail'}/>
+                            <TextSingleInput styleForm={{
+                                height: height / 15,
+                                flexDirection: 'row',
+                                backgroundColor: 'transparent',
+                                borderWidth: 1,
+                                borderColor: global.colorFF,//global.darkBlue,
+                                borderRadius: 8, alignItems: 'center'
+                            }}
+                                             warning={this.state.isWarningPassword}
+                                             textWarning={this.state.warningPassword}
+                                             value={this.state.password}
+                                             onChangeText={(password) => this.setState({
+                                                 password,
+                                                 isWarningPassword: false
+                                             })}
+                                             placeholder={'Mật khẩu'}
+                                             secureTextEntry
+                                             placeholderTextColor={global.colorFF}//{global.darkBlue}
+                                             styleIcon={{color: global.colorFF}}
+                                             styleDivider={{backgroundColor: global.colorFF}}
+                                             style={{fontSize: global.sizeP18, color: global.colorFF}}
+                                             nameIcon={'ios-lock'}/>
                         </KeyboardAvoidingView>
-                            <ButtonWithIcon buttonText={'Đăng nhập'.toUpperCase()}
-                                            styleText={{fontSize: global.sizeP16, fontWeight: "700"}}
-                                            onClick={this.onClickLogin}
-                                            style={{
-                                                backgroundColor: global.yellowColor,
-                                                marginTop: 20,
-                                                height: 40,
-                                                alignSelf: 'center',
-                                                width: width / 2 - 30,
-                                                borderWidth: 0,
-                                                borderRadius: 20
-                                            }}/>
-                        <View style={{height:height/3,justifyContent:'flex-end', flex: 1, alignItems: 'center'}}>
-                            <ButtonWithIcon nameIcon={'logo-facebook'}
-                                            buttonText={'Facebook'}
-                                            onClick={this.onGoBack}
-                                            icoStyle={{
-                                                fontSize: global.sizeP25,
-                                                color: global.colorFF,
-                                                margin: 0,
-                                                marginRight: 10,
-                                                marginTop: 3
-                                            }}
-                                            style={{
-                                                height: 35,
-                                                width: width / 2 - 10,
-                                                borderRadius: 8,
-                                                backgroundColor: global.colorBlackBlue,
-                                                borderColor: 'transparent',
-                                                borderWidth: 0,
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                paddingRight: 3,
-                                                paddingTop: 2,
-                                                zIndex: 2
-                                            }}/>
+                        <ButtonWithIcon buttonText={'Đăng nhập'.toUpperCase()}
+                                        styleText={{fontSize: global.sizeP16, fontWeight: "700"}}
+                                        onClick={this.onClickLogin}
+                                        style={{
+                                            backgroundColor: global.yellowColor,
+                                            marginTop: 20,
+                                            height: 40,
+                                            alignSelf: 'center',
+                                            width: width / 2 - 30,
+                                            borderWidth: 0,
+                                            borderRadius: 20
+                                        }}/>
+                        <View style={{height: height / 3, justifyContent: 'flex-end', flex: 1, alignItems: 'center'}}>
+                            {/*<ButtonWithIcon nameIcon={'logo-facebook'}*/}
+                            {/*buttonText={'Facebook'}*/}
+                            {/*onClick={this.onGoBack}*/}
+                            {/*styleText={{fontSize: global.sizeP16, fontWeight: "700", lineHeight:global.sizeP18}}*/}
+                            {/*icoStyle={{*/}
+                            {/*fontSize: global.sizeP25,*/}
+                            {/*color: global.colorFF,*/}
+                            {/*margin: 0,*/}
+                            {/*marginRight: 10,*/}
+                            {/*marginTop: 3*/}
+                            {/*}}*/}
+                            {/*style={{*/}
+                            {/*width: width / 2 - 20,*/}
+                            {/*borderRadius: 20,*/}
+                            {/*backgroundColor: global.colorBlackBlue,*/}
+                            {/*borderColor: 'transparent',*/}
+                            {/*borderWidth: 0,*/}
+                            {/*alignItems: 'center',*/}
+                            {/*justifyContent: 'center',*/}
+                            {/*//paddingRight: 3,*/}
+                            {/*//paddingTop: 2,*/}
+                            {/*// zIndex: 2*/}
+                            {/*}}/>*/}
                             <ButtonWithIcon buttonText={'Đăng ký tài khoản miễn phí'}
                                             styleText={{fontSize: global.sizeP16}}
                                             onClick={() => this.props.navigation.navigate('SignUp')}

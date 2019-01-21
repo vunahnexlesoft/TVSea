@@ -84,7 +84,6 @@ export default class VideoPlayer extends Component {
     }
 
     onLoadStart(data) {
-        console.log('onLoadStart');
         this.setState({isLoadingVideo: true})
     }
 

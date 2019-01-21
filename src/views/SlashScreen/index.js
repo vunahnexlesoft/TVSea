@@ -22,11 +22,10 @@ import {
 } from "../../redux/ActionCreator/actionLoginCreators";
 import ItemReview from "../../modules/ItemReview";
 import VerticalListView from "../../modules/VerticalListView";
-import EmptyView from "../../modules/EmptyView";
 
 const {height, width} = Dimensions.get('window');
 
-export default class ViewAll extends Component {
+export default class SlashScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,7 +42,6 @@ export default class ViewAll extends Component {
     componentDidMount() {
         const {token} = this.props;
         const {type} = this.props.navigation.state.params.data;
-        console.log(this.generateDataMovies(type).url, this.generateDataMovies(type).params, token);
         this.setState({
             isLoading: true
         });
@@ -135,8 +133,14 @@ export default class ViewAll extends Component {
                                 }}
                             />}
                             data={this.state.data}
-                            renderItem={this._renderItem}/> :
-                        <EmptyView style={{marginTop: height / 2 - 100}} nameIcon={'ios-pulse'} textDes={'Chưa có dữ liệu phim vui lòng chọn mục khác'}/>)
+                            renderItem={this._renderItem}/> : <TextComponent text={'Chưa có dữ liệu vui lòng chọn mục khác'}
+                                                                             color={global.colorFF}
+                                                                             size={global.sizeP18}
+                                                                             style={{
+                                                                                 textAlign: 'center',
+                                                                                 alignSelf: 'center',
+                                                                                 marginTop: height / 2 - 100
+                                                                             }}/>)
                         : <SkypeIndicator color={global.yellowColor}/>
                 }
 

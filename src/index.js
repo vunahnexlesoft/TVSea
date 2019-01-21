@@ -54,16 +54,16 @@ const TabBar = createBottomTabNavigator({
                 let iconName;
                 switch (routeName) {
                     case 'Home':
-                        iconName = "ios-sync";
+                        iconName = "ios-home";
                         break;
                     case 'Discover':
-                        iconName = "ios-aperture";
+                        iconName = "ios-sync";
                         break;
                     case 'Search':
                         iconName = "ios-search";
                         break;
                     case 'History':
-                        iconName = "ios-copy";
+                        iconName = "ios-book";
                         break;
                     case 'Account':
                         iconName = "ios-contact";

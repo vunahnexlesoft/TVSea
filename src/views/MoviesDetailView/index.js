@@ -162,7 +162,6 @@ class MoviesDetailView extends Component {
             }, userInfo
         } = this.props;
         let {note, rating} = '';
-        console.log(comment);
         comment.map((item, index) => {
             if (item.id_user === userInfo.id) {
                 note = item.comment;
@@ -172,9 +171,9 @@ class MoviesDetailView extends Component {
         console.log(note, rating);
         this.refs.modalReview.openModal({note, rating})
     }
-    _navigateVideo(){
+    _navigateVideo(item){
         this.props.navigation.navigate('Video', {
-            host: STRING.VAR.VIDEO_DEFAULT,
+            host: item.url_link,//STRING.VAR.VIDEO_DEFAULT,
             type: "on-demend"
         })
     }
@@ -236,7 +235,7 @@ class MoviesDetailView extends Component {
                     zIndex: 3
                 }}>
                     <IconButton nameIcon={'ios-play'}
-                                onClick={this._navigateVideo}
+                                onClick={this._navigateVideo.bind(this, info)}
                                 hitSlop={{top:35, bottom:35, left:35, right:35}}
                                 iconStyle={{
                                     fontSize: global.sizeP45,
@@ -320,8 +319,8 @@ class MoviesDetailView extends Component {
                                     paddingTop: 2,
                                     zIndex: 2
                                 }}/>
-                <Animated.View style={{opacity: textOpacity, width: width - 150}}>
-                    <TextComponent text={title} size={global.sizeP18} color={global.colorFF}/>
+                <Animated.View style={{opacity: textOpacity, width: width - 150, alignItems:'center'}}>
+                    <TextComponent text={title} size={global.sizeP18} color={global.colorFF} style={{textAlign: 'center'}}/>
                 </Animated.View>
                 <IconButton nameIcon={check ? 'ios-heart-outline' : 'ios-heart'}
                             onClick={this._onClickToLike}
@@ -379,9 +378,12 @@ class MoviesDetailView extends Component {
                 related
             }, dataRecommend, isRecommendLoading, isRecommendError, userInfo
         } = this.props;
+        console.log('comment',comment, userInfo.id,comment.map((e) => {
+            return e.id_user
+        }).indexOf(userInfo.id) > -1);
         let check = comment.map((e) => {
             return e.id_user
-        }).indexOf(userInfo.id) >= -1;
+        }).indexOf(userInfo.id) > -1;
         return (
             <View style={{flex: 1}}>
                 <WrapperView heading={'Số tập'}
@@ -391,7 +393,7 @@ class MoviesDetailView extends Component {
                                      horizontal={true}
                                      data={episodes}
                                      renderItem={({item, index}) =>
-                                         <ItemGenres key={index} item={item} type={'detail'}/>
+                                         <ItemGenres key={index} onClick={this._navigateVideo.bind(this, item)} item={item} type={'detail'}/>
                                      }/>}/>
                 <WrapperView heading={'Thể loại'}
                              styleHeading={{fontSize: global.sizeP16}}
@@ -400,7 +402,7 @@ class MoviesDetailView extends Component {
                                      horizontal={true}
                                      data={genres}
                                      renderItem={({item, index}) =>
-                                         <ItemGenres key={index} item={item} type={'detail'}/>
+                                         <ItemGenres key={index} onClick={() => UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: item.name_genre, type:'GENRE', id: item.id})} item={item} type={'detail'}/>
                                      }/>}/>
                 <WrapperView heading={'Diễn viên'}
                              styleHeading={{fontSize: global.sizeP16}}

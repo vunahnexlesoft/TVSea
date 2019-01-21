@@ -12,7 +12,7 @@ class EmptyView extends Component{
         return (
             <View style={[{alignItems:'center', justifyContent:'center', height: 70},style]}>
                 <IconButton nameIcon={nameIcon} iconStyle={{fontSize: global.sizeP35,color:global.colorFF}}/>
-                <Text text={textDes} color={global.colorFF} size={global.sizeP16}/>
+                <Text numberOfLines={2} text={textDes} color={global.colorFF} size={global.sizeP16}/>
             </View>
         );
     }

@@ -47,7 +47,6 @@ export default class SearchView extends Component {
 
     onEndEditing() {
         const {moviesAction} = this.props;
-        console.log('onSubmitEditing');
         if (this.addHistoryTimeOut) {
             clearTimeout(this.addHistoryTimeOut);
             this.addHistoryTimeOut = null;
@@ -134,10 +133,12 @@ export default class SearchView extends Component {
                                               renderItem={({item, index}) => {
                                                   return this.state.changeText ? (
                                                           <ItemMovieNew item={item} isNew
+                                                                        onClickDetail={this._navigateToDetail.bind(this, item)}
                                                                         onClick={this._navigateToDetail.bind(this, item)}/>
                                                       )
                                                       :
                                                       (<ItemHistorySearch item={item}
+                                                                          onClickCloseButton={()=> this.props.moviesAction.updateSearchHistory({type: 'REMOVE_SEARCH_HISTORY_MOVIE', name: item})}
                                                                           onClick={this.onClickHistoryItem.bind(this, item)}/>);
                                               }}/>
                             : <EmptyView nameIcon={'ios-pulse'} textDes={'Chưa có lịch sử tìm kiếm'}/>

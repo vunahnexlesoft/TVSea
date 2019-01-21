@@ -135,7 +135,7 @@ export default function moviesReducer(state = defaultState.movies, action) {
                 updateObject = [...state.detail.data.comment];
                 updateObject[index] = {...updateObject[index], comment: action.data.data.comment, rate: action.data.data.rate}
             }
-            if (action.data.actionType === 'REMOVE' && index >= -1) {
+            if (action.data.actionType === 'REMOVE' && index > -1) {
                 let removeFromArray = [...state.history.data];
                 removeFromArray.splice(index, 1);
                 updateObject = removeFromArray;
