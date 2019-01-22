@@ -23,13 +23,14 @@ export const HEADER = {
         {id: 2, name: 'Thông Báo'},
     ],
     ROUTE_HISTORY: [
-        {id: 1, name: 'Phim Đã xem'},
-        {id: 2, name: 'Phim Đã thích'},
+        {id: 1, name: 'Đã xem'},
+        {id: 2, name: 'Đã thích'},
+        {id: 3, name: 'Sẽ xem'},
     ],
     ROUTE_DETAIL: [
         {id: 1, name: 'Thông Tin'},
         {id: 2, name: 'Số Tập'},
-        {id: 2, name: 'Bình Luận'},
+        {id: 3, name: 'Bình Luận'},
     ],
 };
 

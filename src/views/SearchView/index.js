@@ -15,6 +15,7 @@ import ItemMovieNew from "../../modules/ItemMovieNew";
 import EmptyView from "../../modules/EmptyView";
 import * as UTIL_FUCTION from "../../util";
 import ViewTabScrollAnimated from "../../modules/ViewTabScrollAnimated";
+import RoundAvatar from "../../commons/Avatar/RoundAvatar";
 
 const {height, width} = Dimensions.get('window');
 
@@ -86,16 +87,40 @@ export default class SearchView extends Component {
         const {dataSearch, dataHistory} = this.props;
         return (
             <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
-                <Header heading={STRING.HEADER.NAME.SEARCH} url={this.props.userInfo.url_avatar}/>
-                <View style={{marginLeft: 10, marginRight: 10, flex: 1}}>
+                <View style={[{
+                    elevation: 2,
+                    shadowColor: "#000",
+                    backgroundColor: global.backgroundColor23,
+                    //backgroundColor: 'red',
+                    width: width,
+                    paddingTop: 5,
+                    paddingBottom: 5,
+                    paddingLeft:8, paddingRight:8,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection:'row',
+                    // position: 'absolute',
+                    // top: 0, right: 0, left: 0,
+                    zIndex: 1,
+                    shadowOffset: {width: 2, height: 2},
+                    shadowOpacity: 0.4
+                }]}>
+                    <IconButton btnStyle={{height: height/22,alignSelf: 'center',marginRight:10,marginBottom: 2}}
+                                iconStyle={{fontSize:height / 20, color:global.colorA5}}
+                                nameIcon={'ios-arrow-back'}
+                                hitSlop={{top:35, left:35, bottom:35,right:35}}
+                                onClick={() => this.props.navigation.goBack()}/>
                     <TextSingleInput styleForm={{
                         height: height / 18,
+                        marginLeft:5,
                         flexDirection: 'row',
                         backgroundColor: 'transparent',
                         borderWidth: 1,
                         borderColor: global.darkBlue,
-                        borderRadius: 8, alignItems: 'center'
+                        borderRadius: 8,
+                        alignItems: 'center'
                     }}
+                                     type={'search'}
                                      value={this.state.searchText}
                                      onChangeText={this.onChangeTextToSearch}
                                      onEndEditing={this.onEndEditing}
@@ -103,7 +128,9 @@ export default class SearchView extends Component {
                                      placeholderTextColor={global.darkBlue}
                                      style={{fontSize: global.sizeP18, color: global.colorFF}}
                                      nameIcon={'ios-search'}/>
-
+                </View>
+                {/*<Header heading={STRING.HEADER.NAME.SEARCH} url={this.props.userInfo.url_avatar}/>*/}
+                <View style={{marginLeft: 10, marginRight: 10, flex: 1}}>
                     {
                         this.state.searchText.length <= 0 ? <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <View style={{

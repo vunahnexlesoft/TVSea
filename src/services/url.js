@@ -8,6 +8,7 @@ export const GET_RECOMMEND_MOVIES = 'movies/related';
 export const GET_SERACH_MOVIES = 'movies/search';
 export const GET_USER_HISTORY_MOVIES = 'movies/history';
 export const GET_USER_LIKE_MOVIES = 'movies/like';
+export const GET_USER_WATCH_LIST_MOVIES ='movies/watchlist';
 export const POST_USER_LIKE_OR_HISTORY_MOVIES = 'movies/insertHistoryOrLike';
 export const PUT_REMOVE_USER_LIKE_OR_HISTORY_MOVIES = 'movies/removeMovie';
 export const GET_USER_COMMENT = 'movies/comment';

@@ -43,22 +43,23 @@ export default class ViewAll extends Component {
     componentDidMount() {
         const {token} = this.props;
         const {type} = this.props.navigation.state.params.data;
-        console.log(this.generateDataMovies(type).url, this.generateDataMovies(type).params, token);
-        this.setState({
-            isLoading: true
-        });
-        restClient.excuteAPI("get", this.generateDataMovies(type).url, token, this.generateDataMovies(type).params).then(res => {
-            console.log(res);
-            if (res.success) {
-                this.setState({
-                    data: res.data, isLoading: false
-                });
-            } else {
-                this.setState({
-                    isLoading: false, data: []
-                })
-            }
-        });
+        if (type !== 'INFOMATION') {
+            this.setState({
+                isLoading: true
+            });
+            restClient.excuteAPI("get", this.generateDataMovies(type).url, token, this.generateDataMovies(type).params).then(res => {
+                console.log(res);
+                if (res.success) {
+                    this.setState({
+                        data: res.data, isLoading: false
+                    });
+                } else {
+                    this.setState({
+                        isLoading: false, data: []
+                    })
+                }
+            });
+        }
     }
 
     generateDataMovies(type) {
@@ -73,7 +74,10 @@ export default class ViewAll extends Component {
             case 'ANIME':
                 return {url: URL.base_url + URL.GET_MOVIES_BY_CATEGORY, params: {page: 1, size: 50, category: 4}};
             case 'RECOMMEND':
-                return {url: URL.base_url + URL.GET_RECOMMEND_MOVIES, params: {page: 1, size: 50, idMovie: userInfo.id_movie_history}};
+                return {
+                    url: URL.base_url + URL.GET_RECOMMEND_MOVIES,
+                    params: {page: 1, size: 50, idMovie: userInfo.id_movie_history}
+                };
             case 'GENRES':
                 return {url: URL.base_url + URL.GET_ALL_GENRES, params: {page: 1, size: 50}};
             case 'GENRE':
@@ -112,7 +116,7 @@ export default class ViewAll extends Component {
                 return <ItemGenres item={item} onClick={() => this._pushToAnotherScreen(item)}/>
             }
             case 'COMMENT': {
-                return <ItemReview item={item} style={{marginTop:10}}/>
+                return <ItemReview item={item} style={{marginTop: 10}}/>
             }
             default:
                 return <ItemMovieCategory numCol={3} item={item} onClick={() => this._navigateToDetail(item)}/>
@@ -136,10 +140,22 @@ export default class ViewAll extends Component {
                             />}
                             data={this.state.data}
                             renderItem={this._renderItem}/> :
-                        <EmptyView style={{marginTop: height / 2 - 100}} nameIcon={'ios-pulse'} textDes={'Chưa có dữ liệu phim vui lòng chọn mục khác'}/>)
+                        (data.type !== 'INFOMATION' ?
+                            <EmptyView style={{marginTop: height / 2 - 100}} nameIcon={'ios-pulse'}
+                                       textDes={'Chưa có dữ liệu phim vui lòng chọn mục khác'}/>
+                            : <View style={{alignItems: 'center',justifyContent: 'center',flex:1,marginBottom: 30}}>
+                                <TextComponent text={'Video Streaming On Mobile Version 1.0'} color={global.colorFF}
+                                               numberOfLines={2}
+                                               size={global.sizeP20}/>
+                                <TextComponent text={'Team: TVon'} color={global.colorFF}
+                                               style={{marginTop:5,marginBottom:5}}
+                                               size={global.sizeP18}/>
+                                <TextComponent text={'Copyright: 2018'} color={global.colorFF}
+                                               size={global.sizeP16}/>
+
+                            </View>))
                         : <SkypeIndicator color={global.yellowColor}/>
                 }
-
 
             </View>
         );

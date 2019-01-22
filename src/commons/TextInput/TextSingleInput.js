@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multiline,value, placeholder, placeholderTextColor, style,
                                 onChangeText,autoCapitalize,secureTextEntry,onEndEditing,
-                                returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning,styleForm,onChange,textWarning,styleIcon,styleDivider}) => {
+                                returnKeyType,onSubmitEditing,keyboardType,blurOnSubmit,onFocus,onBlur, ref,warning,styleForm,onChange,textWarning,styleIcon,styleDivider,type}) => {
     const borderColor = warning ? styles.borderWarning : null;
     const height = multiline ? 150 : 40;
     return (
@@ -54,7 +54,7 @@ const TextSingleInput = ({numberOfLines,returnKeyLabel,maxLength,nameIcon,multil
             {
                 warning ? <View style={styles.footerWarningWrapper}>
                     <TextComponent text={textWarning} style={styles.textFooterWarning}/>
-                </View> : <View style={{height:10}}/>
+                </View> : <View style={{height: type !== 'search' ? 10 : 0}}/>
             }
         </View>
     );
@@ -96,6 +96,7 @@ TextSingleInput.propTypes = {
     onEndEditing: PropTypes.func,
     maxLength: PropTypes.number,
     returnKeyLabel:PropTypes.string,
+    type:PropTypes.string,
     numberOfLines:PropTypes.number,
     styleIcon: PropTypes.oneOfType([PropTypes.number,PropTypes.object,PropTypes.array]),
     styleDivider: PropTypes.oneOfType([PropTypes.number,PropTypes.object,PropTypes.array]),

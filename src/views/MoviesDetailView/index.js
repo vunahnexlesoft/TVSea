@@ -67,6 +67,7 @@ class MoviesDetailView extends Component {
         this._onAddComment = this._onAddComment.bind(this);
         this._onGotoReview = this._onGotoReview.bind(this);
         this._navigateVideo = this._navigateVideo.bind(this);
+        this._onClickToWatchList = this._onClickToWatchList.bind(this);
         this.nScroll = new Animated.Value(0);
     }
 
@@ -121,6 +122,32 @@ class MoviesDetailView extends Component {
                 idMovie: info.id,
                 idUser: userInfo.id,
                 Key: 2
+            }
+        };
+        usersAction.addUserHistoryMovies(data);
+    }
+    _onClickToWatchList() {
+        const {
+            userInfo,
+            usersAction,
+            dataLike,
+            dataWatchList,
+            dataDetail: {
+                info,
+                language,
+            }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
+        } = this.props;
+        let check = !!dataDetail && !!dataDetail.info && dataWatchList.map((e) => {
+            return e.id
+        }).indexOf(info.id) <= -1;
+        let data = {
+            movie: info,
+            type: 'WATCHLIST',
+            actionType: check ? 'ADD' : 'REMOVE',
+            params: {
+                idMovie: info.id,
+                idUser: userInfo.id,
+                Key: 3
             }
         };
         usersAction.addUserHistoryMovies(data);
@@ -257,6 +284,7 @@ class MoviesDetailView extends Component {
     _renderHeading() {
         const {
             dataLike,
+            dataWatchList,
             usersAction,
             dataDetail: {
                 info,
@@ -265,6 +293,9 @@ class MoviesDetailView extends Component {
         } = this.props;
         let {title, overview, backdrop_path} = this.props.navigation.state.params.movie;
         let check = !!dataDetail && !!dataDetail.info && dataLike.map((e) => {
+            return e.id
+        }).indexOf(info.id) <= -1;
+        let checkWatch = !!dataDetail && !!dataDetail.info && dataWatchList.map((e) => {
             return e.id
         }).indexOf(info.id) <= -1;
         const imageTranslate = this.nScroll.interpolate({
@@ -319,24 +350,44 @@ class MoviesDetailView extends Component {
                                     paddingTop: 2,
                                     zIndex: 2
                                 }}/>
-                <Animated.View style={{opacity: textOpacity, width: width - 150, alignItems:'center'}}>
+                <Animated.View style={{opacity: textOpacity, width: width - 150, alignItems:'center', paddingLeft:25}}>
                     <TextComponent text={title} size={global.sizeP18} color={global.colorFF} style={{textAlign: 'center'}}/>
                 </Animated.View>
-                <IconButton nameIcon={check ? 'ios-heart-outline' : 'ios-heart'}
-                            onClick={this._onClickToLike}
-                            iconStyle={{
-                                fontSize: global.sizeP40,
-                                color: check ? global.colorFF : global.yellowColor,
-                            }}
-                            btnStyle={{
-                                height: 35,
-                                width: 40,
-                                backgroundColor: 'transparent',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                elevation: 1,
-                                zIndex: 2
-                            }}/>
+                <View style={{
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                }}>
+                    <IconButton nameIcon={'ios-list-box'}
+                                onClick={this._onClickToWatchList}
+                                iconStyle={{
+                                    fontSize: global.sizeP35,
+                                    color: checkWatch ? global.colorFF : global.yellowColor,
+                                }}
+                                btnStyle={{
+                                    height: 35,
+                                    width: 40,
+                                    backgroundColor: 'transparent',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    elevation: 1,
+                                    zIndex: 2
+                                }}/>
+                    <IconButton nameIcon={check ? 'ios-heart-outline' : 'ios-heart'}
+                                onClick={this._onClickToLike}
+                                iconStyle={{
+                                    fontSize: global.sizeP35,
+                                    color: check ? global.colorFF : global.orangeColor,
+                                }}
+                                btnStyle={{
+                                    height: 35,
+                                    width: 40,
+                                    backgroundColor: 'transparent',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    elevation: 1,
+                                    zIndex: 2
+                                }}/>
+                </View>
             </Animated.View>
         ) : null;
     }
@@ -378,9 +429,6 @@ class MoviesDetailView extends Component {
                 related
             }, dataRecommend, isRecommendLoading, isRecommendError, userInfo
         } = this.props;
-        console.log('comment',comment, userInfo.id,comment.map((e) => {
-            return e.id_user
-        }).indexOf(userInfo.id) > -1);
         let check = comment.map((e) => {
             return e.id_user
         }).indexOf(userInfo.id) > -1;
@@ -517,7 +565,7 @@ class MoviesDetailView extends Component {
             outputRange: [height / 3 - 35 / 2 - 5, 0],
             extrapolate: 'clamp',
         });
-
+        console.log('dataWatchList',this.props.dataWatchList);
         return (
             <View style={{flex: 1, backgroundColor: global.backgroundColor}}>
                 {this._renderHeading()}

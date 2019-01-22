@@ -49,6 +49,25 @@ export function dataFetchingLikeFail() {
     }
 }
 
+export function dataFetchingWatchlist() {
+    return {
+        type: NAME_ACTION.USER_GET_WATCH_LIST_LOADING
+    };
+}
+
+export function dataFetchingWatchlistSuccess(data) {
+    return {
+        type: NAME_ACTION.USER_GET_WATCH_LIST_SUCCESS,
+        data,
+    }
+}
+
+export function dataFetchingWatchlistFail() {
+    return {
+        type: NAME_ACTION.USER_GET_WATCH_LIST_LOADING_FAIL,
+    }
+}
+
 export function addOrDeleteUserPropertyMoviesSuccess(data) {
     return {
         type: NAME_ACTION.USER_ADD_OR_DELETE_PROPERTY_MOVIES,
@@ -83,6 +102,23 @@ export function getDataUserLikeMovie(params) {
                 dispatch(dataFetchingLikeSuccess(res.data))
             } else {
                 dispatch(dataFetchingLikeFail());
+            }
+        });
+    }
+}
+
+export function getDataUserWatchListMovie(params) {
+    return (dispatch) => {
+        let generateParams = {...params, key: 3};
+        let url = URL.base_url + URL.GET_USER_WATCH_LIST_MOVIES;
+        let token = store.getState().userInfoReducer.token;
+        dispatch(dataFetchingWatchlist());
+        restClient.excuteAPI("get", url, token, generateParams).then(res => {
+            console.log('res', res);
+            if (res.success) {
+                dispatch(dataFetchingWatchlistSuccess(res.data))
+            } else {
+                dispatch(dataFetchingWatchlistFail());
             }
         });
     }

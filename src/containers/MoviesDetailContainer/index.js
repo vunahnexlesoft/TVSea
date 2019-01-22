@@ -5,7 +5,7 @@ import * as moviesAction from "../../redux/ActionCreator/actionMovieCreator";
 import * as usersAction from "../../redux/ActionCreator/actionLoginCreators";
 function mapStateToProps(state) {
     const {detail,recommend,navigateState} = state.moviesReducer;
-    const {like} = state.userLoginReducer;
+    const {like, watchlist} = state.userLoginReducer;
     const userInfo = state.userInfoReducer.data;
     return {
         navigateState,
@@ -17,6 +17,7 @@ function mapStateToProps(state) {
         isRecommendError: recommend.isError,
         moviesReducer: state.moviesReducer,
         dataLike: like.data,
+        dataWatchList: watchlist.data,
         userInfo
     };
 }

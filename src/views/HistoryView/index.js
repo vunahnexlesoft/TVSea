@@ -24,6 +24,7 @@ export default class HistoryView extends Component {
             routes: STRING.HEADER.ROUTE_HISTORY,
             dataHistory: this.props.dataHistory,
             dataLike: this.props.dataLike,
+            dataWatchList: this.props.dataWatchList
         };
         this._isFirstOpen = false;
         this.renderScene = this.renderScene.bind(this);
@@ -33,9 +34,11 @@ export default class HistoryView extends Component {
     }
 
     componentDidMount() {
-        const {usersAction: {getDataUserHistoryMovie, getDataUserLikeMovie}, userInfo} = this.props;
+        const {usersAction: {getDataUserHistoryMovie, getDataUserLikeMovie, getDataUserWatchListMovie}, userInfo} = this.props;
         getDataUserHistoryMovie({id: userInfo.id});
         getDataUserLikeMovie({id: userInfo.id});
+        getDataUserWatchListMovie({id: userInfo.id});
+
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -43,7 +46,8 @@ export default class HistoryView extends Component {
             || UTIL_FUNCTION.compareDifference(nextProps.dataLike, prevState.dataLike)) {
             return {
                 dataHistory: nextProps.dataHistory,
-                dataLike: nextProps.dataLike
+                dataLike: nextProps.dataLike,
+                dataWatchList: nextProps.dataWatchList
             }
         }
         return null;
@@ -80,6 +84,18 @@ export default class HistoryView extends Component {
     }
 
     _removeItemView(movie, type) {
+        let Key;
+        switch (type) {
+            case 'HISTORY':
+                Key = 1;
+                break;
+            case 'LIKE':
+                Key = 2;
+                break;
+            case 'WATCHLIST':
+                Key = 3;
+                break;
+        }
         let data = {
             movie,
             type: type,
@@ -87,14 +103,14 @@ export default class HistoryView extends Component {
             params: {
                 idMovie: movie.id,
                 idUser: this.props.userInfo.id,
-                Key: type === 'HISTORY' ? 1 : 2
+                Key
             }
         };
         this.props.usersAction.addUserHistoryMovies(data);
     }
 
     renderScene() {
-        const {dataHistory, dataLike} = this.state;
+        const {dataHistory, dataLike,dataWatchList} = this.state;
         switch (this.state.index) {
             case 1: {
                 return (
@@ -141,6 +157,28 @@ export default class HistoryView extends Component {
                     </View>
                 );
             }
+            case 3: {
+                return (
+                    <View key={3} style={{flex: 1, marginTop: 10}}>
+                        {
+                            dataWatchList.length > 0 ? <VerticalListView
+                                    ItemSeparatorComponent={() => <View
+                                        style={{
+                                            height: 15,
+                                            width: "100%",
+                                        }}
+                                    />}
+                                    data={dataWatchList}
+                                    renderItem={({item, index}) =>
+                                        <ItemMovieNew type={'WATCHLIST'} disabledClickDetail
+                                                      onClickToRemove={this._removeItemView}
+                                                      onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
+                                    }/> :
+                                <EmptyView style={{marginTop: height / 3 - 50}} nameIcon={'ios-book'} textDes={'Bạn chưa yêu thích bất kỳ bộ phim nào'}/>
+                        }
+                    </View>
+                );
+            }
             default:
                 return null;
         }
@@ -152,7 +190,7 @@ export default class HistoryView extends Component {
                 {...this.props}
                 textHeader={STRING.HEADER.NAME.HISTORY}
                 url={this.props.userInfo.url_avatar}
-                numTab={2}
+                numTab={3}
                 onIndexChange={this._onIndexChange}
                 renderScene={this.renderScene()}
                 routes={this.state.routes}

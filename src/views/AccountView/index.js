@@ -17,6 +17,7 @@ import IconButton from "../../commons/Button/IconButton";
 import ItemMovieNew from "../../modules/ItemMovieNew";
 import ItemNotification from "../../modules/ItemNotification";
 import {NavigationActions, StackActions} from "react-navigation";
+import * as UTIL_FUCTION from "../../util";
 
 const {height, width} = Dimensions.get('window');
 
@@ -58,11 +59,11 @@ export default class AccountView extends Component {
                                     icSrc={userInfo.url_avatar}/>
                                 <TextComponent text={userInfo.display_name} size={global.sizeP18} color={global.colorFF}
                                                style={{marginTop: 2}}/>
-                                <TextComponent text={userInfo.email} size={global.sizeP16}
-                                               color={global.grayDarkColor} style={{marginTop: 5}}/>
-                                <TextComponent text={number_phone} size={global.sizeP16}
-                                               color={global.grayDarkColor}
-                                               style={{marginTop: 2}}/>
+                                {/*<TextComponent text={userInfo.email} size={global.sizeP16}*/}
+                                               {/*color={global.grayDarkColor} style={{marginTop: 5}}/>*/}
+                                {/*<TextComponent text={number_phone} size={global.sizeP16}*/}
+                                               {/*color={global.grayDarkColor}*/}
+                                               {/*style={{marginTop: 2}}/>*/}
                                 {/*<TextComponent text={'20/07/1996'} size={global.sizeP16} color={global.grayDarkColor}*/}
                                                {/*style={{marginTop: 2, marginBottom: 2}}/>*/}
                                 <ButtonWithIcon onClick={this._onLogOut} buttonText={'Đăng xuất'}
@@ -72,13 +73,13 @@ export default class AccountView extends Component {
                             <Divide/>
                             <View style={styles.viewCount}>
                                 <View style={styles.viewContentCount}>
-                                    <TextComponent text={'100K'} color={global.lightGreen} size={global.sizeP18}/>
-                                    <TextComponent text={'Tiền hiện tại'} size={global.sizeP16}
+                                    <TextComponent text={'Email'} color={global.lightGreen} size={global.sizeP18}/>
+                                    <TextComponent text={userInfo.email} size={global.sizeP16}
                                                    color={global.grayLightColor}/>
                                 </View>
                                 <View style={styles.viewContentCount1}>
-                                    <TextComponent text={'56'} color={global.lightGreen} size={global.sizeP18}/>
-                                    <TextComponent text={'Số lần xem'} size={global.sizeP16}
+                                    <TextComponent text={'Số điện thoại'} color={global.lightGreen} size={global.sizeP18}/>
+                                    <TextComponent text={number_phone} size={global.sizeP16}
                                                    color={global.grayLightColor}/>
                                 </View>
                             </View>
@@ -101,19 +102,19 @@ export default class AccountView extends Component {
                             borderRadius: 10,
                             marginTop: 5
                         }}>
-                            <TouchableOpacity activeOpacity={0.8}>
-                                <View style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center'
-                                }}>
-                                    <TextComponent text={'Nạp tiền ngay'} color={global.colorFF} size={global.sizeP16}/>
-                                    <IconButton nameIcon={'ios-arrow-dropright-outline'}
-                                                iconStyle={{fontSize: global.sizeP20, color: global.colorFF}}/>
-                                </View>
-                                <Divide style={{width: width - 20}}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={0.8}>
+                            {/*<TouchableOpacity activeOpacity={0.8}>*/}
+                                {/*<View style={{*/}
+                                    {/*flexDirection: 'row',*/}
+                                    {/*justifyContent: 'space-between',*/}
+                                    {/*alignItems: 'center'*/}
+                                {/*}}>*/}
+                                    {/*<TextComponent text={'Nạp tiền ngay'} color={global.colorFF} size={global.sizeP16}/>*/}
+                                    {/*<IconButton nameIcon={'ios-arrow-dropright-outline'}*/}
+                                                {/*iconStyle={{fontSize: global.sizeP20, color: global.colorFF}}/>*/}
+                                {/*</View>*/}
+                                {/*<Divide style={{width: width - 20}}/>*/}
+                            {/*</TouchableOpacity>*/}
+                            <TouchableOpacity activeOpacity={0.8} onPress={()=> UTIL_FUCTION.navigateToViewAll(null,this.props.navigation,{heading: 'Thông tin', type:'INFOMATION'})}>
                                 <View style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',

@@ -43,7 +43,7 @@ const {height, width} = Dimensions.get('window');
 const TabBar = createBottomTabNavigator({
         Home: Home,
         Discover: Discover,
-        Search: Search,
+        //Search: Search,
         History: History,
         Account: Account
 
@@ -54,22 +54,22 @@ const TabBar = createBottomTabNavigator({
                 let iconName;
                 switch (routeName) {
                     case 'Home':
-                        iconName = "ios-home";
+                        iconName = "ios-desktop";
                         break;
                     case 'Discover':
-                        iconName = "ios-sync";
+                        iconName = "md-list";
                         break;
-                    case 'Search':
-                        iconName = "ios-search";
-                        break;
+                    // case 'Search':
+                    //     iconName = "ios-search";
+                    //     break;
                     case 'History':
-                        iconName = "ios-book";
+                        iconName = "ios-clock";
                         break;
                     case 'Account':
                         iconName = "ios-contact";
                         break;
                 }
-                return <Ionicons name={iconName} style={{fontSize: height / 20, color: tintColor}}/>;
+                return <Ionicons name={iconName} style={{fontSize: routeName === 'Account' ? height / 18 : height / 20, color: tintColor}}/>;
             },
         }),
         initialRouteName: 'Home',
@@ -101,7 +101,8 @@ const RootNavigator = createStackNavigator({
         Video: {screen: Video},
         ViewAll: {screen: ViewAll},
         SignIn: {screen: SignIn},
-        SignUp: {screen: SignUp}
+        SignUp: {screen: SignUp},
+        Search: {screen: Search}
     },
     {
         initialRouteName: "SignIn",

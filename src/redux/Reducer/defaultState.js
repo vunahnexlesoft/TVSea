@@ -26,6 +26,11 @@ export default {
             isLoading: false,
             isError: false
         },
+        watchlist:{
+            data: [],
+            isLoading: false,
+            isError: false
+        },
         recommend:{
             data:[],
             isLoading: false,

@@ -27,6 +27,7 @@ import SkypeIndicator from "react-native-indicators/src/components/skype-indicat
 import RoundAvatar from "../../commons/Avatar/RoundAvatar";
 import Swiper from "../../commons/Swipe/Swiper";
 import localImage from "../../themes/localImage";
+import IconButton from "../../commons/Button/IconButton";
 
 const HeaderAnimated = Animated.createAnimatedComponent(Header);
 
@@ -243,22 +244,28 @@ export default class DiscoverView extends Component {
                     elevation: 2,
                     shadowColor: "#000",
                     backgroundColor: global.backgroundColor23,
-                    paddingTop: 13,
-                    paddingBottom: 13,
+                    paddingTop: 7,
+                    paddingBottom: 7,
+                    paddingLeft:10, paddingRight:10,
                     alignItems: 'center',
-                    justifyContent: 'center',
+                    justifyContent: 'space-between',
+                    flexDirection:'row',
                     position: 'absolute',
                     top: 0, right: 0, left: 0,
                     zIndex: 1,
                     shadowOffset: {width: 2, height: 2},
                     shadowOpacity: 0.4
                 }, {opacity: Opacity}]}>
-                    <TextComponent text={STRING.HEADER.NAME.DISCOVER} color={global.colorFF} size={global.sizeP20}/>
+                    <IconButton btnStyle={{height: height/22}}
+                                hitSlop={{top:35, left:35, bottom:35,right:35}}
+                                iconStyle={{fontSize:height / 20, color:global.colorA5}}
+                                nameIcon={'ios-search'} onClick={() => this.props.navigation.navigate('Search')}/>
+                    <TextComponent text={STRING.HEADER.NAME.DISCOVER} color={global.colorFF} size={global.sizeP20} style={{lineHeight:global.size20}}/>
                     <RoundAvatar size={'tiny'}
-                                 style={{
-                                     position: 'absolute',
-                                     top: 13 / 2, right: 10
-                                 }}
+                                 // style={{
+                                 //     position: 'absolute',
+                                 //     top: 13 / 2, right: 10
+                                 // }}
                                  canClick={false}
                                  icSrc={this.props.userInfo.url_avatar}/>
                 </Animated.View>
