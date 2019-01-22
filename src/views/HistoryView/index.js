@@ -174,7 +174,7 @@ export default class HistoryView extends Component {
                                                       onClickToRemove={this._removeItemView}
                                                       onClickToReSee={this._navigateToDetail} isNew={false} item={item}/>
                                     }/> :
-                                <EmptyView style={{marginTop: height / 3 - 50}} nameIcon={'ios-book'} textDes={'Bạn chưa yêu thích bất kỳ bộ phim nào'}/>
+                                <EmptyView style={{marginTop: height / 3 - 50}} nameIcon={'ios-book'} textDes={'Bạn chưa chọn bất kỳ bộ phim nào'}/>
                         }
                     </View>
                 );

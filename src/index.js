@@ -63,7 +63,7 @@ const TabBar = createBottomTabNavigator({
                     //     iconName = "ios-search";
                     //     break;
                     case 'History':
-                        iconName = "ios-clock";
+                        iconName = "ios-book";
                         break;
                     case 'Account':
                         iconName = "ios-contact";

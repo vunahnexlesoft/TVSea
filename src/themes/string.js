@@ -25,7 +25,7 @@ export const HEADER = {
     ROUTE_HISTORY: [
         {id: 1, name: 'Đã xem'},
         {id: 2, name: 'Đã thích'},
-        {id: 3, name: 'Sẽ xem'},
+        {id: 3, name: 'Xem sau'},
     ],
     ROUTE_DETAIL: [
         {id: 1, name: 'Thông Tin'},

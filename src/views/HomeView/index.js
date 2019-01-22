@@ -21,7 +21,8 @@ export default class HomeView extends Component {
         this.state = {
             index: STRING.HEADER.ROUTE_HOME[0].id,
             routes: STRING.HEADER.ROUTE_HOME,
-            counter: 0
+            counter: 0,
+            changeData: []
         };
         this.renderScene = this.renderScene.bind(this);
         this._onIndexChange = this._onIndexChange.bind(this);
@@ -29,9 +30,8 @@ export default class HomeView extends Component {
     }
     componentDidMount(){
         const {moviesAction:{getDataMoviebyCategory,getDataChannelMovie,getDataCalenderMovie}} = this.props;
-        getDataMoviebyCategory({page: 1, category: 1});
         getDataChannelMovie();
-        getDataCalenderMovie();
+        // getDataCalenderMovie();
         firebase.database().ref('Channel').on('value', (snap) => {
             const items = [];
             snap.forEach((child) => {
@@ -42,6 +42,19 @@ export default class HomeView extends Component {
             this.setState({
                 counter: items.length
             });
+        });
+        firebase.database().ref('Streaming').on('value', (snap) => {
+            const items = [];
+            snap.forEach((child) => {
+                let item = child.val();
+                item['key'] = child.key;
+                items.push(item);
+            });
+            getDataCalenderMovie();
+            // if(items.length > 0 && items[0].turn === 1){
+            //     console.log('Update data nek');
+            //     getDataCalenderMovie();
+            // }
         });
     }
     _onIndexChange(item) {
@@ -69,6 +82,7 @@ export default class HomeView extends Component {
                                               return index === 0 ? (
                                                   <ItemChannel numCol={1}
                                                                counter={this.state.counter}
+                                                               dataCalender={dataCalender}
                                                                onClick={this._onGotoSteamingScreen.bind(this, item)}
                                                                text={item.name_channel}
                                                                uriImage={item.url_image}/>

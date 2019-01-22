@@ -9,7 +9,7 @@ import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 
 const {height, width} = Dimensions.get('window');
 
-const ItemChannel = ({uriImage, onClick, numCol, counter, text, type}) => {
+const ItemChannel = ({uriImage, onClick, numCol, counter, text, type,dataCalender}) => {
     let viewGroup = {
         flex: 1,
         alignItems: numCol === 1 ? 'center' : null,
@@ -90,7 +90,7 @@ const ItemChannel = ({uriImage, onClick, numCol, counter, text, type}) => {
                 numCol === 1 ? <View style={{
                     position: 'absolute', bottom: 10, left: 10, zIndex: 1
                 }}>
-                    <Text text={'Đang chiếu: Transformer 4 Kỷ nguyên mới'} size={global.sizeP16}
+                    <Text text={dataCalender && dataCalender.length > 0 ? 'Đang chiếu: ' + dataCalender[0].title : 'Kênh chưa phát sóng'} size={global.sizeP16}
                           color={global.colorFF}/>
                 </View> : null
             }
@@ -105,6 +105,7 @@ ItemChannel.propTypes = {
     onClick: PropTypes.func,
     numCol: PropTypes.number,
     counter: PropTypes.number,
+    dataCalender: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
 };
 
 export default ItemChannel;
