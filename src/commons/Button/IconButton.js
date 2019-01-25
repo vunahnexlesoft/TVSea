@@ -11,15 +11,19 @@ const IconButton = ({nameIcon, btnStyle, iconStyle, badge, onClick,disabled,hitS
     };
     let badgeStyle = {
         position: 'absolute',
-        top: 0, left: 0, bottom: 0, right: 15,
+        top: 0, left: 0, bottom: 0, right: 13,
         backgroundColor: global.red,
         borderRadius:10,height:20,width:20,
-        textAlign:'center'
+        textAlign:'center',
+        alignItems:'center',justifyContent: 'center'
     };
     return (
         <TouchableOpacity activeOpacity={0.85} style={[buttonStyle, btnStyle]} hitSlop={hitSlop} onPress={onClick} disabled={disabled}>
                 <Icon name={nameIcon} style={iconStyle}/>
-                {badge ? <TextComponent text={badge} size={global.sizeP15} color={global.colorF4} style={badgeStyle}/> : null}
+                {badge ?
+                    <View style={badgeStyle}>
+                        <TextComponent text={badge} size={global.sizeP15} color={global.colorF4} style={{textAlign: 'center', lineHeight:global.sizeP15}}/>
+                    </View> : null}
         </TouchableOpacity>
     );
 };

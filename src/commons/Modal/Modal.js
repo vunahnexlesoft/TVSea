@@ -1,6 +1,15 @@
 import PropTypes from 'prop-types';
 import React, {Component} from "react";
-import {View, Text, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, BackAndroid ,Platform} from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    TouchableOpacity,
+    BackAndroid,
+    Platform,
+    Easing
+} from "react-native";
 import Modal from './ModalBox';
 import styles from "./styles";
 
@@ -15,6 +24,7 @@ export default class ModalComponent extends Component {
             pressBackToClose : true,
             animationDuration:0,
             swipeToClose:true,
+            easing: Easing.elastic(0.8),
         };
         console.disableYellowBox = true;
         this.onLayout = this.onLayout.bind(this);
@@ -23,7 +33,6 @@ export default class ModalComponent extends Component {
         this.onCloseModal = this.onCloseModal.bind(this);
         this.onOpenedModal = this.onOpenedModal.bind(this);
         this.renderPopup = this.renderPopup.bind(this);
-
     }
 
     componentWillReceiveProps(nextProp) {

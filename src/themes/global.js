@@ -74,6 +74,7 @@ export default  {
     transparentWhite1: 'rgba(255, 255, 255, .1)',
     transparentWhite2: 'rgba(255, 255, 255, .2)',
     transparentWhite0: 'rgba(255, 255, 255, 0)',
+    transparentBlack03: 'rgba(0, 0, 0, .03)',
     transparentBlack3: 'rgba(0, 0, 0, .3)',
     transparentBlack2: 'rgba(0, 0, 0, .2)',
     transparentBlack5: 'rgba(0, 0, 0, .5)',
@@ -97,6 +98,6 @@ export default  {
     sizeP45: 45,
 
     // for member search screen
-    lightGreen:"#7BCB45",
+    lightGreen:"#36cf17",
     lightGrey:"#f3f3f3"
 };

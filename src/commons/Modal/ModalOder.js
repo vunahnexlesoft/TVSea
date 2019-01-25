@@ -13,6 +13,7 @@ export default class ModalOder extends Modal {
     constructor(props) {
         super(props);
         this.renderPopup = this.renderPopup.bind(this);
+        this.renderCenter = true;
     }
 
 
@@ -39,7 +40,7 @@ export default class ModalOder extends Modal {
     }
 
     render() {
-        return super.render(this.renderPopup, true);
+        return super.render(this.renderPopup, this.renderCenter);
     }
 }
 

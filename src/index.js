@@ -16,9 +16,9 @@ import SignIn from './containers/SignInContainer';
 import SignUp from './containers/SignUpContainer';
 import Search from './containers/SearchContainer';
 import MoviesDetail from './containers/MoviesDetailContainer';
-import VideoItemView from './modules/VideoItemView';
 import Video from './containers/VideoContainer';
 import ViewAll from './containers/ViewAllContainer';
+import Admin from './containers/AdminContainer';
 import moment from 'moment';
 moment.updateLocale("en", {
     relativeTime: {
@@ -102,10 +102,11 @@ const RootNavigator = createStackNavigator({
         ViewAll: {screen: ViewAll},
         SignIn: {screen: SignIn},
         SignUp: {screen: SignUp},
-        Search: {screen: Search}
+        Search: {screen: Search},
+        Admin: {screen: Admin}
     },
     {
-        initialRouteName: "SignIn",
+        initialRouteName: "Admin",
         headerMode: "none",
     }
 );

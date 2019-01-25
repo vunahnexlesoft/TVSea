@@ -6,10 +6,11 @@ import PropTypes from 'prop-types';
 import global from '../../themes/global';
 import FastImage from 'react-native-fast-image'
 import localImage from "../../themes/localImage";
+import IconButton from "../../commons/Button/IconButton";
 
 const {height, width} = Dimensions.get('window');
 
-const ItemMovieCategory = ({item, onClick, numCol}) => {
+const ItemMovieCategory = ({item, onClick, numCol, colorChoose}) => {
     let viewGroup = {
         //flex: 1,
         alignItems: 'center',
@@ -71,18 +72,36 @@ const ItemMovieCategory = ({item, onClick, numCol}) => {
                                style={{textAlign: 'center', lineHeight: global.sizeP14}}
                                text={item.rating}/>
             </ImageBackground>
+            {
+                colorChoose ? <IconButton nameIcon={'ios-radio-button-on'}
+                                          onClick={()=> this.refs.modalStreaming.openModal()}
+                                          iconStyle={{
+                                              fontSize: global.sizeP20,
+                                              color: '#ff0000',
+                                          }}
+                                          btnStyle={{
+                                              width: 25, height: 25,
+                                              paddingBottom:5,
+                                              position:'absolute', right: 5, top:5,
+                                              zIndex:2,
+                                              alignItems: 'center',
+                                              justifyContent: 'center'
+                                          }}/> : null
+            }
         </TouchableOpacity>
     );
 };
 ItemMovieCategory.defaultProps = {
-    numCol:1
+    numCol:1,
+    colorChoose:false
 };
 
 ItemMovieCategory.propTypes = {
     uriImage: PropTypes.string,
     styleText: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     onClick: PropTypes.func,
-    numCol: PropTypes.number
+    numCol: PropTypes.number,
+    colorChoose: PropTypes.bool,
 };
 
 export default ItemMovieCategory;

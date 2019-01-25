@@ -92,5 +92,15 @@ export default {
             isLoading: false,
             isError: false,
         }
+    }),
+    admin: Immutable({
+        category: {
+            phimle: {
+                data: [],
+                isLoading: false,
+                isError: false
+            },
+        },
+        storeStreaming: []
     })
 };
