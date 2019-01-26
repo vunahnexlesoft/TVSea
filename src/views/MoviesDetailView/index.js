@@ -560,6 +560,7 @@ class MoviesDetailView extends Component {
                 language,
             }, dataDetail, isDetailLoading, isDetailError, dataRecommend, isRecommendLoading, isRecommendError
         } = this.props;
+        console.log(dataDetail);
         const headerTranslate = this.nScroll.interpolate({
             inputRange: [0, height / 3 - 35 / 2 - 5],
             outputRange: [height / 3 - 35 / 2 - 5, 0],

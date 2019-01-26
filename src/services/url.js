@@ -17,6 +17,8 @@ export const PUT_REMOVE_USER_COMMENT_MOVIE = 'movies/removeComment';
 export const GET_CHANNEL_MOVIE = 'movies/channel';
 export const GET_CALENDER_MOVIE = 'movies/calender';
 export const GET_GENRES_MOVIE = 'movies/genres';
+export const POST_START_STREAMING = 'movies/start-stream';
+export const POST_REMOVE_STREAMING = 'movies/remove-stream';
 //USER
 export const GET_USER_HISTORY = 'user/history';
 export const GET_USER_LIKE = 'user/like';

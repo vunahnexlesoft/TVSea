@@ -33,6 +33,9 @@ export default function moviesReducer(state = defaultState.admin, action) {
             }
             return state.setIn(['storeStreaming'], updateObject);
         }
+        case NAME_ACTION.UPDATE_STATE_STREAMING_MOVIE: {
+            return state.setIn(['isStreaming'], action.data)
+        }
         default:
             return state;
     }

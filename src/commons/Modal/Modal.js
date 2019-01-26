@@ -25,6 +25,7 @@ export default class ModalComponent extends Component {
             animationDuration:0,
             swipeToClose:true,
             easing: Easing.elastic(0.8),
+            backdropOpacity: 0.5
         };
         console.disableYellowBox = true;
         this.onLayout = this.onLayout.bind(this);
@@ -131,7 +132,7 @@ export default class ModalComponent extends Component {
                 onOpened ={this.onOpenedModal}
                 coverScreen
                 backdropColor={styleBackgroundColor}
-                backdropOpacity={this.props.backdropOpacity}
+                backdropOpacity={this.state.backdropOpacity}
                 position={center ? "center" : "bottom"}
                 pressBackToClose ={this.state.pressBackToClose}
                 swipeToClose={this.state.swipeToClose}

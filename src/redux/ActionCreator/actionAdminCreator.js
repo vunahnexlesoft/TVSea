@@ -82,6 +82,12 @@ export function updateHistory(data) {
         data
     }
 }
+export function updateStateStreaming(data) {
+    return {
+        type: NAME_ACTION.UPDATE_STATE_STREAMING_MOVIE,
+        data
+    }
+}
 
 
 export function getDataMoviebyCategory(params) {

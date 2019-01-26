@@ -40,7 +40,7 @@ class ItemMovieNew extends Component {
     }
 
     render() {
-        const {onClick, item, isNew, disabledSwipe, disabledClick, disabledClickDetail, onClickDetail} = this.props;
+        const {onClick, item, isNew, disabledSwipe, disabledClick, disabledClickDetail, onClickDetail,isAdmin,styleButton,isVisible} = this.props;
         let viewGroup = {
             flex: 1,
             flexDirection: 'row',
@@ -61,7 +61,7 @@ class ItemMovieNew extends Component {
             height: 70,
             borderRadius: 70 / 4
         };
-        let buttonText = isNew ? 'Xem ngay' : 'Xem lại';
+        let buttonText = isNew ? !isAdmin ? 'Xem ngay' : 'Xóa' : 'Xem lại';
         let swipeBtns = [{
             component: <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
                 <IconButton
@@ -132,9 +132,9 @@ class ItemMovieNew extends Component {
                         </View>
                     </TouchableOpacity>
                     {
-                        isNew ? <ButtonWithIcon buttonText={buttonText}
+                        isNew ? (isVisible ? <ButtonWithIcon buttonText={buttonText}
                                                 onClick={onClick}
-                                                style={{
+                                                style={[{
                                                     bottom: 70 / 3,
                                                     right: 10,
                                                     position: 'absolute',
@@ -142,8 +142,8 @@ class ItemMovieNew extends Component {
                                                     backgroundColor: global.borderRightColor,
                                                     padding: 5, paddingRight: 8, paddingLeft: 8,
                                                     zIndex: 1
-                                                }}
-                                                styleText={{color: global.colorFF, fontSize: global.sizeP14}}/>
+                                                },styleButton]}
+                                                styleText={{color: global.colorFF, fontSize: global.sizeP14}}/> :null)
                             : <View style={{
                                 bottom: IS_IOS ? 70 / 6 : 70 / 5,
                                 right: 20,
@@ -173,11 +173,13 @@ class ItemMovieNew extends Component {
 
 };
 ItemMovieNew.defaultProps = {
-    isNew: true
+    isNew: true,
+    isVisible:true
 };
 
 ItemMovieNew.propTypes = {
     styleText: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
+    styleButton: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     onClick: PropTypes.func,
     numCol: PropTypes.number,
     isNew: PropTypes.bool,
@@ -185,6 +187,8 @@ ItemMovieNew.propTypes = {
     disabledSwipe: PropTypes.bool,
     disabledClickDetail: PropTypes.bool,
     onClickDetail: PropTypes.func,
+    isAdmin: PropTypes.bool,
+    isVisible: PropTypes.bool,
 };
 
 export default ItemMovieNew;

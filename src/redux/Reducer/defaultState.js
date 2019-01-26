@@ -101,6 +101,7 @@ export default {
                 isError: false
             },
         },
-        storeStreaming: []
+        storeStreaming: [],
+        isStreaming: false
     })
 };

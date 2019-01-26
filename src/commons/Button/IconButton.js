@@ -28,13 +28,13 @@ const IconButton = ({nameIcon, btnStyle, iconStyle, badge, onClick,disabled,hitS
     );
 };
 IconButton.defaultProps = {
-    badge: '',
+    badge: 0,
     nameIcon: ''
 };
 IconButton.propTypes = {
     disabled:PropTypes.bool,
     nameIcon: PropTypes.string,
-    badge: PropTypes.string,
+    badge: PropTypes.number,
     btnStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     iconStyle: PropTypes.oneOfType([PropTypes.number, PropTypes.object, PropTypes.array]),
     onClick: PropTypes.func

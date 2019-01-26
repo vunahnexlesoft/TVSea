@@ -3,10 +3,11 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as adminAction from "../../redux/ActionCreator/actionAdminCreator";
 function mapStateToProps(state) {
-    const{category, storeStreaming} = state.adminReducer;
+    const{category, storeStreaming, isStreaming} = state.adminReducer;
     return {
         category,
-        storeStreaming
+        storeStreaming,
+        isStreaming
     };
 }
 function mapDispatchToProps(dispatch) {
