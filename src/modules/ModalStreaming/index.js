@@ -17,6 +17,7 @@ import * as restClient from "../../services/restClient";
 import {dataFetchingCategoryFail, dataFetchingCategorySuccess} from "../../redux/ActionCreator/actionAdminCreator";
 import * as URL from "../../services/url";
 import ModalLoading from "../ModalLoading";
+const IS_IOS = Platform.OS === "ios";
 
 const {height, width} = Dimensions.get("window");
 
@@ -51,7 +52,7 @@ export default class ModalStreaming extends ModalOder {
             null,
             'Bạn có muốn xoá sản phẩm này ?',
             [
-                {text: 'Không', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: 'Không', onPress: () => console.log('Cancel Pressed'), style: IS_IOS ? 'cancel' : 'negative'},
                 {
                     text: 'Có', onPress: () => {
                         this.props.cartAction.deleteItemCheck(item.id)
@@ -151,7 +152,7 @@ export default class ModalStreaming extends ModalOder {
                         null,
                         'Đã có lỗi xảy ra vui lòng thử lại',
                         [
-                            {text: 'OK', onPress: () => console.log('Cancel Pressed')},
+                            {text: 'OK', onPress: () => console.log('Cancel Pressed'),style: IS_IOS ? 'destructive' : 'positive'},
                         ],
                         {cancelable: false}
                     )

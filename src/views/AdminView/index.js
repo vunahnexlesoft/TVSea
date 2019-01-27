@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Animated, Dimensions, Alert} from 'react-native';
+import {View, Animated, Dimensions, Alert,Platform} from 'react-native';
 import styles from './styles';
 import ButtonWithIcon from "../../commons/Button/ButtonWithIcon";
 import global from "../../themes/global";
@@ -27,7 +27,7 @@ import StreamingModal from "../../modules/ModalStreaming";
 import ModalLoading from "../../modules/ModalLoading";
 
 const {height, width} = Dimensions.get('window');
-
+const IS_IOS = Platform.OS === "ios";
 export default class AdminView extends Component {
     constructor(props) {
         super(props);
@@ -74,14 +74,14 @@ export default class AdminView extends Component {
                                         null,
                                         'Đã có lỗi xảy ra vui lòng thử lại',
                                         [
-                                            {text: 'OK', onPress: () => console.log('Cancel Pressed')},
+                                            {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: IS_IOS ? 'destructive' : 'positive'},
                                         ],
                                         {cancelable: false}
                                     )
                                 }
                             });
-                        });}},
-                    {text: 'Bỏ qua', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                        });}, style: IS_IOS ? 'destructive' : 'positive'},
+                    {text: 'Bỏ qua', onPress: () => console.log('Cancel Pressed'), style: IS_IOS ? 'cancel' : 'negative'},
                 ],
                 {cancelable: false}
             )
@@ -140,8 +140,8 @@ export default class AdminView extends Component {
                                     )
                                 }
                             });
-                        });}},
-                    {text: 'Bỏ qua', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                        });},style: IS_IOS ? 'destructive' : 'positive'},
+                    {text: 'Bỏ qua', onPress: () => console.log('Cancel Pressed'), style : IS_IOS ? 'cancel' : 'negative'},
                 ],
                 {cancelable: false}
             );
@@ -151,7 +151,7 @@ export default class AdminView extends Component {
                 null,
                 'Hãy lựa chọn phim và bất đầu phát',
                 [
-                    {text: 'OK', onPress: () => console.log('Cancel Pressed')},
+                    {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: IS_IOS ? 'destructive' : 'positive'},
                 ],
                 {cancelable: false}
             )
