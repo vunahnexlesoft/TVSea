@@ -91,6 +91,11 @@ export default {
             data:[],
             isLoading: false,
             isError: false,
+        },
+        duration:{
+            data: [],
+            isLoading:false,
+            isError: false
         }
     }),
     admin: Immutable({
@@ -102,6 +107,6 @@ export default {
             },
         },
         storeStreaming: [],
-        isStreaming: false
+        isStreaming: false,
     })
 };

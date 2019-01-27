@@ -17,6 +17,7 @@ export default function moviesReducer(state = defaultState.admin, action) {
                 ...state,
                 category: {...state.category, phimle: {data: [], isLoading: false, isError: true}}
             });
+        //Phim le
         //UPDATE HISTORY
         case NAME_ACTION.UPDATE_HISTORY_STREAMING_MOVIE: {
             let updateObject = [];

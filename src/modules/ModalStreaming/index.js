@@ -133,39 +133,51 @@ export default class ModalStreaming extends ModalOder {
         };
         console.log('start streaming');
         let url = URL.base_url + URL.POST_START_STREAMING;
-        this.setState({
-            loading:true
-        },()=>{
-            restClient.excuteAPI("post",url, null, null , params).then(res =>{
-                if(res.success){
-                    updateStateStreaming(true);
-                    this.setState({
-                        loading: false
-                    },()=>{
-                        this.onCloseModal();
-                    });
-                }else{
-                    this.setState({
-                        loading:false
-                    });
-                    Alert.alert(
-                        null,
-                        'Đã có lỗi xảy ra vui lòng thử lại',
-                        [
-                            {text: 'OK', onPress: () => console.log('Cancel Pressed'),style: IS_IOS ? 'destructive' : 'positive'},
-                        ],
-                        {cancelable: false}
-                    )
-                }
+        if(storeStreaming.length > 1){
+            this.setState({
+                loading:true
+            },()=>{
+                restClient.excuteAPI("post",url, null, null , params).then(res =>{
+                    if(res.success){
+                        updateStateStreaming(true);
+                        this.setState({
+                            loading: false
+                        },()=>{
+                            this.onCloseModal();
+                        });
+                    }else{
+                        this.setState({
+                            loading:false
+                        });
+                        Alert.alert(
+                            null,
+                            'Đã có lỗi xảy ra vui lòng thử lại',
+                            [
+                                {text: 'OK', onPress: () => console.log('Cancel Pressed'),style: IS_IOS ? 'destructive' : 'positive'},
+                            ],
+                            {cancelable: false}
+                        )
+                    }
+                });
             });
-        });
+        }else {
+            Alert.alert(
+                null,
+                'Vui lòng chọn nhiều hơn 2 phim để có thể phát',
+                [
+                    {text: 'OK', onPress: () => console.log('Cancel Pressed'),style: IS_IOS ? 'destructive' : 'positive'},
+                ],
+                {cancelable: false}
+            )
+        }
+
     }
     renderBottom() {
         return (
             <View style={{
                 paddingLeft: width >= 375 ? 15 : 9,
                 paddingRight: width >= 375 ? 15 : 9, flexDirection: 'row',
-                paddingBottom: 10,
+                paddingBottom: 20,
                 flex: 0.5, backgroundColor: global.backgroundColor23, alignItems: 'flex-end'
             }}>
                 <ButtonWithIcon

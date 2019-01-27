@@ -199,6 +199,12 @@ export default function moviesReducer(state = defaultState.movies, action) {
                     isLoading: false,
                     isError: false,
                 }});
+        case NAME_ACTION.GET_MOVIES_DURATION_ADMIN_FETCHING:
+            return state.setIn(['duration', 'isLoading'], true);
+        case NAME_ACTION.GET_MOVIES_DURATION_ADMIN_SUCCESS:
+            return state.merge({...state, duration: {data: action.data, isLoading: false, isError: false}});
+        case NAME_ACTION.GET_MOVIES_DURATION_ADMIN_FAIL:
+            return state.merge({...state, duration: {data: [], isLoading: false, isError: true}});
         default:
             return state;
     }

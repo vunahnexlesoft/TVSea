@@ -25,6 +25,7 @@ import VerticalListView from "../../modules/VerticalListView";
 import EmptyView from "../../modules/EmptyView";
 import StreamingModal from "../../modules/ModalStreaming";
 import ModalLoading from "../../modules/ModalLoading";
+import firebase from "react-native-firebase";
 
 const {height, width} = Dimensions.get('window');
 const IS_IOS = Platform.OS === "ios";
@@ -45,11 +46,18 @@ export default class AdminView extends Component {
     componentDidMount() {
         const {adminAction: {getDataMoviebyCategory,updateStateStreaming}} = this.props;
         getDataMoviebyCategory({page: 1, size: 50, category: 1});
-
+        firebase.database().ref('Streaming').on('value', (snap) => {
+            if(!snap.val()){
+                updateStateStreaming(false);
+            }
+        });
     }
 
     onAddMovies(item){
-        const {adminAction: {updateHistory},storeStreaming,isStreaming} = this.props;
+        const {adminAction: {updateHistory,updateStateStreaming},storeStreaming,isStreaming} = this.props;
+        let params = {
+            id: 1
+        };
         let url = URL.base_url + URL.POST_REMOVE_STREAMING;
         if(isStreaming){
             Alert.alert(
@@ -225,7 +233,7 @@ export default class AdminView extends Component {
                     styleModalPopupCustom={{backgroundColor: 'transparent',
                         borderRadius: 10,
                         paddingTop: 0,
-                        width: width, height: height - 20,
+                        width: width, height: height - 30,
                         paddingLeft: 0,
                         paddingRight: 0,
                         paddingBottom: 0,

@@ -4,7 +4,7 @@ import {bindActionCreators} from "redux";
 import * as moviesAction from "../../redux/ActionCreator/actionMovieCreator";
 import moviesReducer from "../../redux/Reducer/moviesReducer";
 function mapStateToProps(state) {
-    const{category,calender, channel} = state.moviesReducer;
+    const{category,calender, channel, duration} = state.moviesReducer;
     const userInfo = state.userInfoReducer.data;
     return {
         dataPhimle: category.phimle.data,
@@ -20,6 +20,7 @@ function mapStateToProps(state) {
 
         dataChannel : channel.data,
         dataCalender : calender.data,
+        dataDuration: duration.data,
         userInfo
     };
 }

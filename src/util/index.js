@@ -152,3 +152,33 @@ export function convertItemArray(array) {
     });
     return newArr.join(",");
 }
+export function convertTimeToSecond(time) {
+    let {h, m, s} = 0;
+    time.trim().split(':').map((item, index) => {
+        let ParseItem = parseInt(item);
+        switch (index) {
+            case 0:
+                h = ParseItem * 3600;
+                break;
+            case 1:
+                m = ParseItem * 60;
+                break;
+            case 2:
+                s = ParseItem;
+                break;
+            default:
+                return null;
+        }
+    });
+    return h + m + s;
+}
+export function toHHMMSS(secs){
+    var sec_num = parseInt(secs, 10);
+    var hours   = Math.floor(sec_num / 3600) % 24;
+    var minutes = Math.floor(sec_num / 60) % 60;
+    var seconds = sec_num % 60;
+    return [hours,minutes,seconds]
+        .map(v => v < 10 ? "0" + v : v)
+        //.filter((v,i) => v !== "00" || i > 0)
+        .join(":")
+}

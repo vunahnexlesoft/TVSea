@@ -220,7 +220,37 @@ export function logoutUser() {
         type: NAME_ACTION.LOG_OUT_USER
     }
 }
-
+export function dataFetchingDuration() {
+    return {
+        type: NAME_ACTION.GET_MOVIES_DURATION_ADMIN_FETCHING
+    };
+}
+export function dataFetchingDurationSuccess(data) {
+    return {
+        type: NAME_ACTION.GET_MOVIES_DURATION_ADMIN_SUCCESS,
+        data
+    };
+}
+export function dataFetchingDurationFail() {
+    return {
+        type: NAME_ACTION.GET_MOVIES_DURATION_ADMIN_FAIL,
+    };
+}
+export function getDataDuration() {
+    return (dispatch) => {
+        let url = URL.base_url + URL.GET_DURATION;
+        let token = store.getState().userInfoReducer.token;
+        dispatch(dataFetchingDuration());
+        restClient.excuteAPI("get",url,token, null).then(res =>{
+            console.log(res);
+            if(res.success){
+                dispatch(dataFetchingDurationSuccess(res.data))
+            }else{
+                dispatch(dataFetchingDurationFail());
+            }
+        });
+    }
+}
 export function getDataMoviebyCategory(params) {
     return (dispatch) => {
         let url = URL.base_url + URL.GET_MOVIES_BY_CATEGORY;

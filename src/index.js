@@ -106,7 +106,7 @@ const RootNavigator = createStackNavigator({
         Admin: {screen: Admin}
     },
     {
-        initialRouteName: "SignIn",
+        initialRouteName: "Admin",
         headerMode: "none",
     }
 );

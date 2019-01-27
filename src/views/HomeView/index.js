@@ -29,7 +29,7 @@ export default class HomeView extends Component {
         this._onGotoSteamingScreen = this._onGotoSteamingScreen.bind(this);
     }
     componentDidMount(){
-        const {moviesAction:{getDataMoviebyCategory,getDataChannelMovie,getDataCalenderMovie}} = this.props;
+        const {moviesAction:{getDataMoviebyCategory, getDataChannelMovie, getDataCalenderMovie}} = this.props;
         getDataChannelMovie();
         // getDataCalenderMovie();
         firebase.database().ref('Channel').on('value', (snap) => {
@@ -66,7 +66,8 @@ export default class HomeView extends Component {
         this.props.navigation.navigate('Video',{host: STRING.VAR.STEAMING_URL, url: item.backdrop_path, type:"stream"})
     }
     renderScene() {
-        const{dataPhimle,dataChannel, dataCalender} = this.props;
+        const{dataPhimle, dataChannel, dataCalender} = this.props;
+        console.log(dataCalender);
         switch (this.state.index) {
             case 1:
                 return (
@@ -95,7 +96,7 @@ export default class HomeView extends Component {
                     <View style={{flex: 1,marginTop:10}}>
                         <VerticalGirdView data={dataCalender}
                                           renderItem={({item, index}) =>
-                                              <ItemChannel uriImage={item.poster_path} text={item.start_time}/>
+                                              <ItemChannel uriImage={item.poster_path} text={UTIL_FUNCTION.toHHMMSS(UTIL_FUNCTION.convertTimeToSecond(item.start_time) - item.duration)}/>
                                           }/>
                     </View>
                 );

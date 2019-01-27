@@ -94,13 +94,13 @@ export function getDataMoviebyCategory(params) {
     return (dispatch) => {
         let url = URL.base_url + URL.GET_MOVIES_BY_CATEGORY;
         let token = store.getState().userInfoReducer.token;
-        dispatch(dataFetchingCategory(params.category));
+        dispatch(dataFetchingCategory());
         restClient.excuteAPI("get",url,token, params).then(res =>{
             console.log(res);
             if(res.success){
-                dispatch(dataFetchingCategorySuccess(res.data, params.category))
+                dispatch(dataFetchingCategorySuccess(res.data))
             }else{
-                dispatch(dataFetchingCategoryFail(params.category));
+                dispatch(dataFetchingCategoryFail());
             }
         });
     }
